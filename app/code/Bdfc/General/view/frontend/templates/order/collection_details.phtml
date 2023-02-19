@@ -1,0 +1,30 @@
+<?php
+/**
+ * @package Bdfc_General
+ */
+
+/** @var \Bdfc\General\Block\Order\ColletionDetails $block */ ?>
+
+<?php $storeCode = $block->getCurrentStoreCode()?>
+<?php if ($storeCode == 'arrival' || $storeCode == 'departure'):?>
+<div class="collection-details">
+    <div><?= $block->escapeHtml(__('Flight No')) ?> : 
+        <?= $block->escapeHtmlAttr($block->getFlightNumber()) ?></div>
+    <div><?= $block->escapeHtml(__('Collection Point')) ?> : 
+        <?= $block->escapeHtml($block->getCollectionPoint()) ?></div>
+    <div><?= $block->escapeHtml(__('Collection Date')) ?> : 
+        <?= $block->escapeHtml($block->getCollectionDate()) ?></div>
+    <div>
+        <?php if ($storeCode == 'arrival'):?>
+            <?= $block->escapeHtml(__('Arrival Time')) ?> : 
+        <?= $block->escapeHtml($block->getFlightTime()) ?>
+            <?php endif; ?>
+        </div>
+    <div>
+        <?php if ($storeCode == 'departure'):?>
+            <?= $block->escapeHtml(__('Collection Time')) ?> : 
+        <?= $block->escapeHtml($block->getCollectionTime()) ?>
+            <?php endif; ?>
+        </div>
+</div>
+<?php endif; ?>

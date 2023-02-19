@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <sparsh_mobile_number_login>
+            <general>
+                <enable>0</enable>
+                <login_mode>1</login_mode>
+            </general>
+        </sparsh_mobile_number_login>
+    </default>
+</config>

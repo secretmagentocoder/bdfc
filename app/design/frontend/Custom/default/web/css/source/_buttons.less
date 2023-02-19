@@ -1,0 +1,117 @@
+// /**
+//  * Copyright © Magento, Inc. All rights reserved.
+//  * See COPYING.txt for license details.
+//  */
+
+@button-primary__font-family: 'brandon_grotesque';
+
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+
+    .abs-btn-group-common {
+        max-width: 100%;
+        width: 100%;
+        padding: 15px 50px;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        border-radius: 50px;
+        overflow: hidden;
+        color: #ffffff;
+        outline: none;
+        font-size: 1.1rem;
+        text-transform: uppercase;
+
+        span {
+            min-height: 30px;
+            line-height: 30px;
+            font-size: 18px;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-family: @button-primary__font-family;
+        }
+    }
+
+    .abs-btn-back {
+        &:extend(.abs-btn-group-common all);
+        margin: initial;
+        min-height: 38px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        // font-size: 1.1rem;
+        // font-weight: 500;
+        background-color: @theme-primary-color;
+    }
+
+    .abs-btn-front-floater {
+        &:extend(.abs-btn-group-common all);
+        margin: auto;
+        background: #000000;
+        position: relative;
+        border: none;
+
+        img {
+            filter: brightness(0) invert(1);
+        }
+    }
+
+    //  Using buttons mixins
+    button,
+    a.action.primary {
+        .lib-css(border-radius, @button__border-radius);
+    }
+
+    button {
+        &:active {
+            .lib-css(box-shadow, @button__shadow);
+        }
+    }
+
+    a.action.primary {
+        .lib-link-as-button();
+    }
+
+    .action.primary,
+    .action-primary {
+        .lib-button-primary();
+    }
+
+    button,
+    .action {
+        &.btn-float {
+            width: 100%;
+            padding: 0;
+            display: block;
+            padding: 0;
+            border-radius: 100px;
+            position: relative;
+            overflow: hidden;
+
+
+            .front {
+                &:extend(.abs-btn-front-floater all);
+                position: absolute;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                transition: all 0.3s ease-in 0s;
+            }
+            .back {
+                &:extend(.abs-btn-back all);
+            }
+
+            &:hover {
+                .front {
+                    right: 100%;
+                    transition: all 0.3s ease-in 0s;
+                }
+            }
+        }
+    }
+}

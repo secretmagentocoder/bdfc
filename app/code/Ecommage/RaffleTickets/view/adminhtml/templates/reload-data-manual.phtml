@@ -1,0 +1,22 @@
+<?php
+/** @var Template $block */
+
+use Magento\Backend\Block\Template;
+
+?>
+
+
+<?php /** * Copyright © Magento, Inc. All rights reserved. * See COPYING.txt for license details. */ ?>
+<div class="page-actions">
+    <div class="page-actions-inner">
+        <div class="page-actions-buttons"><?= $block->getChildHtml() ?>
+            <form class="action-element" action="<?= $block->escapeUrl($block->getUrl('ecommage_raffle_tickets/action/index')) ?>"
+                  method="post"><input name="form_key" type="hidden"
+                                       value="<?= $block->escapeHtmlAttr($block->getFormKey()) ?>"/>
+                <input type="hidden" name="type" value="manual">
+                <button class="action-primary" type="submit"
+                        title="<?= $block->escapeHtmlAttr(__('Reload Data')) ?>"><?= $block->escapeHtml(__('Reload Data')) ?></button>
+            </form>
+        </div>
+    </div>
+</div>

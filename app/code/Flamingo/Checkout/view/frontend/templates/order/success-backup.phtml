@@ -1,0 +1,183 @@
+
+<?php /** @var $block \Bss\OrderDetails\Block\Details */ ?>
+<?php 
+$commonBlock= $block->getLayout()->createBlock('Flamingo\Custom\Block\CreateObject');   
+$storename = $commonBlock->getStoreName();
+$order = $block->getOrder();
+$codfee = $commonBlock->getConfigValue('payment/cashondelivery/payment_fee');
+             
+             
+$payment = $order->getPayment();
+$method = $payment->getMethodInstance();
+$reorderurl = $block->getReorder();
+$printurl = $block->getPrint();
+$date = $order->getCreatedAt();
+$formatdate = $block->formatDate($date);
+$thanksz = $block->getThankMessegerSizeDetails();
+$textbeforesz = $block->getBeforeTextSizeDetails();
+$textaftersz = $block->getAfterTextSizeDetails();
+$thankcl = '#'.$block->getThankMessegerColorDetails();
+$textbeforecl = '#'.$block->getBeforeTextColorDetails();
+$textaftercl = '#'.$block->getAfterTextColorDetails();
+$source = $block->getSource();
+?>
+
+<div class="checkout-success">
+    <div class="success-box">
+        <div class="biolayout">
+            <div class="shoppingbagContainer">
+                <ul class="shoppingBag">
+                    <li>
+                        <a href="#">
+                            <span class="sCircle ">1</span><span class="shoppingText ">Shopping Bag</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="sCircle ">2</span><span class="shoppingText ">Onepage checkout</span>
+                        </a>
+                    </li>
+                    <li>
+                        <span class="sCircle active">3</span><span class="shoppingText activeText">Place  Order</span>
+                    </li>
+                </ul>
+                <span class="shoppingShadow"></span>
+            </div>
+
+            <div class="shoppingdetailsArea">
+                <div class="shoppingareaLeft">
+                    <div class="shadowtop">
+                        <div class="shadowBottom">
+                            <div class="orderPlace">
+                                <h4>Order Successfully Placed!.<span class="order-number">Your order #: <?=$order->getIncrementId()?></span></h4>
+                                <p class="confirmation">You will receive an order confirmation email with details of your order and a link to track its progress.</p>
+                                <div class="actions-toolbar">
+                                    <div class="primary">
+                                        <a class="action primary continue" href="<?= $block->escapeUrl($block->getContinueUrl()) ?>"><span>Continue Shopping</span></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="shoppingareaRight">
+                    <div class="chooseMethodHd">
+                        <h5>order summAry.</h5>
+                    </div>
+                    <div class="order-opt">
+                        <h6>1 ITEM</h6>
+                        <p class="subtotal">
+                            <span class="spgtxt">Subtotal before Shipping:</span>
+                            <span class="amount"><span class="price"><?=$commonBlock->getCurrentCurrency()?><?=number_format($order->getGrandTotal()-$order->getShippingAmount(),2)?></span></span>
+                        </p>
+                        <?php if($storename != 'International'){ ?>
+                        <p class="tax">
+                            <span class="spgtxt">Tax:</span>
+                            <span class="amount"><span class="price"><?php /* @escapeNotVerified */ echo $order->formatPrice($source->getTaxAmount()) ?></span></span>
+                        </p>
+                        <?php }  ?>
+                        <?php 
+                            if($order->getCouponCode()){
+                        ?>
+                        <p class="discount">
+                            <span class="spgtxt">Discount (<?=$order->getCouponCode();?>):</span>
+                            <span class="amount"><span class="price">-<?=$commonBlock->getCurrentCurrency()?><?=number_format(abs($order->getDiscountAmount()),2)?></span></span>
+                        </p>
+                        <?php } ?>
+                        <p class="discount">
+                            <span class="spgtxt">Shipping Amount:</span>
+                            <span class="amount"><span class="price"><?=$commonBlock->getCurrentCurrency()?><?= number_format($order->getShippingAmount(),2)?></span></span>
+                        </p>
+						<?php if (strpos($method->getCode(), 'cashondelivery') !== false): ?>
+							<p class="cod-fee">
+								<span class="spgtxt"><?= __('COD Fee:')?></span>
+								<span class="amount"><span class="price"><?=$commonBlock->getCurrentCurrency()?><?= number_format($order->getPaymentFee(),2)?></span></span>
+							</p>
+                        <?php endif;?>
+                        <?php 
+                            $payment = $order->getPayment();
+                            $method = $payment->getMethodInstance();
+                        ?>
+                        <p class="paid">
+                            <span class="spgtxt">Payable Amount:</span>
+                            <span class="amount"><span class="price"><?=$commonBlock->getCurrentCurrency()?><?=number_format($order->getGrandTotal(),2);?></span></span>
+                        </p>
+                    </div>
+                    <div class="success-opt"> 
+                    <?php $formatshipping = $block->formatShipping(); ?>
+                    <?php $shippingMethod = $order ->getShippingDescription(); ?>
+                        <h5>DELIVER TO:</h5>
+                        <p><?php echo $formatshipping;  ?></p> 
+                       <!-- <p> Mobile No:9731084643</p>
+                        <p>saaaaaa</p><p>xyz, Haryana</p>
+                        <p>Postcode: 122002</p>
+                        <p>IN</p>-->
+                       <!-- <h6>SHIPPING METHOD:
+                         <?php //if ($order->getShippingDescription()): ?>
+                            <?php //echo $shippingMethod; ?>
+                            <?php //else: ?>
+                            <?php //echo __('No shipping information available'); ?>
+                            <?php// endif; ?>
+                        </h6>-->
+                        <p>Shipping Charges
+                        <?= number_format($order->getShippingAmount(),2);?>
+                        </p>                        
+                    </div>
+                    <div class="secure">
+                        <ul class="risk">
+                            <li class="riskIcon">                
+                                <span class="shop">Zero</span>
+                                <span class="buy">Risk Buy</span>
+                            </li>
+                            <li class="shopIcon">                
+                                <span class="shop">Shop</span>
+                                <span class="buy">Safe & Secure</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+
+<!-- Event snippet for Conversion conversion page -->
+<?php if($storename != 'International'){ ?>
+<script>
+
+  gtag('event', 'conversion', {
+      'send_to': 'AW-827457245/kmHYCKW4mXkQ3f3HigM',
+      'value': <?=number_format($order->getGrandTotal(),2)?>,
+      'currency': 'INR',
+      'transaction_id': <?=$order->getIncrementId()?>
+  });
+  fbq('track', 'Purchase', {value: <?=number_format($order->getGrandTotal(),2)?>, currency: 'INR'});
+</script>
+<?php  }
+        else{
+        ?>
+        <script>
+
+          gtag('event', 'conversion', {
+              'send_to': 'AW-827457245/kmHYCKW4mXkQ3f3HigM',
+              'value': <?=number_format($order->getGrandTotal(),2)?>,
+              'currency': 'USD',
+              'transaction_id': <?=$order->getIncrementId()?>
+          });
+          fbq('track', 'Purchase', {value: <?=number_format($order->getGrandTotal(),2)?>, currency: 'USD'});
+        </script>
+        <?php
+        }
+ ?>
+<?php if($block->isEnableDetails()): ?>    
+<script type="text/x-magento-init">
+        {
+        "*": {
+            "Bss_OrderDetails/js/continue": {}
+            }
+        } 
+</script>
+
+<?php endif; ?>

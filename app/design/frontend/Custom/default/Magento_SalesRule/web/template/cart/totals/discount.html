@@ -1,0 +1,26 @@
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<!-- ko if: isDisplayed() -->
+<tr class="totals discount">
+    <th colspan="1" style="" class="mark" scope="row">
+        <span class="title" data-bind="text: getTitle()"></span>
+        <span class="discount coupon" data-bind="text: getCouponLabel()"></span>
+    </th>
+    <td class="amount" data-bind="attr: {'data-th': title}">
+        <span><span class="price" data-bind="text: getValue()"></span></span>
+    </td>
+</tr>
+<tr class="totals after-discount">
+    <th colspan="1" style="" class="mark" scope="row">
+        <span class="title" data-bind="text: 'Total After Discount'"></span>
+        <span class="discount coupon" data-bind="text: getCouponLabel()"></span>
+    </th>
+    <td class="amount" data-bind="attr: {'data-th': title}">
+        <span><span class="price" data-bind="text: getAfterValue()"></span></span>
+    </td>
+</tr>
+<!-- /ko -->

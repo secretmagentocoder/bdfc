@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\ConfigurableProduct\Helper\Product\Options\Loader">
+        <plugin name="fix_simple_detail_configurable_bss" type="Ecommage\FixSimpledetailconfigurable\Plugin\Helper\Product\OptionsLoader"/>
+    </type>
+</config>

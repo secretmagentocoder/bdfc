@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Magento\Customer\Block\Form\Login" type="Sparsh\MobileNumberLogin\Block\Form\Login"/>
+    <preference for="Magento\Customer\Block\Account\Dashboard\Info" type="Sparsh\MobileNumberLogin\Block\Account\Dashboard\Info"/>
+    <type name="Magento\Customer\Api\AccountManagementInterface">
+        <plugin name="sparsh_validate_unique_mobile_number" type="Sparsh\MobileNumberLogin\Plugin\Model\AccountManagement"/>
+    </type>
+    <type name="Magento\Checkout\Model\CompositeConfigProvider">
+        <arguments>
+            <argument name="configProviders" xsi:type="array">
+                <item name="checkout_check_module_status" xsi:type="object">
+                    Sparsh\MobileNumberLogin\Model\MobileNumberConfigProvider
+                </item>
+            </argument>
+        </arguments>
+    </type>
+</config>

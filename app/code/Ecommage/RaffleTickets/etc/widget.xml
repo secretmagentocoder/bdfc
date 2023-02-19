@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Created By : Rohan Hapani
+ */
+-->
+<widgets xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Widget:etc/widget.xsd">
+    <widget id="raffle_tickets_widget" class="Ecommage\RaffleTickets\Block\Adminhtml\WidgetUpload">
+        <label>Widget Raffles</label>
+        <description> Widget Example</description>
+        <parameters>
+            <parameter name="all_draw" sort_order="10" visible="true" xsi:type="text">
+                <label>Url View All Draw</label>
+            </parameter>
+            <parameter name="all_winner" sort_order="10" visible="true" xsi:type="text">
+                <label>Url View All Winner</label>
+            </parameter>
+            <parameter name="upload_draw" xsi:type="block" visible="true" required="true">
+                <label translate="true">Category</label>
+                <block class="Ecommage\RaffleTickets\Block\Adminhtml\Widget\VideoChooser">
+                    <data>
+                        <item name="button" xsi:type="array">
+                            <item name="open" xsi:type="string" translate="true">Select Video...</item>
+                        </item>
+                    </data>
+                </block>
+            </parameter>
+        </parameters>
+    </widget>
+</widgets>

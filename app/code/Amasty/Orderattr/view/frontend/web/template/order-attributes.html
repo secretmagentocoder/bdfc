@@ -1,0 +1,12 @@
+<li class="order-attributes">
+    <div class="order-attributes-form fieldset address">
+        <!-- ko foreach: { data: elems, as: 'element' } -->
+            <!-- ko template: element.getTemplate() --><!-- /ko -->
+        <!-- /ko -->
+        <!-- ko foreach: { data: elems, as: 'element' } -->
+            <!-- ko if: element.inputName == 'pick_up_by_another_person' -->
+                <!-- ko template: {name: getTemplate(), data: $data, as: 'element'} --><!-- /ko -->
+            <!-- /ko -->
+        <!-- /ko -->
+    </div>
+</li>

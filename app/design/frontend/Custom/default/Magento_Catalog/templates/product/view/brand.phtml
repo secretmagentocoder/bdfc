@@ -1,0 +1,47 @@
+<?php
+/**
+ * Product view template
+ *
+ * @var $block \Magento\Catalog\Block\Product\View\Description
+ */
+?>
+<?php
+$_helper = $this->helper(Magento\Catalog\Helper\Output::class);
+$_product = $block->getProduct();
+
+if (!$_product instanceof \Magento\Catalog\Model\Product) {
+    return;
+}
+
+$home_url = $block->getBaseUrl();
+
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$connection = $objectManager->get('Magento\Framework\App\ResourceConnection')->getConnection('\Magento\Framework\App\ResourceConnection::DEFAULT_CONNECTION');
+
+// $product_brand = $_product->getResource()->getAttribute('product_brand')->getFrontend()->getValue($_product);
+$product_brand = $_product->getData('product_brand');
+$product_brand_arr = explode(",", $product_brand);
+$product_brand_html = '';
+$count = '0';
+if (!empty($product_brand_arr)) {
+    foreach ($product_brand_arr as $value) {
+        if (!empty($value)) {
+            if ($count != '0') {
+                $product_brand_html .= ', ';
+            }
+            $brand_id = $value;
+            $query = $connection->select()->from('magetop_brand', ['*'])->where('brand_id = ?', $brand_id);
+            $result = $connection->fetchRow($query);
+            $brand_name = $result['name'];
+            $brand_url_key = $result['url_key'];
+            $brand_url = $home_url.'brand/'.$brand_url_key.'.html';
+            $product_brand_html .= '<a href="'.$brand_url.'" title="'.$brand_name.'">'.$brand_name.'</a>';
+        }
+        $count++;
+    }
+}
+?>
+
+<div class="product_brand">
+    <h6 class="brand_title"><?php echo $product_brand_html;?></h6>
+</div>

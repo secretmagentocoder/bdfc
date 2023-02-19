@@ -1,0 +1,233 @@
+/**
+ * WARNING: Please don't edit this file. This file was generated automatically, your any changes on this file will be overwritten and lost.
+ * Updated on <?php echo date("Y-m-d H:i:s"); ?>
+ */
+
+<?php 
+$helper = $this->helper('Rootways\Megamenu\Helper\Data');
+$general = $this->getConfig("rootmegamenu_option",$this->_coreRegistry->registry('cssgen_store'));
+$general_value = $general['general'];
+
+$design = $this->getConfig("rootmegamenu_option",$this->_coreRegistry->registry('cssgen_store'));
+$design_value = $design['design'];
+
+$ulDisplay = 'table';
+$ulJustify = '';
+$liPadding = '15px 15px;';
+if ($general_value['topmenualignmenttype'] == 0) {
+    $float = 'left'; $display = 'inline-block'; $clear = 'none'; $text_align = 'left';
+} elseif ($general_value['topmenualignmenttype'] == 1) {
+    $float = 'none'; $display = 'inline-block'; $clear = 'none'; $text_align = 'right';
+} elseif ($general_value['topmenualignmenttype'] == 3) {
+    $float = 'none'; $display = 'inline-block'; $clear = 'none'; $text_align = 'center';
+    $ulDisplay = 'flex';
+    $ulJustify = 'justify-content:center;';
+} else {
+    $float = 'none'; $display = 'table-cell'; $clear = 'both'; $text_align = 'left';
+    $liPadding = '15px 5px;';
+}
+
+$mainLiBorder = "border: none !important;";
+if ($design_value['background_type'] == 1 ) {
+    $mainBg = "none";
+} else if ($design_value['background_type'] == 2 ) {
+    $mainBg = "linear-gradient(".$design_value['gradient_bg'].")";
+} else {
+    $mainBg = "#".$design_value['bgcolor'];
+    $mainLiBorder = "";
+    
+}?>
+.nav-sections, .rootmenu {
+    background: <?php echo $mainBg; ?>;
+}
+.rootmenu .rootmenu-list{
+    text-align: <?=$text_align?>;
+    display: <?=$ulDisplay?>;
+    <?= $ulJustify?>
+}
+.rootmenu-list > li {
+    border-color: #<?php echo $design_value['mainbordercolor']; ?> !important;
+    float: <?php echo $float?>;
+    display: <?php echo $display?>;
+    clear: <?php echo $clear?> !important;
+    <?php echo $mainLiBorder;?>
+}
+.rootmenu-list > li > a{ 
+    color: #<?php echo $design_value['fontcolor']; ?>;
+    font-size: <?php echo $design_value['fontsize']; ?>px;
+    text-transform: <?php echo $design_value['menulabel']; ?>;
+    padding: <?=$liPadding;?>
+}
+
+<?php $activeBgColor = "#".$design_value['activebgcolor'];
+if ($design_value['active_background_type'] == 1 ) {
+    $activeBgColor = "linear-gradient(".$design_value['active_gradient_bg'].")";
+    
+}
+$hoverBgColor = "#".$design_value['hoverbgcolor'];
+if ($design_value['active_background_type'] == 1 ) {
+    $hoverBgColor = "linear-gradient(".$design_value['hover_gradient_bg'].")";
+    
+}?>
+
+
+.rootmenu .title a,
+.rootmenu .title a{
+    color: #<?php echo $design_value['submenuheadingcolor']; ?>;
+    font-size: <?php echo $design_value['submenuheadingfontsize']; ?>px;
+}
+
+<?php /*if ($design_value['bgcolor'] == 1 ) { ?>
+    .megamenu {opacity:0; visibility:hidden;}
+    
+    .rootmenu-list li:hover .megamenu,
+    .rootmenu-list li:hover .contacthalfmenu,
+    .rootmenu-list li:hover .halfmenu,
+    .rootmenu-list li:hover .rootmenu-submenu  {transition: all 0.5s ease 0.6s;} 
+<?php }*/ ?>
+
+<?php if ($general_value['mobile_dropdownclickbehaviour'] == 1 ) { ?>
+.rootmenu > .rootmenu-list > li > .rootmenu-click {width:100%;}
+<?php } ?>
+
+.rootmenu > .rootmenu-list .halfmenu,
+.rootmenu > .rootmenu-list > li > .megamenu {
+    background: #<?php echo $design_value['submenubgcolor']; ?>;
+    text-transform: <?php echo $design_value['sub_uppercase']; ?>;
+    border-top:  <?php echo $design_value['dropdownborderwidth']; ?>px solid;
+    border-color: #<?php echo $design_value['dropdownbordercolor']; ?>
+}
+
+.rootmenu > .rootmenu-list .halfmenu ul > li > a,
+.rootmenu > .rootmenu-list .fullmenu ul > li > a { color: #<?php echo $design_value['submenufountcolor']; ?>; }
+.rootmenu > .rootmenu-list .halfmenu ul > li > a:hover,
+.rootmenu > .rootmenu-list .fullmenu ul > li > a:hover {  color: #<?php echo $design_value['submenuhoverfontcolor']; ?>; }
+<?php
+if ($general_value['underline'] == 1) { ?>
+    .rootmenu > .rootmenu-list .level2-popup > li:hover .sub-cat-name,
+    .rootmenu > .rootmenu-list .level3-popup > li:hover a span,
+    .rootmenu > .rootmenu-list .level3-listing >li:hover > a .sub-cat-name,
+    .rootmenu > .rootmenu-list .level4-listing >li:hover > a .sub-cat-name,
+    .rootmenu > .rootmenu-list .tabbing_lev4 >li:hover > a .sub-cat-name,
+    .rootmenu > .rootmenu-list .ulliststy02 >li:hover > a .sub-cat-name{text-decoration:underline}
+<?php } ?>
+
+.topmenu_main,
+.rootmenu .tabmenu .verticalopen,
+.rootmenu .rootmenu-list .tabmenu { background: #<?php echo $design_value['tebingbgcolor']; ?> !important;}
+
+.rootmenu .tabmenu .tabimgtext,
+.rootmenu .rootmenu-list .view_all{
+    color: #<?php echo $design_value['tebingfontcolor']; ?>;
+    font-size: <?php echo $design_value['tebingfontsize']; ?>px;
+}
+.rootmenu .tabmenu .vertical-menu > li > a{
+    background: #<?php echo $design_value['tebingheadingbgcolor']; ?>;
+    border-bottom-color: #<?php echo $design_value['tebingheadingbordercolor']; ?> !important;
+    color: #<?php echo $design_value['tebingheadingfontcolor']; ?>;
+    font-size: <?php echo $design_value['tebingheadingfontsize']; ?>px;
+}
+.rootmenu > .rootmenu-list .tabmenu .vertical-menu .main_openactive01 > a {
+    background: #<?php echo $design_value['tebinghoverbgcolor']; ?>;
+    color: #<?php echo $design_value['tebingheadinghoverfontcolor']; ?>;
+}
+.rootmenu .tabmenu .tabimgtext:hover{
+      color: #<?php echo $design_value['tebinghoverfontcolor']; ?>;
+}
+
+.rootmenu > .rootmenu-list .rootmenu-submenu {
+    border-top:  <?php echo $design_value['dropdownborderwidth']; ?>px solid;
+    border-color: #<?php echo $design_value['dropdownbordercolor']; ?>
+}
+
+.rootmenu > .rootmenu-list .rootmenu-submenu li  a{
+    background: #<?php echo $design_value['simplesubbgcolor']; ?>;
+    border-bottom-color: #<?php echo $design_value['simplesubbordercolor']; ?> !important;
+    color: #<?php echo $design_value['simplesubfontcolor']; ?>;
+    font-size: <?php echo $design_value['simplesubfontsize']; ?>px !important;
+}
+.rootmenu > .rootmenu-list .rootmenu-submenu li a:hover,
+.rootmenu > .rootmenu-list .rootmenu-submenu li:hover > a{
+    background: #<?php echo $design_value['simplesubhoerbgcolor']; ?> !important;
+    color: #<?php echo $design_value['simplesubhoverfontcolor']; ?> !important;
+}
+
+@media only screen and (min-width:768px) {
+    <?php if (isset($general_value['show_all_cat_bgcolor'])) {
+        $allCatHoverBg = '#'.$general_value['show_all_cat_hoverbgcolor'].' !important';
+        $allCatBg = '#'.$general_value['show_all_cat_bgcolor'].' !important';
+        if ($general_value['all_cat_background_type'] == 1 ) {
+            $allCatHoverBg = "linear-gradient(".$general_value['show_all_cat_gradient_hoverbgcolor'].") !important";
+            $allCatBg = "linear-gradient(".$general_value['show_all_cat_gradient_bgcolor'].") !important";
+        }?>
+        li.all-category-wrapper {
+            background: <?=$allCatBg?>;
+            color: <?php echo '#'.$general_value['show_all_cat_fontcolor'].' !important'; ?>;
+            font-size: <?php echo $general_value['show_all_cat_fontsize']; ?>px !important;
+        }
+        li.all-category-wrapper:hover > a {
+            background: <?=$allCatHoverBg?>;
+            color: <?php echo '#'.$general_value['show_all_cat_hovercolor'].' !important'; ?>;
+        }
+    <?php } ?>
+    
+    <?php if (isset($general_value['delay_hover_second'])) { ?>
+        <?php if ($general_value['delay_hover_second'] != '' && $general_value['dropdown_delay'] == 1) { ?>
+            .rootmenu > .rootmenu-list > li:hover .megamenu,
+            .rootmenu > .rootmenu-list li:hover .halfmenu,
+            .rootmenu > .rootmenu-list > li:hover > .rootmenu-submenu {transition-delay:<?php echo $general_value['delay_hover_second'];?>s; }
+        <?php } ?>
+    <?php } ?>
+    
+    <?php if ($general_value['show_contactus'] == 1) { ?>
+        .contactus_menu {position: relative;}
+        .megamenu.fullmenu.contacthalfmenu.clearfix {
+            width: 370px;
+            left: inherit;
+        }
+    <?php } ?>
+    <?php if ($general_value['sticky'] == 1) { ?>
+        .nav-sections.sticky {
+            position: fixed;
+            top: 0;
+            width: 100%;
+        }
+    <?php } ?>
+    <?php if ($general_value['topmenualignmenttype'] == 0) { ?>
+        .rw-social-links {float: right !important; border-right: none !important; border-left: 1px solid;}
+    <?php } ?>
+    <?php if ($general_value['topmenualignmenttype'] == 1) { ?>
+        .rw-social-links {float: left !important; border-left: none !important; border-right: 1px solid;}
+    <?php } ?>
+    <?php if ($general_value['contactus_position'] == 2) { ?>
+        li.contactus_menu{float: left !important; border-left: none !important; border-right: 1px solid;}
+    <?php } if ($general_value['contactus_position'] != 2 && $general_value['show_contactus'] == 1) { ?>
+        .megamenu.fullmenu.contacthalfmenu.clearfix {right: 0 !important;}
+    <?php } ?>
+    <?php if ($general_value['contactus_position'] == 1) { ?>
+        li.contactus_menu {float: right !important; border-right: none !important; border-left: 1px solid;}
+    <?php } ?>
+
+    .rootmenu-list > li:hover > a,
+    .rootmenu-list > li > a:hover{
+    background: <?=$hoverBgColor?>;
+    color: #<?php echo $design_value['hoverfontcolor']; ?>;
+    }
+    .rootmenu-list > li > a.active {
+        background: <?=$activeBgColor?>;
+        color: #<?php echo $design_value['activefontcolor']; ?>;
+    }
+    
+}
+
+@media only screen and (max-width:767px){
+    .rootmenu-list > li{
+        float: none !important;
+    }
+}
+
+<?php $rw_menucustom_css = $general['rw_menucustom_css'];
+if ($rw_menucustom_css['menucustom_css'] != '') {
+    echo $rw_menucustom_css['menucustom_css'];
+}
+?>

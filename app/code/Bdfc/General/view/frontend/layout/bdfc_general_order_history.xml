@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * 
+ * @package Bdfc_General
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd"> 
+    <update handle="customer_account"/>
+    <body>
+        <referenceBlock name="page.main.title">
+            <action method="setPageTitle">
+                <argument translate="true" name="title" xsi:type="string">Change Delivery Date</argument></action>
+        </referenceBlock>
+        <referenceContainer name="content">
+            <block class="Ecommage\ChangeDeliveryDate\Block\Widget\DeliveryForm" name="bdfc_general_order_history" template="Bdfc_General::order-history.phtml" />
+        </referenceContainer>
+    </body>
+</page>

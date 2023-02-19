@@ -1,0 +1,22 @@
+{
+    "name": "experiencesdigital/module-flights",
+    "description": "This is for handling Flights API from Navision",
+    "type": "magento2-module",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Mage2Gen",
+            "email": "info@mage2gen.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "ExperiencesDigital\\Flights\\": ""
+        }
+    }
+}

@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Email:etc/email_templates.xsd">
+    <template id="nav_config_email_change_delivery_date_successfully" label="Change Delivery Date" file="successfully.html" type="html" module="Ecommage_ChangeDeliveryDate" area="frontend"/>
+</config>

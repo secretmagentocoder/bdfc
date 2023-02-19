@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!-- 
+/**
+ * Webkuls Software
+ *
+ * @category Webkuls
+ * @package Webkuls_SpecialPromotions
+ * @author Webkuls
+ * @copyright Copyright (c) Webkuls Software Private Limited (https://Webkuls.com)
+ * @license https://store.Webkuls.com/license.html
+ */ -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
+    <module name="Webkuls_SpecialPromotions" setup_version="2.1.0">
+        <sequence>
+            <module name="Magento_SalesRule" />
+        </sequence>
+    </module>
+</config>

@@ -1,0 +1,76 @@
+<?php
+
+namespace Custom\Shortby\Controller\Shortby;
+
+use Magento\Framework\App\Action\Action;
+use Magento\Framework\Controller\Result\JsonFactory;
+
+
+class Index extends Action
+{  
+    protected $sessionFactory;
+    protected $resultJsonFactory;
+    protected $_productCollectionFactory;
+    protected  $_brand;
+    protected $_urlInterface;
+    
+    public function __construct( 
+      \Magento\Framework\App\Action\Context $context, 
+      \Magento\Checkout\Model\SessionFactory $sessionFactory,
+      \Magento\Catalog\Model\ResourceModel\Product\CollectionFactory $productCollectionFactory,
+      \Magetop\Brand\Model\BrandFactory $brand,   
+      \Magento\Framework\UrlInterface $urlInterface,     
+      JsonFactory $resultJsonFactory
+       ) 
+    {    
+        $this->sessionFactory = $sessionFactory;
+        $this->resultJsonFactory = $resultJsonFactory;
+        $this->_productCollectionFactory = $productCollectionFactory;
+        $this->_brand = $brand;
+        $this->_urlInterface = $urlInterface;
+        parent::__construct($context);   
+    }
+
+    public function execute()
+    {
+        $brandStr = $this->getRequest()->getParam('search_str');
+        $brandObj = $this->getRequest()->getParam('return_first');
+        $currentUrl = $this->getRequest()->getParam('current_url');
+        $brandData = $this->_brand->create();
+        $resultJson = $this->resultJsonFactory->create();
+
+        if(empty($brandStr) || $brandStr == null){
+            return $resultJson->setData(['value' => '0', 'brand_html' => '']);
+        }
+
+        $brandArr = json_decode($brandObj, true);
+        $matches  = preg_grep('/'.$brandStr.'/i', $brandArr['brand_list']);
+       
+        $html = '';
+        foreach($matches as $brand){
+            foreach($brandData->getCollection() as $key=> $value){
+                if($brand == $value['name']){
+
+                    $url = $currentUrl . '?product_brand=' . $value['brand_id'];
+                    $html .= "<li class='item' style='list-style-type: none;'>";
+                    $html .= "<span class='check-box'>";
+                    $html .= "<input type='checkbox' name='vehicle' onclick='window.location.assign(\"".$url."\")'>";
+                    $html .= "</span>";
+                    $html .= "<a href='".$currentUrl.'?product_brand='.$value['brand_id']."' rel='nofollow'>".$value['name']."";
+                    $html .= "</a>";
+                    $html .= "</li>";
+                    
+                }
+            }
+        }
+
+        if(empty($html) || $html == '' || $html == null){
+            return $resultJson->setData(['value' => '2', 'brand_html' => $html]); 
+        }
+
+        // echo "<pre>"; print_r($html);die("jj");
+
+        return $resultJson->setData(['value' => '1', 'brand_html' => $html]);    
+    }
+
+}

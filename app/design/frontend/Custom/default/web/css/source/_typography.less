@@ -1,0 +1,110 @@
+// /**
+//  * Copyright © Magento, Inc. All rights reserved.
+//  * See COPYING.txt for license details.
+//  */
+
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+    .lib-font-face(
+        @family-name: 'brandon_grotesque',
+        @font-path: '@{baseDir}fonts/brandon_thin',
+        @font-weight: 200,
+        @font-style: normal,
+        @font-display: swap
+    );
+
+    .lib-font-face(
+        @family-name: 'brandon_grotesque',
+        @font-path: '@{baseDir}fonts/brandon_light',
+        @font-weight: 300,
+        @font-style: normal,
+        @font-display: swap
+    );
+
+    .lib-font-face(
+        @family-name: 'brandon_grotesque',
+        @font-path: '@{baseDir}fonts/brandon_reg',
+        @font-weight: 400,
+        @font-style: normal,
+        @font-display: swap
+    );
+
+    .lib-font-face(
+        @family-name: 'brandon_grotesque',
+        @font-path: '@{baseDir}fonts/brandon_med',
+        @font-weight: 600,
+        @font-style: normal,
+        @font-display: swap
+    );
+
+    .lib-font-face(
+        @family-name: 'brandon_grotesque',
+        @font-path: '@{baseDir}fonts/brandon_bld',
+        @font-weight: 700,
+        @font-style: normal,
+        @font-display: swap
+    );
+}
+
+//
+//  Desktop
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+    h1 {
+        .lib-css(font-size, @h1__font-size-desktop);
+        .lib-css(margin-bottom, @h1__margin-bottom__desktop);
+    }
+}
+
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+    .items {
+        .lib-list-reset-styles();
+    }
+
+    .abs-main-page-title {
+        .page-title-wrapper {
+            text-align: center;
+            text-transform: uppercase;
+            padding: 20px 0;
+
+            .page-title {
+                span {
+                    font-size: 24px;
+                    color: #3f3f3f;
+                }
+            }
+        }
+    }
+
+    .warning-message {
+        display: inline-block;
+        align-items: center;
+        font-size: 13px;
+        font-weight: 600;
+        width: 100%;
+        margin: 10px 0;
+        padding: 6px 15px;
+        background: #CD5B66;
+        font-style: italic;
+        color: #fff;
+
+        img {
+            padding: 10px;
+        }
+
+        p {
+            display: inline-block;
+            padding-top: 12px;
+            padding-bottom: 0px !important;
+            margin: 0px !important;
+        }
+    }
+}

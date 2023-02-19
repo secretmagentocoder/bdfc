@@ -1,0 +1,33 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// phpcs:disable Magento2.Templates.ThisInTemplate.FoundThis
+
+/**
+ * Product view template
+ *
+ * @var $block \Magento\Catalog\Block\Product\View\Description
+ */
+?>
+<?php
+$_helper = $this->helper(Magento\Catalog\Helper\Output::class);
+$_product = $block->getProduct();
+
+if (!$_product instanceof \Magento\Catalog\Model\Product) {
+    return;
+}
+
+if (empty($_product->getShortDescription())) {
+    return;
+}
+?>
+
+<div class="short-description">
+    <h5 class="card_title text-uppercase base_line"><span>Description</span></h5>
+    <div class="description-product-view">
+        <?php echo $_product->getShortDescription(); ?>
+    </div>
+</div>

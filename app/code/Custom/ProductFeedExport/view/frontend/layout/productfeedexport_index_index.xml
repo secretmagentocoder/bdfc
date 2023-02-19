@@ -1,0 +1,22 @@
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="../../../../../../../lib/internal/Magento/Framework/View/Layout/etc/page_configuration.xsd">
+
+	<head>
+        <title>Product Feed Export</title>
+        
+		<css src="Custom_ProductFeedExport::css/custom.css"/>
+		<script src="Custom_ProductFeedExport::js/custom.js"/>
+		<!-- <css src="jquery/fileUploader/css/jquery.fileupload-ui.css"/>
+		<script src="path/file.js" defer="defer"/>
+		<link src="http://url.com" src_type="url"/>
+		<remove src="path/remove/file.css"/> -->
+		
+    </head>
+
+    <body>
+
+        <referenceContainer name="content">
+            <block class="Custom\ProductFeedExport\Block\Index\Index" name="productfeedexport" template="Custom_ProductFeedExport::productfeedexport.phtml"/>
+        </referenceContainer>
+
+    </body>
+</page>

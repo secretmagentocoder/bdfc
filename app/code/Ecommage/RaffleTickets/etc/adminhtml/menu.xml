@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+        <menu>
+            <add id="Ecommage_RaffleTickets::synchronized" title="API" module="Ecommage_RaffleTickets" sortOrder="51" resource="Ecommage_RaffleTickets::synchronized"/>
+            <add id="Ecommage_RaffleTickets::hexcolor" title="Update Hex Color" module="Ecommage_RaffleTickets" sortOrder="30" action="ecommage_raffle_tickets/index/hexcolor" resource="Ecommage_RaffleTickets::hexcolor" parent="Ecommage_RaffleTickets::synchronized"/>
+            <add id="Ecommage_RaffleTickets::post" title="Data Synchronization" module="Ecommage_RaffleTickets" sortOrder="10" action="ecommage_raffle_tickets/index/reload" resource="Ecommage_RaffleTickets::post" parent="Ecommage_RaffleTickets::synchronized"/>
+            <add id="Ecommage_RaffleTickets::variant" title="Data Synchronization Variant" module="Ecommage_RaffleTickets" sortOrder="20" action="ecommage_raffle_tickets/index/variant" resource="Ecommage_RaffleTickets::variant" parent="Ecommage_RaffleTickets::synchronized"/>
+            <add id="Ecommage_RaffleTickets::manual" title="Data Synchronization SDCP" module="Ecommage_RaffleTickets" sortOrder="20" action="ecommage_raffle_tickets/index/manual" resource="Ecommage_RaffleTickets::manual" parent="Ecommage_RaffleTickets::synchronized"/>
+            <add id="Ecommage_RaffleTickets::raffle_configuration" title="Configuration" module="Ecommage_RaffleTickets" sortOrder="99" parent="Ecommage_RaffleTickets::synchronized" action="adminhtml/system_config/edit/section/ecommage_api/" resource="Ecommage_RaffleTickets::raffle_configuration"/>
+
+            <add id="Ecommage_RaffleTickets::raffleticket" title="Winners" translate="title" module="Ecommage_RaffleTickets" sortOrder="40" resource="Ecommage_RaffleTickets::raffleticket" parent="Magento_Catalog::catalog"/>
+            <add id="Ecommage_RaffleTickets::raffleticketlist" title="Raffle Ticket Winner" translate="title" module="Ecommage_RaffleTickets" sortOrder="30" parent="Ecommage_RaffleTickets::raffleticket" action="ecommage_raffle_tickets/raffleticket/index" resource="Ecommage_RaffleTickets::raffleticketlist"/>
+        </menu>
+</config>

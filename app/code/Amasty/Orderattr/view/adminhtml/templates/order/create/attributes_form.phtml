@@ -1,0 +1,26 @@
+<?php
+/** @var \Amasty\Orderattr\Block\Adminhtml\Order\Create\Form\Attributes $block */
+?>
+</section><section id="amasty-order-attributes" class="admin__page-section amasty-order-attributes">
+<div class="admin__page-section-title">
+    <span class="title"><?= $block->escapeHtml(__('Order Attributes')); ?></span>
+    <div class="actions"></div>
+</div>
+<div id="order-attributes-fields"
+     class="admin__page-section-content">
+        <?= /** @escapeNotVerified */ $block->getFormHtml();?>
+</div>
+
+<script>
+    require([
+        "jquery",
+        "mage/calendar"
+    ], function($){
+        $('.date-calendar').each(function(key, item) {
+            var calendar = $(item).data('mage-init');
+            if(calendar) {
+                $(item).calendar(calendar.calendar);
+            }
+        });
+    });
+</script>

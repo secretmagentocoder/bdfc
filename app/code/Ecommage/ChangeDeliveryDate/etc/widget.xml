@@ -1,0 +1,12 @@
+<?xml version="1.0" ?>
+<widgets xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:helloworld:Magento_Widget:etc/widget.xsd">
+    <widget class="Ecommage\ChangeDeliveryDate\Block\Widget\DeliveryForm" id="collection_date_change">
+        <label translate="true">Change Delivery Date</label>
+        <description translate="true">Collection Date Change</description>
+        <parameters>
+            <parameter name="title" sort_order="10" visible="true" xsi:type="text">
+                <label translate="true">Title</label>
+            </parameter>
+        </parameters>
+    </widget>
+</widgets>

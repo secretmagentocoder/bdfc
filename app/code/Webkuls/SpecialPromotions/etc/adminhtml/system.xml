@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Webkuls Software.
+ *
+ * @category  Webkuls
+ * @package   Webkuls_SpecialPromotions
+ * @author    Webkuls
+ * @copyright Copyright (c) Webkuls Software Private Limited (https://Webkuls.com)
+ * @license   https://store.Webkuls.com/license.html
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+      <tab id="Webkuls" translate="label" sortOrder="10">
+          <label>Webkuls</label>
+      </tab>
+      <section id="customization" translate="label" type="text" sortOrder="300" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Special Promotions</label>
+            <!-- Assign section to tab -->
+            <tab>Webkuls</tab>
+            <resource>Webkuls_SpecialPromotions::config_specialpromotion</resource>
+            <!-- create group for fields in section -->
+            <group id="enable" translate="label" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>General</label>
+                <field id="check_option_values" translate="label comment" sortOrder="3" type="select" showInDefault="1">
+                    <label>Check Special Option Values</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+            </group>
+            <group id="skipsettings" translate="label" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Skip Settings</label>
+                <field id="skip_item_special_price" translate="label comment" sortOrder="3" type="select" showInDefault="1">
+                    <label>Skip Items With Special Price</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="skip_configurable_item_special_price" translate="label comment" sortOrder="3" type="select" showInDefault="1">
+                    <label>Skip Configurable Items if child Special Price</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="skip_item_tier_price" translate="label comment" sortOrder="3" type="select" showInDefault="1">
+                    <label>Skip Items with Tier Price</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

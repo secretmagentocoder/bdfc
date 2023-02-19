@@ -1,0 +1,112 @@
+<?php
+$_item = $block->getItem();
+$product = $_item->getProduct();
+
+$_item_qty = $block->escapeHtmlAttr($_item->getQty());
+$item_qty = intval($_item_qty);
+?>
+
+<div class="col qty" data-th="<?= $block->escapeHtml(__('Quantity')) ?>">
+    <div class="field qty">
+        <div class="control qty">
+            <label for="qty[<?= $block->escapeHtmlAttr($_item->getId()) ?>]">
+                <span class="decreaseQty">-</span>
+                <input id="qty[<?= $block->escapeHtmlAttr($_item->getId()) ?>]"
+                       class="input-text qty"
+                       type="number"
+                       data-role="qty"
+                       data-validate="{'required-number':true,'validate-greater-than-zero':true, 'validate-item-quantity':{'minAllowed':1,'maxAllowed':10}}"
+                       name="qty[<?= $block->escapeHtmlAttr($_item->getId()) ?>]"
+                       value="<?php echo $item_qty; ?>" />
+                <span class="increaseQty">+</span>
+            </label>
+        </div>
+    </div>
+    <div class="view_all_offer_content offer-wraper">
+        <div class="offer-button">
+            <a href="javascript:void(0);" class="view_all_offer">View All Offer</a>
+        </div>
+        <div class="view_all_offer_popup offer-content">
+            <?php
+            $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+            $_storeManager = $objectManager->create('Magento\Store\Model\StoreManagerInterface');
+            $currentWebsiteId = $_storeManager->getStore()->getWebsiteId();
+
+            $rules = $objectManager->create('Magento\SalesRule\Model\RuleFactory')->create();
+            $rules = $rules->getCollection()->addIsActiveFilter()->addWebsiteFilter($currentWebsiteId);
+            $objDate = $objectManager->create('Magento\Framework\Stdlib\DateTime\DateTime');
+            $_currentTime = strtotime($objDate->date());
+
+            $product_offers = [];
+            foreach ($rules as $rule) {
+                $fromDate = $rule->getFromDate();
+                $toDate = $rule->getToDate();
+                $is_active = $rule->getIsActive();
+
+                if (isset($is_active) && $is_active == '1') {
+                    $product = $objectManager->get('Magento\Catalog\Model\Product')->load($_item->getId());
+                    $item = $objectManager->create('Magento\Catalog\Model\Product');
+                    $item->setProduct($product);
+                    if ($rule->getActions()->validate($item)) {
+                        $product_label = $rule->getName();
+                        $product_offers[] = $product_label;
+                    }
+                }
+            }
+
+            if(!empty($product_offers)) {
+                ?>
+                <div class="box_offers p-4">
+                    <ul>
+                        <?php
+                        foreach ($product_offers as $value) {
+                            $product_offer_name = $value;
+                            echo '<li>'.$product_offer_name.'</li>';
+                        }
+                        ?>
+                    </ul>
+                </div>
+                <?php
+            }
+            ?>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    require(["jquery"], function ($) {
+        // increaseQty/decreaseQty
+        $('.increaseQty, .decreaseQty').unbind().click(function () {
+            console.log("sds");
+            let inputElem = $(this).parents('.qty').find('input');
+            let currentQty = inputElem.val();
+            console.log(currentQty);
+            if ($(this).hasClass('increaseQty')) {
+                inputElem.val(parseInt(currentQty) + parseInt(1));
+            } else {
+                if (currentQty > 1) {
+                    inputElem.val(parseInt(currentQty) - parseInt(1));
+                }
+            }
+        });
+
+        // view_all_offer
+        $('.view_all_offer').unbind().click(function () {
+            console.log("sds");
+            if($(this).parents('.view_all_offer_content').find('.view_all_offer_popup').hasClass("active")){
+                console.log("sds 1");
+                $(this).parents('.view_all_offer_content').find('.view_all_offer_popup').removeClass("active");
+            }else{
+                console.log("sds 2");
+                $(this).parents('.view_all_offer_content').find('.view_all_offer_popup').addClass("active");
+            }
+        });
+        // view_all_offer_popup
+        $('body').click(function(e) {
+            if (!$(e.target).closest('.view_all_offer_content').length){
+                $(".view_all_offer_popup").removeClass("active");
+            }
+        });
+
+    });
+</script>

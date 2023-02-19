@@ -1,0 +1,393 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Amasty\Orderattr\Api\RelationRepositoryInterface" type="Amasty\Orderattr\Model\Attribute\Relation\RelationRepository"/>
+    <preference for="Amasty\Orderattr\Api\CheckoutAttributeRepositoryInterface" type="Amasty\Orderattr\Model\Attribute\Repository"/>
+    <preference for="Amasty\Orderattr\Api\EntityDataRepositoryInterface" type="Amasty\Orderattr\Model\Entity\EntityDataRepository" />
+    <preference for="Amasty\Orderattr\Api\Data\CheckoutAttributeInterface" type="Amasty\Orderattr\Model\Attribute\Attribute"/>
+    <preference for="Amasty\Orderattr\Api\Data\EntityDataInterface" type="Amasty\Orderattr\Model\Entity\EntityData"/>
+    <preference for="Amasty\Orderattr\Api\CheckoutDataRepositoryInterface" type="Amasty\Orderattr\Model\Entity\CheckoutDataRepository" />
+    <preference for="Amasty\Orderattr\Api\GuestCheckoutDataRepositoryInterface" type="Amasty\Orderattr\Model\Entity\GuestCheckoutDataRepository" />
+    <virtualType name="OrderAttributesReservedList" type="Magento\Catalog\Model\Product\ReservedAttributeList" shared="false">
+        <arguments>
+            <argument name="productModel" xsi:type="string">\Magento\Sales\Api\Data\OrderInterface</argument>
+            <argument name="reservedAttributes" xsi:type="array">
+                <item name="id" xsi:type="string">id</item>
+                <item name="entity_id" xsi:type="string">entity_id</item>
+                <item name="parent_entity_id" xsi:type="string">parent_entity_id</item>
+                <item name="store_id" xsi:type="string">store_id</item>
+                <item name="increment_id" xsi:type="string">increment_id</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="\Amasty\Orderattr\Model\Attribute\Attribute">
+        <arguments>
+            <argument name="reservedAttributeList" xsi:type="object">OrderAttributesReservedList</argument>
+        </arguments>
+    </type>
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="amorderattr_relation_grid_data_source" xsi:type="string">Amasty\Orderattr\Model\ResourceModel\Attribute\Relation\Relation\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <!-- Virtual Input types -->
+    <virtualType name="InputType\Text" type="Amasty\Orderattr\Model\Attribute\InputType\InputType">
+        <arguments>
+            <argument name="label" translate="true" xsi:type="string">Text Field</argument>
+            <argument name="validateTypes" xsi:type="array">
+                <item name="0" xsi:type="string">min_text_length</item>
+                <item name="1" xsi:type="string">max_text_length</item>
+            </argument>
+            <argument name="validateFilters" xsi:type="array">
+                <item name="alphanumeric" xsi:type="string" translate="true">Alphanumeric</item>
+                <item name="numeric" xsi:type="string" translate="true">Numeric Only</item>
+                <item name="alpha" xsi:type="string" translate="true">Alpha Only</item>
+                <item name="url" xsi:type="string" translate="true">URL</item>
+                <item name="email" xsi:type="string" translate="true">Email</item>
+            </argument>
+            <argument name="filterTypes" xsi:type="array">
+                <item name="striptags" xsi:type="string" translate="true">Strip HTML Tags</item>
+                <item name="escapehtml" xsi:type="string" translate="true">Escape HTML Entities</item>
+            </argument>
+            <argument name="dataModel" xsi:type="string">Amasty\Orderattr\Model\Value\Metadata\Form\Text</argument>
+            <argument name="backendType" xsi:type="string">varchar</argument>
+            <argument name="defaultValue" xsi:type="string">text</argument>
+            <argument name="filterableInGrid" xsi:type="boolean">true</argument>
+            <argument name="frontendInputType" xsi:type="string">input</argument>
+            <argument name="frontendUiComponent" xsi:type="string">Amasty_Orderattr/js/form/element/abstract</argument>
+            <argument name="columnUiComponent" xsi:type="string">Magento_Ui/js/grid/columns/column</argument>
+            <argument name="columnUiFilter" xsi:type="string">text</argument>
+            <argument name="columnDatatype" xsi:type="string">text</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="InputType\Textarea" type="Amasty\Orderattr\Model\Attribute\InputType\InputType">
+        <arguments>
+            <argument name="label" translate="true" xsi:type="string">Text Area</argument>
+            <argument name="validateTypes" xsi:type="array">
+                <item name="0" xsi:type="string">min_text_length</item>
+                <item name="1" xsi:type="string">max_text_length</item>
+            </argument>
+            <argument name="validateFilters" xsi:type="array">
+                <item name="alphanumeric" xsi:type="string" translate="true">Alphanumeric</item>
+                <item name="numeric" xsi:type="string" translate="true">Numeric Only</item>
+                <item name="alpha" xsi:type="string" translate="true">Alpha Only</item>
+            </argument>
+            <argument name="filterTypes" xsi:type="array">
+                <item name="striptags" xsi:type="string" translate="true">Strip HTML Tags</item>
+                <item name="escapehtml" xsi:type="string" translate="true">Escape HTML Entities</item>
+            </argument>
+            <argument name="dataModel" xsi:type="string">Amasty\Orderattr\Model\Value\Metadata\Form\Text</argument>
+            <argument name="backendType" xsi:type="string">text</argument>
+            <argument name="defaultValue" xsi:type="string">textarea</argument>
+            <argument name="frontendInputType" xsi:type="string">textarea</argument>
+            <argument name="frontendUiComponent" xsi:type="string">Amasty_Orderattr/js/form/element/textarea</argument>
+            <argument name="columnUiComponent" xsi:type="string">Magento_Ui/js/grid/columns/column</argument>
+            <argument name="columnDatatype" xsi:type="string">text</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="InputType\Date" type="Amasty\Orderattr\Model\Attribute\InputType\InputType">
+        <arguments>
+            <argument name="label" translate="true" xsi:type="string">Date</argument>
+            <argument name="validateTypes" xsi:type="array">
+                <item name="0" xsi:type="string">date_range_min</item>
+                <item name="1" xsi:type="string">date_range_max</item>
+            </argument>
+            <argument name="backendModel" xsi:type="string">Magento\Eav\Model\Entity\Attribute\Backend\Datetime</argument>
+            <argument name="dataModel" xsi:type="string">Amasty\Orderattr\Model\Value\Metadata\Form\Date</argument>
+            <argument name="backendType" xsi:type="string">datetime</argument>
+            <argument name="defaultValue" xsi:type="string">date</argument>
+            <argument name="filterableInGrid" xsi:type="boolean">true</argument>
+            <argument name="frontendInputType" xsi:type="string">date</argument>
+            <argument name="frontendUiComponent" xsi:type="string">Amasty_Orderattr/js/form/element/date</argument>
+            <argument name="columnUiComponent" xsi:type="string">Magento_Ui/js/grid/columns/date</argument>
+            <argument name="columnUiFilter" xsi:type="string">dateRange</argument>
+            <argument name="columnDatatype" xsi:type="string">date</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="InputType\DateTime" type="Amasty\Orderattr\Model\Attribute\InputType\InputType">
+        <arguments>
+            <argument name="label" translate="true" xsi:type="string">Date With Time</argument>
+            <argument name="validateTypes" xsi:type="array">
+                <item name="0" xsi:type="string">date_range_min</item>
+                <item name="1" xsi:type="string">date_range_max</item>
+            </argument>
+            <argument name="backendModel" xsi:type="string">Magento\Eav\Model\Entity\Attribute\Backend\Datetime</argument>
+            <argument name="dataModel" xsi:type="string">Amasty\Orderattr\Model\Value\Metadata\Form\Datetime</argument>
+            <argument name="backendType" xsi:type="string">datetime</argument>
+            <argument name="defaultValue" xsi:type="string">datetime</argument>
+            <argument name="filterableInGrid" xsi:type="boolean">true</argument>
+            <argument name="frontendInputType" xsi:type="string">datetime</argument>
+            <argument name="frontendUiComponent" xsi:type="string">Amasty_Orderattr/js/form/element/date</argument>
+            <argument name="columnUiComponent" xsi:type="string">Magento_Ui/js/grid/columns/date</argument>
+            <argument name="columnUiFilter" xsi:type="string">dateRange</argument>
+            <argument name="columnDatatype" xsi:type="string">date</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="InputType\Select" type="Amasty\Orderattr\Model\Attribute\InputType\InputType">
+        <arguments>
+            <argument name="label" translate="true" xsi:type="string">Dropdown</argument>
+            <argument name="manageOptions" xsi:type="boolean">true</argument>
+            <argument name="optionDefault" xsi:type="string">radio</argument>
+            <argument name="sourceModel" xsi:type="string">Magento\Eav\Model\Entity\Attribute\Source\Table</argument>
+            <argument name="backendType" xsi:type="string">int</argument>
+            <argument name="filterableInGrid" xsi:type="boolean">true</argument>
+            <argument name="frontendInputType" xsi:type="string">select</argument>
+            <argument name="frontendUiComponent" xsi:type="string">Amasty_Orderattr/js/form/element/select</argument>
+            <argument name="columnUiComponent" xsi:type="string">Magento_Ui/js/grid/columns/select</argument>
+            <argument name="columnUiFilter" xsi:type="string">select</argument>
+            <argument name="columnDatatype" xsi:type="string">select</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="InputType\MultiSelect" type="Amasty\Orderattr\Model\Attribute\InputType\InputType">
+        <arguments>
+            <argument name="label" translate="true" xsi:type="string">Multiple Select</argument>
+            <argument name="manageOptions" xsi:type="boolean">true</argument>
+            <argument name="optionDefault" xsi:type="string">checkbox</argument>
+            <argument name="displayEmptyOption" xsi:type="boolean">false</argument>
+            <argument name="sourceModel" xsi:type="string">Magento\Eav\Model\Entity\Attribute\Source\Table</argument>
+            <argument name="backendModel" xsi:type="string">Magento\Eav\Model\Entity\Attribute\Backend\ArrayBackend</argument>
+            <argument name="dataModel" xsi:type="string">Amasty\Orderattr\Model\Value\Metadata\Form\MultiSelect</argument>
+            <argument name="backendType" xsi:type="string">varchar</argument>
+            <argument name="frontendInputType" xsi:type="string">multiselect</argument>
+            <argument name="frontendUiComponent" xsi:type="string">Amasty_Orderattr/js/form/element/multiselect</argument>
+            <argument name="columnUiComponent" xsi:type="string">Magento_Ui/js/grid/columns/select</argument>
+            <argument name="columnDatatype" xsi:type="string">select</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="InputType\Boolean" type="Amasty\Orderattr\Model\Attribute\InputType\InputType">
+        <arguments>
+            <argument name="label" translate="true" xsi:type="string">Yes/No</argument>
+            <argument name="displayEmptyOption" xsi:type="boolean">false</argument>
+            <argument name="sourceModel" xsi:type="string">Amasty\Orderattr\Model\Config\Source\Boolean</argument>
+            <argument name="backendType" xsi:type="string">int</argument>
+            <argument name="dataModel" xsi:type="string">Amasty\Orderattr\Model\Value\Metadata\Form\Boolean</argument>
+            <argument name="defaultValue" xsi:type="string">yesno</argument>
+            <argument name="filterableInGrid" xsi:type="boolean">true</argument>
+            <argument name="frontendInputType" xsi:type="string">select</argument>
+            <argument name="frontendUiComponent" xsi:type="string">Amasty_Orderattr/js/form/element/select</argument>
+            <argument name="columnUiComponent" xsi:type="string">Magento_Ui/js/grid/columns/select</argument>
+            <argument name="columnUiFilter" xsi:type="string">select</argument>
+            <argument name="columnDatatype" xsi:type="string">select</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="InputType\Radios" type="Amasty\Orderattr\Model\Attribute\InputType\InputType">
+        <arguments>
+            <argument name="label" translate="true" xsi:type="string">Radio Buttons</argument>
+            <argument name="manageOptions" xsi:type="boolean">true</argument>
+            <argument name="optionDefault" xsi:type="string">radio</argument>
+            <argument name="displayEmptyOption" xsi:type="boolean">false</argument>
+            <argument name="sourceModel" xsi:type="string">Magento\Eav\Model\Entity\Attribute\Source\Table</argument>
+            <argument name="backendType" xsi:type="string">int</argument>
+            <argument name="dataModel" xsi:type="string">Magento\Eav\Model\Attribute\Data\Select</argument>
+            <argument name="filterableInGrid" xsi:type="boolean">true</argument>
+            <argument name="frontendInputType" xsi:type="string">radios</argument>
+            <argument name="frontendUiComponent" xsi:type="string">Amasty_Orderattr/js/form/element/radios</argument>
+            <argument name="frontendTmpl" xsi:type="string">Amasty_Orderattr/form/element/radios</argument>
+            <argument name="columnUiComponent" xsi:type="string">Magento_Ui/js/grid/columns/select</argument>
+            <argument name="columnUiFilter" xsi:type="string">select</argument>
+            <argument name="columnDatatype" xsi:type="string">select</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="InputType\Checkboxes" type="Amasty\Orderattr\Model\Attribute\InputType\InputType">
+        <arguments>
+            <argument name="label" translate="true" xsi:type="string">Checkbox Group</argument>
+            <argument name="manageOptions" xsi:type="boolean">true</argument>
+            <argument name="optionDefault" xsi:type="string">checkbox</argument>
+            <argument name="displayEmptyOption" xsi:type="boolean">false</argument>
+            <argument name="sourceModel" xsi:type="string">Magento\Eav\Model\Entity\Attribute\Source\Table</argument>
+            <argument name="backendModel" xsi:type="string">Magento\Eav\Model\Entity\Attribute\Backend\ArrayBackend</argument>
+            <argument name="dataModel" xsi:type="string">Magento\Eav\Model\Attribute\Data\Multiselect</argument>
+            <argument name="backendType" xsi:type="string">varchar</argument>
+            <argument name="frontendInputType" xsi:type="string">checkboxes</argument>
+            <argument name="frontendUiComponent" xsi:type="string">Amasty_Orderattr/js/form/element/checkboxes</argument>
+            <argument name="frontendTmpl" xsi:type="string">Amasty_Orderattr/form/element/checkboxes</argument>
+            <argument name="columnUiComponent" xsi:type="string">Magento_Ui/js/grid/columns/select</argument>
+            <argument name="columnUiFilter" xsi:type="string">select</argument>
+            <argument name="columnDatatype" xsi:type="string">select</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="InputType\HtmlContainer" type="Amasty\Orderattr\Model\Attribute\InputType\InputType">
+        <arguments>
+            <argument name="label" translate="true" xsi:type="string">Html</argument>
+            <argument name="dataModel" xsi:type="string">Amasty\Orderattr\Model\Value\Metadata\Form\Text</argument>
+            <argument name="backendType" xsi:type="string">text</argument>
+            <argument name="frontendInputType" xsi:type="string">html</argument>
+            <argument name="defaultValue" xsi:type="string">html</argument>
+            <argument name="frontendUiComponent" xsi:type="string">Amasty_Orderattr/js/form/element/html</argument>
+            <argument name="columnUiComponent" xsi:type="string">Magento_Ui/js/grid/columns/column</argument>
+            <argument name="columnDatatype" xsi:type="string">text</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="InputType\File" type="Amasty\Orderattr\Model\Attribute\InputType\InputType">
+        <arguments>
+            <argument name="label" translate="true" xsi:type="string">Single File Upload</argument>
+            <argument name="validateTypes" xsi:type="array">
+                <item name="0" xsi:type="string">max_file_size</item>
+                <item name="1" xsi:type="string">file_extensions</item>
+            </argument>
+            <argument name="dataModel" xsi:type="string">Amasty\Orderattr\Model\Value\Metadata\Form\File</argument>
+            <argument name="backendType" xsi:type="string">varchar</argument>
+            <argument name="frontendInputType" xsi:type="string">file</argument>
+            <argument name="frontendUiComponent" xsi:type="string">Amasty_Orderattr/js/form/element/file</argument>
+            <argument name="frontendTmpl" xsi:type="string">ui/form/element/uploader/uploader</argument>
+            <argument name="columnUiComponent" xsi:type="string">Magento_Ui/js/grid/columns/column</argument>
+            <argument name="filterableInGrid" xsi:type="boolean">true</argument>
+            <argument name="displayFutureCheckout" xsi:type="boolean">false</argument>
+            <argument name="columnUiFilter" xsi:type="string">text</argument>
+            <argument name="columnDatatype" xsi:type="string">text</argument>
+        </arguments>
+    </virtualType>
+
+    <type name="Amasty\Orderattr\Model\Attribute\InputType\InputTypeProvider">
+        <arguments>
+            <argument name="inputTypes" xsi:type="array">
+                <item name="text" xsi:type="object">InputType\Text</item>
+                <item name="textarea" xsi:type="object">InputType\Textarea</item>
+                <item name="date" xsi:type="object">InputType\Date</item>
+                <item name="datetime" xsi:type="object">InputType\DateTime</item>
+                <item name="select" xsi:type="object">InputType\Select</item>
+                <item name="multiselect" xsi:type="object">InputType\MultiSelect</item>
+                <item name="boolean" xsi:type="object">InputType\Boolean</item>
+                <item name="radios" xsi:type="object">InputType\Radios</item>
+                <item name="checkboxes" xsi:type="object">InputType\Checkboxes</item>
+                <item name="html" xsi:type="object">InputType\HtmlContainer</item>
+                <item name="file" xsi:type="object">InputType\File</item>
+            </argument>
+            <argument name="frontendCaster" xsi:type="object">Amasty\Orderattr\Model\Attribute\InputType\FrontendCaster\Proxy</argument>
+            <argument name="customerSession" xsi:type="object">Magento\Customer\Model\Session\Proxy</argument>
+        </arguments>
+    </type>
+
+    <type name="Amasty\Orderattr\Model\Attribute\InputType\FrontendCaster">
+        <arguments>
+            <argument name="lastCheckoutValue" xsi:type="object">Amasty\Orderattr\Model\Value\LastCheckoutValue\Proxy</argument>
+        </arguments>
+    </type>
+    <!-- /Virtual Input types -->
+
+    <type name="Magento\Email\Model\Template">
+        <plugin name="amasty_email_attributes" type="Amasty\Orderattr\Plugin\Email\Model\Template" />
+    </type>
+
+    <type name="Amasty\PDFCustom\Model\Template">
+        <!--order attribute variables for PDF Customizer-->
+        <plugin name="amasty_PDF_attributes" type="Amasty\Orderattr\Plugin\Email\Model\Template" />
+    </type>
+
+    <type name="Magento\Sales\Model\OrderRepository">
+        <plugin name="amasty_order_attributes" type="Amasty\Orderattr\Model\Entity\Adapter\Order\Plugin\Api\OrderRepository" />
+    </type>
+
+    <type name="Magento\Quote\Api\CartRepositoryInterface">
+        <plugin name="amasty_order_attributes" type="Amasty\Orderattr\Model\Entity\Adapter\Quote\Plugin\Api\QuoteRepository"/>
+    </type>
+
+    <type name="Magento\Sales\Block\Items\AbstractItems">
+        <plugin name="Amasty_Orderattr::OrderEmailAttributesList" type="Amasty\Orderattr\Block\Order\Plugin\OrderEmail" />
+    </type>
+
+    <type name="Magento\Webapi\Controller\Rest\ParamsOverrider">
+        <arguments>
+            <argument name="paramOverriders" xsi:type="array">
+                <item name="%amasty_cart_id%" xsi:type="object">Amasty\Orderattr\Model\Webapi\ParamOverriderAmastyCartId\Proxy</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Amasty\Orderattr\Model\ConfigProvider">
+        <arguments>
+            <argument name="localeDate" xsi:type="object">Magento\Framework\Stdlib\DateTime\TimezoneInterface\Proxy</argument>
+        </arguments>
+    </type>
+
+    <type name="Amasty\Orderattr\Block\Checkout\LayoutProcessor">
+        <arguments>
+            <argument name="checkoutPlaces" xsi:type="array">
+                <item name="shippingAddress" xsi:type="array">
+                    <item name="isCustomerLogged" xsi:type="boolean">false</item>
+                    <item name="path" xsi:type="string">components.checkout.children.steps.children.shipping-step.children.shippingAddress.children.shipping-address-fieldset.children</item>
+                    <item name="place_code" xsi:type="const">Amasty\Orderattr\Model\Config\Source\CheckoutStep::SHIPPING_STEP</item>
+                    <item name="scope" xsi:type="string">amastyShippingAttributes</item>
+                    <item name="show_in_shipping_information" xsi:type="boolean">true</item>
+                    <item name="template" xsi:type="string">Amasty_Orderattr/order-attributes</item>
+                </item>
+                <item name="shippingAddressCustomerLogged" xsi:type="array">
+                    <item name="isCustomerLogged" xsi:type="boolean">true</item>
+                    <item name="path" xsi:type="string">components.checkout.children.steps.children.shipping-step.children.shippingAddress.children.before-form.children</item>
+                    <item name="place_code" xsi:type="const">Amasty\Orderattr\Model\Config\Source\CheckoutStep::SHIPPING_STEP</item>
+                    <item name="scope" xsi:type="string">amastyShippingAttributes</item>
+                    <item name="show_in_shipping_information" xsi:type="boolean">true</item>
+                    <item name="template" xsi:type="string">Amasty_Orderattr/order-attributes-div</item>
+                </item>
+                <item name="shippingMethod" xsi:type="array">
+                    <item name="path" xsi:type="string">components.checkout.children.steps.children.shipping-step.children.shippingAddress.children.before-shipping-method-form.children</item>
+                    <item name="place_code" xsi:type="const">Amasty\Orderattr\Model\Config\Source\CheckoutStep::SHIPPING_METHODS</item>
+                    <item name="scope" xsi:type="string">amastyShippingMethodAttributes</item>
+                    <item name="show_in_shipping_information" xsi:type="boolean">true</item>
+                    <item name="template" xsi:type="string">Amasty_Orderattr/order-attributes-div</item>
+                </item>
+                <item name="paymentAttributes" xsi:type="array">
+                    <item name="path" xsi:type="string">components.checkout.children.steps.children.billing-step.children.payment.children.beforeMethods.children</item>
+                    <item name="place_code" xsi:type="const">Amasty\Orderattr\Model\Config\Source\CheckoutStep::PAYMENT_STEP</item>
+                    <item name="scope" xsi:type="string">amastyPaymentAttributes</item>
+                    <item name="template" xsi:type="string">Amasty_Orderattr/order-attributes</item>
+                </item>
+                <item name="beforePlaceOrder" xsi:type="array">
+                    <item name="path" xsi:type="string">components.checkout.children.steps.children.billing-step.children.payment.children.payments-list.children.before-place-order.children</item>
+                    <item name="place_code" xsi:type="const">Amasty\Orderattr\Model\Config\Source\CheckoutStep::PAYMENT_PLACE_ORDER</item>
+                    <item name="scope" xsi:type="string">amastyPaymentMethodAttributes</item>
+                    <item name="template" xsi:type="string">Amasty_Orderattr/order-attributes-div</item>
+                </item>
+                <item name="totals" xsi:type="array">
+                    <item name="path" xsi:type="string">components.checkout.children.sidebar.children.summary.children.totals.children</item>
+                    <item name="place_code" xsi:type="const">Amasty\Orderattr\Model\Config\Source\CheckoutStep::ORDER_SUMMARY</item>
+                    <item name="scope" xsi:type="string">amastySummaryAttributes</item>
+                    <item name="template" xsi:type="string">Amasty_Orderattr/order-attributes-tr</item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Amasty\Orderattr\Block\Checkout\LayoutProcessor">
+        <arguments>
+            <argument name="customerSession" xsi:type="object">Magento\Customer\Model\Session\Proxy</argument>
+        </arguments>
+    </type>
+    <type name="Amasty\Orderattr\Model\Value\LastCheckoutValue">
+        <arguments>
+            <argument name="customerSession" xsi:type="object">Magento\Customer\Model\Session\Proxy</argument>
+        </arguments>
+    </type>
+    <type name="Amasty\Orderattr\Model\Attribute\Repository">
+        <arguments>
+            <argument name="eavAttributeRepository" xsi:type="object">Magento\Eav\Api\AttributeRepositoryInterface\Proxy</argument>
+        </arguments>
+    </type>
+    <type name="Amasty\Orderattr\Model\Attribute\InputType\InputTypeProvider">
+        <arguments>
+            <argument name="customerSession" xsi:type="object">Magento\Customer\Model\Session\Proxy</argument>
+        </arguments>
+    </type>
+    <type name="Amasty\Orderattr\Setup\UpgradeData">
+        <arguments>
+            <argument name="upgradeDataTo300" xsi:type="object">Amasty\Orderattr\Setup\Operation\UpgradeDataTo300\Proxy</argument>
+        </arguments>
+    </type>
+    <type name="Amasty\Orderattr\Model\ResourceModel\Attribute\Relation\Relation\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">amasty_order_attribute_relation</argument>
+            <argument name="resourceModel" xsi:type="string">Amasty\Orderattr\Model\ResourceModel\Attribute\Relation\Relation</argument>
+        </arguments>
+    </type>
+</config>

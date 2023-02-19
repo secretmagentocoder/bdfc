@@ -1,0 +1,37 @@
+<?php
+/** @var \Ecommage\CustomerOrderHistory\Block\DisplayVideo $block */
+$helper = $this->helper('Ecommage\CustomerOrderHistory\Helper\Data');
+$url = $helper->getConfigValue();
+if (!empty($url))
+{
+    $key = array_keys($url,'1') ? $url[3]:$url[0];
+}
+?>
+<div id="custom_popup" style="display:none;">
+    <fieldset class="fieldset">
+        <div class="youtube-video">
+            <iframe width="854" height="480" src="<?= $block->escapeUrl(sprintf('https://www.youtube.com/embed/%s',$key))?>" allow='autoplay' frameborder="0" allowfullscreen></iframe>
+        </div
+    </fieldset>
+</div>
+<script>
+    require(
+        [
+            'jquery',
+            'Magento_Ui/js/modal/modal'
+        ],
+        function($, modal) {
+            var options = {
+                type: 'popup',
+                responsive: true,
+                innerScroll: true,
+            };
+
+            var popup = modal(options, $('#custom_popup'));
+            $("#checkout-button").on('click',function(){
+                $("#custom_popup").modal("openModal");
+            });
+
+        }
+    );
+</script>

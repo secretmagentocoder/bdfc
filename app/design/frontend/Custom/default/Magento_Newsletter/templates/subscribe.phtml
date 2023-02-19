@@ -1,0 +1,49 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/** @var \Magento\Newsletter\Block\Subscribe $block */
+?>
+<!-- <div class="block newsletter">
+    <div class="title"><strong><?= $block->escapeHtml(__('Newsletter')) ?></strong></div>
+    <div class="content"> -->
+        <form class="form subscribe"
+            novalidate
+            action="<?= $block->escapeUrl($block->getFormActionUrl()) ?>"
+            method="post"
+            data-mage-init='{"validation": {"errorClass": "mage-error"}}'
+            id="newsletter-validate-detail">
+            <div class="form-group bg-transparent border-0 border-bottom rounded-0 px-2 py-2 mb-2">
+                <div class="row">
+                    <div class="col">
+                        <input name="email" type="email" id="newsletter" class="form-control pl-3 shadow-none bg-transparent border-0 text-uppercase"
+                            placeholder="<?= $block->escapeHtml(__('Enter your email address')) ?>"
+                            data-mage-init='{"mage/trim-input":{}}'
+                            data-validate="{required:true, 'validate-email':true}"
+                            autocomplete="off"
+                        />
+                    </div>
+                    <div class="col-auto">
+                        <button class="primary btn btn-block"
+                        title="<?= $block->escapeHtmlAttr(__('Subscribe')) ?>"
+                        type="submit"
+                        aria-label="Subscribe">
+                            <img src="/images/icon/newsmap.svg" alt="" width="30px">
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    <!-- </div>
+</div> -->
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Magento_Customer/js/block-submit-on-send": {
+                "formId": "newsletter-validate-detail"
+            }
+        }
+    }
+</script>

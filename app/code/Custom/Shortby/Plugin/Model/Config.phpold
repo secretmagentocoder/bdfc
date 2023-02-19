@@ -1,0 +1,45 @@
+<?php
+namespace Custom\Shortby\Plugin\Model;
+
+use Magento\Store\Model\StoreManagerInterface;
+
+class Config  {
+
+
+    protected $_storeManager;
+
+    public function __construct(
+        StoreManagerInterface $storeManager
+    ) {
+        $this->_storeManager = $storeManager;
+    }
+
+
+    public function afterGetAttributeUsedForSortByArray(\Magento\Catalog\Model\Config $catalogConfig, $options)
+    {
+        $store = $this->_storeManager->getStore();
+        $currencySymbol = $store->getCurrentCurrency()->getCurrencySymbol();
+
+        // Remove specific default sorting options
+        $default_options = [];
+        $default_options['name'] = $options['name'];
+
+        unset($options['position']);
+        unset($options['name']);
+        // unset($options['price']);
+
+        //Changing label
+        // $customOption['bestseller_product'] = __( 'Bestseller' );
+
+        //New sorting options
+        // $customOption['offer'] = __( 'Special Offer' );
+
+
+        $customOption['name'] = $default_options['name'];
+
+        //Merge default sorting options with custom options
+        $options = array_merge($customOption, $options);
+
+        return $options;
+    }
+}

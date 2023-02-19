@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <columns name="widget_columns">
+        <column name="sku" component="Custom_Recently/js/product/sku" displayArea="description-area">
+            <settings>
+                <label translate="true">SKU</label>
+                <bodyTmpl>Custom_Recently/product/sku</bodyTmpl>
+            </settings>
+        </column>
+        <column name="brand" component="Custom_Recently/js/product/brand" displayArea="description-area">
+            <settings>
+                <label translate="true">Brand</label>
+                <bodyTmpl>Custom_Recently/product/brand</bodyTmpl>
+            </settings>
+        </column>
+        <column name="badges" component="Custom_Recently/js/product/badges" displayArea="description-area">
+            <settings>
+                <label translate="true">Badges</label>
+                <bodyTmpl>Custom_Recently/product/badges</bodyTmpl>
+            </settings>
+        </column>
+    </columns>
+</listing>

@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * 
+ * @package Bdfc_General
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <websites>
+        <arrival_website>
+            <checkout>
+                <order_restrictions>
+                    <enabled>1</enabled>
+                    <hours>6</hours>
+                </order_restrictions>
+            </checkout>
+        </arrival_website>
+    </websites>
+</config>

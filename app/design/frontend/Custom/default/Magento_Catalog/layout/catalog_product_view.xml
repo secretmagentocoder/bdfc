@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<page layout="1column" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+
+		<referenceBlock name="reviews.tab" remove="true" />
+		<referenceBlock name="product.info.overview" remove="true"/>
+		<referenceBlock name="product.info.stock.sku" remove="true"/>
+		<referenceBlock name="page.main.title">
+    			<action method="setTemplate">
+				<argument name="template" xsi:type="string">Magento_Theme::html/product-title.phtml</argument>
+			</action>
+		</referenceBlock>
+		
+		  <referenceContainer name="content.row">
+            <block class="Ecommage\RaffleTickets\Block\Slider" name="bannerslider.product.content.top" before="-">
+                <action method="setPosition">
+                    <argument name="position" xsi:type="string">product-content-top</argument>
+                </action>
+                <action method="setBannerId">
+                    <argument name="banner_id" xsi:type="string">1</argument>
+                </action>
+            </block>
+        </referenceContainer>
+
+    	<block class="Magento\Catalog\Block\Product\View" name="product.brand" as="productBrand" template="Magento_Catalog::product/view/brand.phtml"/>
+	    <move element="product.brand" destination="product.info.main" before="page.main.title" />
+
+	    <block class="Magento\Catalog\Block\Product\View" name="product.sku.item" template="Magento_Catalog::product/view/sku-item.phtml"/>
+	    <move element="product.sku.item" destination="product.info.main" after="page.main.title" />
+
+	    <block class="Magento\Catalog\Block\Product\View" name="product.short.description" template="Magento_Catalog::product/view/short-description.phtml"/>
+	    <move element="product.short.description" destination="product.info.main" after="product.sku.item" />
+
+	    <!-- <block class="Magento\Catalog\Block\Product\View" name="product.loyalty.point" template="Magento_Catalog::product/view/loyalty-point.phtml"/>
+	    <move element="product.loyalty.point" destination="product.info.main" after="product.short.description" /> -->
+
+	    <move element="mp.SocialShare.InlineTop" destination="product.info.addtocart" />
+		<!-- <move element="mp.SocialShare.InlineTop" destination="product.info.main" after="page.main.title" /> -->
+		<!-- <referenceBlock name="mp.SocialShare.InlineTop" remove="true"/> -->
+		<!-- <move element="product.info.social" destination="product.info.form.content" after="product.info.addtocart" /> -->
+		<move element="product.short.description" destination="product.info.media" after="-" />
+		
+        <referenceContainer name="content">
+            <container name="content.row" htmlTag="div" htmlClass="row" before="-">
+                <container name="content.row.product-info" htmlTag="div" htmlClass="product-info" />
+            </container>
+             <block class="Ecommage\RaffleTickets\Block\Slider" name="bannerslider.product.content.top" template="Ecommage_RaffleTickets::slider.phtml"/>
+        </referenceContainer>
+	    	<move element="bannerslider.product.content.top" destination="page.wrapper" after="page.top"/>
+	    	<move element="breadcrumbs" destination="page.wrapper" before="main.content"/>
+        <referenceContainer name="product.info.main" htmlClass="product-info-main col-xs-12 col-md-5" />
+        <referenceContainer name="product.info.media" htmlClass="product media col-xs-12 col-md-7" />
+        <move element="product.info.media" destination="content.row.product-info" before="-" />
+        <move element="product.info.main" destination="content.row.product-info" />
+
+        <block class="Magento\Catalog\Block\Product\ListProduct" name="product.similar.products" template="Magento_Catalog::product/similar-products.phtml"/>
+	    <move element="product.similar.products" destination="content" after="content.row" />
+	    
+	    <move element="product.info.brand" destination="product.info.main" before="page.main.title" />
+        <referenceBlock name="product.info.brand" remove="true"/>
+
+	    <!-- <move element="recently_viewed" destination="content" after="-" remove="true"/> -->
+
+	    <block class="Magento\Catalog\Block\Product\View" name="product.badges" as="productBadges" template="Magento_Catalog::product/view/badges.phtml"/>
+	    <move element="product.badges" destination="product.info.media" after="-" />
+
+        <referenceBlock name="product.price.final" remove="true"/>
+        <referenceBlock name="view.addto.wishlist" remove="true" />
+        <referenceBlock name="product.info.details" remove="true" />
+		<referenceBlock name="catalog.product.related" remove="true" />
+			<referenceBlock name="right.reports.onlyproduct.viewed" remove="true" />
+		<referenceBlock name="mp.SocialShare.InlineBottom" remove="true"/>
+		
+	</body>
+</page>

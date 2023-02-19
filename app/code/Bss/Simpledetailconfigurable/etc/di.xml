@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_Simpledetailconfigurable
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2017-2018 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Sitemap\Model\ResourceModel\Catalog\Product">
+        <plugin name="sdcp-custom-cart-page" type="Bss\Simpledetailconfigurable\Model\ResourceModel\Plugin\ProductSitemapItem" sortOrder="10"/>
+    </type>
+    <type name="Magento\Quote\Model\Quote\Item\ToOrderItem">
+		<plugin name="add_additional_options_to_order" type="Bss\Simpledetailconfigurable\Plugin\Quote\ToOrderItem" sortOrder="10" />
+	</type>
+    <preference for="Magento\ConfigurableProduct\Model\Product\Type\Configurable" type="Bss\Simpledetailconfigurable\Model\Product\Type\Configurable" />
+    <preference for="Magento\ConfigurableProduct\Model\Product\Type\Configurable\Price" type="Bss\Simpledetailconfigurable\Override\Model\Product\Type\Configurable\Price" />
+    <preference for="Magento\Catalog\Model\Product\Option\SaveHandler" type="Bss\Simpledetailconfigurable\Override\Model\Product\Option\SaveHandler" />
+    <type name="Bss\Simpledetailconfigurable\Model\Product\Type\Configurable">
+        <plugin name="bss_sdcp_get_helper_configurable" type="Bss\Simpledetailconfigurable\Plugin\Product\Helper\Configurable" sortOrder="10"/>
+    </type>
+
+    <preference for="Bss\Simpledetailconfigurable\Api\SimpleDetailManagementInterface"
+                type="Bss\Simpledetailconfigurable\Model\SimpleDetailManagement" />
+    <preference for="Bss\Simpledetailconfigurable\Api\Data\AdditionalInfoInterface"
+                type="Bss\Simpledetailconfigurable\Model\AdditionalInfo" />
+    <preference for="Bss\Simpledetailconfigurable\Api\Data\ChildProductDataInterface"
+                type="Bss\Simpledetailconfigurable\Model\ChildProductData" />
+    <preference for="Bss\Simpledetailconfigurable\Api\Data\ConfigurationInterface"
+                type="Bss\Simpledetailconfigurable\Model\Configuration" />
+    <preference for="Bss\Simpledetailconfigurable\Api\Data\ImageDataInterface"
+                type="Bss\Simpledetailconfigurable\Model\ImageData" />
+    <preference for="Bss\Simpledetailconfigurable\Api\Data\MetaDataInterface"
+                type="Bss\Simpledetailconfigurable\Model\MetaData" />
+    <preference for="Bss\Simpledetailconfigurable\Api\Data\ProductDataInterface"
+                type="Bss\Simpledetailconfigurable\Model\ProductData" />
+    <preference for="Bss\Simpledetailconfigurable\Api\Data\StockDataInterface"
+                type="Bss\Simpledetailconfigurable\Model\StockData" />
+    <preference for="Bss\Simpledetailconfigurable\Api\Data\PreselectDataInterface"
+                type="Bss\Simpledetailconfigurable\Model\PreselectData" />
+    <preference for="Bss\Simpledetailconfigurable\Api\Data\TierPriceInterface"
+                type="Bss\Simpledetailconfigurable\Model\TierPrice" />
+    <preference for="Bss\Simpledetailconfigurable\Api\Data\AttributesSelectInterface"
+                type="Bss\Simpledetailconfigurable\Model\AttributesSelect" />
+    <preference for="Bss\Simpledetailconfigurable\Api\Data\GeneralConfigInterface"
+                type="Bss\Simpledetailconfigurable\Model\GeneralConfig" />
+    <preference for="Bss\Simpledetailconfigurable\Api\Data\ReviewInterface"
+                type="Bss\Simpledetailconfigurable\Model\Review" />
+</config>

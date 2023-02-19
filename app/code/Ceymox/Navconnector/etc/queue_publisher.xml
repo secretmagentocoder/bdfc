@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * @package Ceymox_Navconnector
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework-message-queue:etc/publisher.xsd">
+    <publisher topic="nav.order.create">
+        <connection name="db" exchange="nav-order-exchange" />
+    </publisher>
+    <publisher topic="nav.creditmemo.create">
+        <connection name="db" exchange="nav-creditmemo-exchange" />
+    </publisher>
+</config>

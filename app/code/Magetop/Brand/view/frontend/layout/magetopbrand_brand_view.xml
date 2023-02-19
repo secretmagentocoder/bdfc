@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magetop
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the Magetop.com license that is
+ * available through the world-wide-web at this URL:
+ * https://www.magetop.com/LICENSE.txt
+ * 
+ * DISCLAIMER
+ * 
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ * 
+ * @category   Magetop
+ * @package    Magetop_Brand
+ * @copyright  Copyright (c) 2014 Magetop (https://www.magetop.com/)
+ * @license    https://www.magetop.com/LICENSE.txt
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+	<body>
+        <referenceContainer name="columns.top">
+            <container name="brand.view.container" htmlTag="div" htmlClass="brand-view" after="-">
+                <block class="Magetop\Brand\Block\Brand\View" name="brand.image" template="Magetop_Brand::brand/image.phtml"/>
+                <block class="Magetop\Brand\Block\Brand\View" name="brand.description" template="Magetop_Brand::brand/description.phtml"/>
+            </container>
+        </referenceContainer>
+        <referenceContainer name="sidebar.main">
+            <block class="Magetop\Brand\Block\GroupList" name="group_list" template="Magetop_Brand::grouplist.phtml"/>
+            <block class="Magento\Framework\View\Element\Template" ifconfig="magetopbrand/general_settings/enable_search" name="brand.searchform.main" template="Magetop_Brand::search/form.phtml" before="-"/>
+        </referenceContainer>
+        <referenceContainer name="content">
+            <block class="Magetop\Brand\Block\Brand\View" name="brand.products" template="Magetop_Brand::brand/view.phtml">
+                <block class="Magetop\Brand\Block\Brand\Product\ListProduct" name="brand.products.list" as="product_list" template="Magento_Catalog::product/list.phtml">
+                    <container name="category.product.list.additional" as="additional" />
+                    <block class="Magento\Framework\View\Element\RendererList" name="category.product.type.details.renderers" as="details.renderers">
+                        <block class="Magento\Framework\View\Element\Template" as="default"/>
+                    </block>
+                    <block class="Magento\Catalog\Block\Product\ProductList\Toolbar" name="product_list_toolbar" template="Magento_Catalog::product/list/toolbar.phtml">
+                        <block class="Magento\Theme\Block\Html\Pager" name="product_list_toolbar_pager"/>
+                    </block>
+                    <action method="setToolbarBlockName">
+                        <argument name="name" xsi:type="string">product_list_toolbar</argument>
+                    </action>
+                </block>
+            </block>
+            <block class="Magento\Cookie\Block\RequireCookie" name="require-cookie" template="Magento_Cookie::require_cookie.phtml">
+                <arguments>
+                    <argument name="triggers" xsi:type="array">
+                        <item name="compareProductLink" xsi:type="string">.action.tocompare</item>
+                    </argument>
+                </arguments>
+            </block>
+        </referenceContainer>
+    </body>
+</page>

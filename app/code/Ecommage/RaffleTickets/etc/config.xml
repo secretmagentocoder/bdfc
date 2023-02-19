@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <!-- <ecommage_api>
+            <general>
+                <link_api>http://88.201.70.74:7048/DynamicsNAV71/OData/Company(%27BDFC%27)/TicketList?$format=application/json</link_api>
+                <user_name>Navtest</user_name>
+                <password>Bdds$123</password>
+            </general>
+        </ecommage_api> -->
+        <catalog>
+            <upload_image>
+                <upload_image_id>https://bahrain.mgt/media/wysiwyg/Ad_Banner_Left_1.jpg</upload_image_id>
+            </upload_image>
+        </catalog>
+    </default>
+</config>

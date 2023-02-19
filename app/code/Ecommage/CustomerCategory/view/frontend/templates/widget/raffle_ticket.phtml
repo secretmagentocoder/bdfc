@@ -1,0 +1,117 @@
+<?php
+
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+use function PHPSTORM_META\type;
+
+/** @var \Ecommage\CustomerCategory\Block\ProductsList $block */
+
+
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$store = $objectManager->get('Magento\Store\Model\StoreManagerInterface')->getStore();
+$taxHelper = $this->helper('Magento\Catalog\Helper\Data');
+$priceHelper = $this->helper('Magento\Framework\Pricing\Helper\Data');
+
+
+?>
+<?php if ($exist = ($block->getProductCollection() && $block->getProductCollection()->getSize())) : ?>
+    <?php
+    $type = 'widget-product-grid featured_brand_slider';
+    $mode = 'list';
+    $image = 'product_page_main_image_default';
+    $items = $block->getProductCollection()->getItems();
+    ?>
+
+
+    <div class="block widget block-products-list <?= /* @noEscape */ $mode ?>">
+        <div class="feature_brands raffles_brands">
+            <div class="container">
+                <?php if ($block->getTitle()) : ?>
+                    <div class="block-title">
+                        <h3 class="fw-bold text-uppercase text-center pb-5 ">
+                            <span class="span_btn"></span><?= $block->escapeHtml(__($block->getTitle())) ?><span class="span_btn"></span>
+                        </h3>
+                    </div>
+                <?php endif ?>
+                <div class=" row justify-content-center">
+                    <?php foreach ($items as $_item) : ?>
+                        <?php
+                        $convertPrice = 0;
+                        $price = 0;
+                        /** @var \Ecommage\CustomerCategory\Helper\Data $helper */
+                        $helper = $this->helper(Ecommage\CustomerCategory\Helper\Data::class);
+
+                        if (!empty($helper->getProductRepository($_item->getEntityId())))
+                        {
+                           $price = substr($helper->getProductRepository($_item->getEntityId()), 0, 7);
+                        }
+
+                        $checkPrice = $helper->convertToBaseCurrency($price);
+
+                        if (is_float($checkPrice))
+                        {
+                            $convertPrice = number_format($checkPrice, 0,'.','.');
+                        }
+                        $imageUrl = $store->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA) . 'catalog/product' . $_item->getImage();
+                        ?>
+                        <?php
+                        $_product = $objectManager->create('Magento\Catalog\Model\Product')->load($_item->getId());
+                        $product_brand = $_product->getResource()->getAttribute('product_brand')->getFrontend()->getValue($_product);
+                        $product_is_new = $_product->getData('product_is_new');
+                        $bestseller_product = $_product->getData('bestseller_product');
+                        $product_in_offer = $_product->getData('product_in_offer');
+                        $product_in_travel = $_product->getData('product_in_travel');
+                        $raffleHelper = $this->helper('Ecommage\RaffleTickets\Helper\Data');
+
+                        $options = $raffleHelper->getTicketOptionsRemaining($_product->getOptions());
+
+                        ?>
+                        <div class="col-md-4">
+                            <div class="card card_space raffle_card_space" style="margin:15px 0px 0px; border:1px solid #fafafa;">
+                                <div class="rafflecard">
+                                    <img src="<?php echo $imageUrl; ?>" alt="<?php echo $_item->getName(); ?>" class="img-fluid" />
+                                </div>
+                                <div class="ticket_div text-left pt-4 pb-2 px-3">
+                                     <?php $price = $taxHelper->getTaxPrice($_product, $_product->getFinalPrice(), true);
+                                    
+                                    $priceCovert =  number_format($helper->convertToBaseCurrency($price,$helper->getBasePrice(),$helper->getConfigValue()),3,'.',',');
+                                    $convertPrice = !empty($helper->getBasePrice() == "USD") ?   number_format($priceCovert,3,'.',',') : $convertPrice;
+
+                                    ?>
+                                    <p class="p-0 m-0"><b>Ticket Price:</b> <span><?= $priceHelper->currency($price, true, false) ?> (US <?= number_format($helper->convertToBaseCurrency($price,"USD",$helper->getConfigValue()),3,'.',',') ?>)</span></p>
+                                    <p><b>Tickets Remaining:</b> <span><?= count($options) ?></span></p>
+                                </div>
+                                <div class="row align-items-end justify-content-between px-4 ticket_row">
+                                    <div class="mb-3 col-md-6 pt-3">
+                                        <div class="internal_page_full_style">
+                                            <a href="<?= $block->escapeUrl($block->getProductUrl($_item)) ?>">
+                                                <button type="submit" title="Buy Ticket">
+                                                    <span class="btn_style1 btn_style_in text-uppercase">
+                                                        <span>Buy Ticket</span>
+                                                    </span>
+                                                    <div class="content-details fadeIn-left">
+                                                        <span class="btn_style btn_style_in text-uppercase">
+                                                            <span>Buy Ticket</span>
+                                                        </span>
+                                                    </div>
+                                                </button>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3 col-md-6 pt-3 text-md-end text-start">
+                                        <a href="<?= $block->escapeUrl($block->getUrl($_product->getData('terms_and_conditions')))?>" class="fs-6">Terms & Conditions</a>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    <?php endforeach ?>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<?php endif; ?>

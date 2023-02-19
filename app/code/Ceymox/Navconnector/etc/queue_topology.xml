@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * @package Ceymox_Navconnector
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework-message-queue:etc/topology.xsd">
+    <exchange name="nav-order-exchange" type="topic" connection="db">
+        <binding id="VendorOrderCreate" topic="nav.order.create" destinationType="queue" destination="nav_order_create"/>
+    </exchange>
+    <exchange name="nav-creditmemo-exchange" type="topic" connection="db">
+        <binding id="VendorCreditmemoCreate" topic="nav.creditmemo.create" destinationType="queue" destination="nav_creditmemo_create"/>
+    </exchange>
+</config>

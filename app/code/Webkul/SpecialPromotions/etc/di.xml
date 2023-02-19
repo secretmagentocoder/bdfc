@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Webkul Software.
+ *
+ * @category  Webkul
+ * @package   Webkul_SpecialPromotions
+ * @author    Webkul
+ * @copyright Copyright (c)  Webkul Software Private Limited (https://webkul.com)
+ * @license   https://store.webkul.com/license.html
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Magento\Checkout\Model\Session" type="Webkul\SpecialPromotions\Model\Checkout\Session" />
+
+    <type name="Magento\SalesRule\Model\Rule\Condition\Product">
+        <plugin name="Webkul_SpecialPromotions::Condition_Product" type="Webkul\SpecialPromotions\Plugin\Condition\Product" sortOrder="2" />
+    </type>
+
+    <type name="Magento\SalesRule\Model\Rule\Action\Discount\CartFixed">
+        <plugin name="Webkul_SpecialPromotions::CartFixed" type="Webkul\SpecialPromotions\Plugin\Model\Rule\Action\Discount\CartFixed" sortOrder="15" />
+    </type>
+
+    <type name="Magento\SalesRule\Model\Rule\Action\Discount\BuyXGetY">
+        <plugin name="Webkul_SpecialPromotions::BuyXGetY" type="Webkul\SpecialPromotions\Plugin\Model\Rule\Action\Discount\BuyXGetY" sortOrder="16" />
+    </type>
+
+    <type name="Magento\SalesRule\Model\Rule\Action\Discount\ByFixed">
+        <plugin name="Webkul_SpecialPromotions::ByFixed" type="Webkul\SpecialPromotions\Plugin\Model\Rule\Action\Discount\ByFixed" sortOrder="17" />
+    </type>
+
+    <type name="Magento\SalesRule\Model\Rule\Action\Discount\ByPercent">
+        <plugin name="Webkul_SpecialPromotions::ByPercent" type="Webkul\SpecialPromotions\Plugin\Model\Rule\Action\Discount\ByPercent" sortOrder="18" />
+    </type>
+
+    <type name="Magento\SalesRule\Model\Rule\Metadata\ValueProvider">
+        <plugin name="Webkul_SpecialPromotions::valueprovider" type="Webkul\SpecialPromotions\Plugin\Model\Rule\Metadata\ValueProvider" sortOrder="1" />
+    </type>
+
+    <type name="Magento\SalesRule\Controller\Adminhtml\Promo\Quote">
+        <plugin name="Webkul_SpecialPromotions::beforeSave" type="Webkul\SpecialPromotions\Plugin\Save" sortOrder="1" />
+    </type>
+
+    <type name="Magento\SalesRule\Model\Rule\Action\Discount\CalculatorFactory">
+        <plugin name="Webkul_SpecialPromotions::CalculatorFactory" type="Webkul\SpecialPromotions\Plugin\CalculatorFactory" sortOrder="1" />
+    </type>
+
+    <type name="Magento\Framework\Console\CommandList">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="disable_promo" xsi:type="object">Webkul\SpecialPromotions\Console\Command\DisablePromotion</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Webkul\SpecialPromotions\Logger\Handler">
+        <arguments>
+            <argument name="filesystem" xsi:type="object">Magento\Framework\Filesystem\Driver\File</argument>
+        </arguments>
+    </type>
+    <type name="Webkul\SpecialPromotions\Logger\Logger">
+        <arguments>
+            <argument name="name" xsi:type="string">wk_specialpromotions_logger</argument>
+            <argument name="handlers" xsi:type="array">
+                <item name="system" xsi:type="object">Webkul\SpecialPromotions\Logger\Handler</item>
+            </argument>
+        </arguments>
+    </type>
+    
+    <type name="Magento\SalesRule\Model\Utility">
+        <plugin name="Webkul_SpecialPromotions::ValidatorUtility" type="Webkul\SpecialPromotions\Plugin\Model\ValidatorUtility" sortOrder="1" />
+    </type>
+
+    <type name='Magento\SalesRule\Model\RulesApplier'>
+        <plugin name='webkul_discountlabel_plugin' type='Webkul\SpecialPromotions\Plugin\DiscountLabels' sortOrder='10' disabled='false'  />
+    </type>
+
+</config>

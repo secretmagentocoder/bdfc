@@ -1,0 +1,57 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/** @var $block \Magento\Catalog\Block\Product\View */
+?>
+<?php $_product = $block->getProduct(); ?>
+
+<?php
+/*$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$_storeManager = $objectManager->create('Magento\Store\Model\StoreManagerInterface');
+$currentWebsiteId = $_storeManager->getStore()->getWebsiteId();
+
+$rules = $objectManager->create('Magento\SalesRule\Model\RuleFactory')->create();
+$rules = $rules->getCollection()->addIsActiveFilter()->addWebsiteFilter($currentWebsiteId);
+$objDate = $objectManager->create('Magento\Framework\Stdlib\DateTime\DateTime');
+$_currentTime = strtotime($objDate->date());
+
+
+$product_offers = [];
+foreach ($rules as $rule) {
+    $fromDate = $rule->getFromDate();
+    $toDate = $rule->getToDate();
+    $is_active = $rule->getIsActive();
+
+    if (isset($is_active) && $is_active == '1') {
+        $product = $objectManager->get('Magento\Catalog\Model\Product')->load($_product->getId());
+        $item = $objectManager->create('Magento\Catalog\Model\Product');
+        $item->setProduct($product);
+        if ($rule->getActions()->validate($item)) {
+            $product_label = $rule->getName();
+            $product_offers[] = $product_label;
+        }
+    }
+}*/
+
+$product_offer = $_product->getProductOffer();
+$product_offers = unserialize($product_offer);
+
+if(!empty($product_offers)) {
+    ?>
+    <div class="box_offers border-0 ">
+        <h5 class="card_title text-uppercase fw-bold">Offers</h5>
+        <ul>
+            <?php
+            foreach ($product_offers as $value) {
+                $product_offer_name = $value;
+                echo '<li>'.$product_offer_name.'</li>';
+            }
+            ?>
+        </ul>
+    </div>
+    <?php
+}
+?>

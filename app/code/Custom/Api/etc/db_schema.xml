@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+   <table name="web_offer_header" resource="default" engine="innodb" comment="Offer Header">
+        <column xsi:type="smallint" name="id" nullable="false" identity="true" comment="ID" />
+        <column xsi:type="varchar" name="no" nullable="false" length="255" comment="No" />
+        <column xsi:type="text" name="description" nullable="true" comment="Description" />
+        <column xsi:type="text" name="status" nullable="true" comment="Status" />
+        <column xsi:type="text" name="type" nullable="true" comment="Type" />
+        <column xsi:type="text" name="price_group" nullable="true" comment="Price Group" />
+        <column xsi:type="text" name="offer_type" nullable="true" comment="Offer Type" />
+        <column xsi:type="int" name="priority" nullable="true" comment="Priority" />
+        <column xsi:type="text" name="currency_code" nullable="true" comment="Currency Code" />
+        <column xsi:type="text" name="validation_period_id" nullable="true" comment="Validation Period ID" />
+        <column xsi:type="text" name="validation_description" nullable="true" comment="Validation Description" />
+        <column xsi:type="timestamp" name="starting_date" nullable="true" comment="Starting Date" />
+        <column xsi:type="timestamp" name="ending_date" nullable="true" comment="Ending Date" />
+        <column xsi:type="text" name="use_trans_line_time" nullable="true" comment="Use Trans Line Time" />
+        <column xsi:type="text" name="price_group_filter" nullable="true" comment="Price Group Filter" />
+        <column xsi:type="text" name="disc_validation_period_filter" nullable="true" comment="Disc Validation Period Filter" />
+        <column xsi:type="text" name="block_periodic_discount" nullable="true" comment="Block Periodic Discount" />
+        <column xsi:type="text" name="price_group_validation" nullable="true" comment="Price Group Validation" />
+        <column xsi:type="text" name="sales_type_filter" nullable="true" comment="Sales Type Filter" />
+        <column xsi:type="text" name="discount_type" nullable="true" comment="Discount Type" />
+        <column xsi:type="text" name="same_diff_m_x0026_m_lines" nullable="true" comment="Same Diff M x0026 M Lines" />
+        <column xsi:type="int" name="no_of_lines_to_trigger" nullable="true" comment="No of Lines to Trigger" />
+        <column xsi:type="int" name="deal_price_value" nullable="true" comment="Deal Price Value" />
+        <column xsi:type="int" name="discount_perc_value" nullable="true" comment="Discount Perc Value" />
+        <column xsi:type="int" name="discount_amount_value" nullable="true" comment="Discount Amount Value" />
+        <column xsi:type="int" name="no_of_least_expensive_items" nullable="true" comment="No of Least Expensive Items" />
+        <column xsi:type="int" name="disc_perc_of_least_expensive" nullable="true" comment="Disc Perc of Least Expensive" />
+        <column xsi:type="int" name="no_of_times_applicable" nullable="true" comment="No of Times Applicable" />
+        <column xsi:type="int" name="no_of_line_groups" nullable="true" comment="No of Line Groups" />
+        <column xsi:type="int" name="customer_disc_group" nullable="true" comment="Customer Disc Group" />
+        <column xsi:type="int" name="amount_to_trigger" nullable="true" comment="Amount to Trigger" />
+        <column xsi:type="text" name="member_value" nullable="true" comment="Member Value" />
+        <column xsi:type="timestamp" name="last_date_modified" nullable="true" comment="Last Date Modified" />
+        <column xsi:type="text" name="coupon_code" nullable="true" comment="Coupon Code" />
+        <column xsi:type="text" name="web_offer" nullable="true" comment="Web Offer" />
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="id" />
+        </constraint>
+    </table>
+    <table name="web_offer_line" resource="default" engine="innodb" comment="Offer Line">
+        <column xsi:type="smallint" name="id" nullable="false" identity="true" comment="ID" />
+        <column xsi:type="varchar" name="offer_no" nullable="false" length="255" comment="Offer No" />
+        <column xsi:type="int" name="line_no" nullable="true" comment="Line No" />
+        <column xsi:type="text" name="type" nullable="true" comment="Type" />
+        <column xsi:type="int" name="no" nullable="true" comment="No" />
+        <column xsi:type="text" name="description" nullable="true" comment="Description" />
+        <column xsi:type="decimal" name="standard_price_including_vat" nullable="true" comment="Standard Price Including VAT" />
+        <column xsi:type="decimal" name="standard_price" nullable="true" comment="Standard Price" />
+        <column xsi:type="int" name="deal_price_disc_perc" nullable="true" comment="Deal Price Disc Perc" />
+        <column xsi:type="text" name="price_group" nullable="true" comment="Price Group" />
+        <column xsi:type="text" name="currency_code" nullable="true" comment="Currency Code" />
+        <column xsi:type="text" name="unit_of_measure" nullable="true" comment="Unit of Measure" />
+        <column xsi:type="text" name="prod_group_category" nullable="true" comment="Prod Group Category" />
+        <column xsi:type="text" name="line_group" nullable="true" comment="Line Group" />
+        <column xsi:type="int" name="no_of_items_needed" nullable="true" comment="No of Items Needed" />
+        <column xsi:type="text" name="disc_type" nullable="true" comment="Disc Type" />
+        <column xsi:type="int" name="discount_amount" nullable="true" comment="Discount Amount" />
+        <column xsi:type="decimal" name="offer_price" nullable="true" comment="Offer Price" />
+        <column xsi:type="decimal" name="offer_price_including_vat" nullable="true" comment="Offer Price Including VAT" />
+        <column xsi:type="decimal" name="discount_amount_including_vat" nullable="true" comment="Discount Amount Including VAT" />
+        <column xsi:type="text" name="status" nullable="true" comment="Status" />
+        <column xsi:type="text" name="offer_desc" nullable="true" comment="Offer Desc" />
+        <column xsi:type="int" name="fixed_quantity_to_sell" nullable="true" comment="Fixed Quantity to Sell" />
+        <column xsi:type="text" name="exclude" nullable="true" comment="Exclude" />
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="id" />
+        </constraint>
+    </table>
+</schema>
+
+
+
+
+                   

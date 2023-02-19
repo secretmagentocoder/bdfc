@@ -1,0 +1,43 @@
+{
+    "web_offer_header": {
+        "column": {
+            "no": true,
+            "description": true,
+            "status": true,
+            "type": true,
+            "price_group": true,
+            "offer_type": true,
+            "priority": true,
+            "currency_code": true,
+            "validation_period_id": true,
+            "validation_description": true,
+            "starting_date": true,
+            "ending_date": true,
+            "use_trans_line_time": true,
+            "price_group_filter": true,
+            "disc_validation_period_filter": true,
+            "block_periodic_discount": true,
+            "price_group_validation": true,
+            "sales_type_filter": true,
+            "discount_type": true,
+            "same_diff_m_x0026_m_lines": true,
+            "no_of_lines_to_trigger": true,
+            "deal_price_value": true,
+            "discount_perc_value": true,
+            "discount_amount_value": true,
+            "no_of_least_expensive_items": true,
+            "disc_perc_of_least_expensive": true,
+            "no_of_times_applicable": true,
+            "no_of_line_groups": true,
+            "customer_disc_group": true,
+            "amount_to_trigger": true,
+            "member_value": true,
+            "last_date_modified": true,
+            "coupon_code": true,
+            "web_offer": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    }
+}

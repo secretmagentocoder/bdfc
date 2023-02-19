@@ -1,0 +1,45 @@
+<?php
+
+namespace Custom\Shortby\Controller\Shortby;
+
+use Magento\Framework\App\Action\Action;
+use Magento\Framework\Controller\Result\JsonFactory;
+
+
+class Shortby extends Action
+{  
+    protected $sessionFactory;
+    protected $resultJsonFactory;
+    protected $_productCollectionFactory;
+    
+    public function __construct( 
+      \Magento\Framework\App\Action\Context $context, 
+      \Magento\Checkout\Model\SessionFactory $sessionFactory,
+      \Magento\Catalog\Model\ResourceModel\Product\CollectionFactory $productCollectionFactory,
+      JsonFactory $resultJsonFactory
+       ) 
+    {    
+        $this->sessionFactory = $sessionFactory;
+        $this->resultJsonFactory = $resultJsonFactory;
+        $this->_productCollectionFactory = $productCollectionFactory;
+        parent::__construct($context);   
+    }
+
+    public function execute()
+    {
+        $brandArr = [];
+        $collection = $this->_productCollectionFactory->create();
+        $collection = $collection->addAttributeToSelect('*');
+        foreach($collection as $val){
+           
+             array_push($brandArr, $val->getAttributeText('product_brand')) ;
+        }
+
+        // echo "<pre>"; print_r(array_unique($brandArr)) ;die(" sssssss");
+        $resultJson = $this->resultJsonFactory->create();
+        return $resultJson->setData(['value' => 1, 'brand_list' => array_unique($brandArr)]);
+
+       
+    }
+
+}

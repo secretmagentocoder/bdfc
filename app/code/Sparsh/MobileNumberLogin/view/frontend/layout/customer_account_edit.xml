@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="customer_account"/>
+    <body>
+        <referenceContainer name="content">
+            <block class="Sparsh\MobileNumberLogin\Block\Form\UpdateMobileNumber" name="customer_edit" template="Sparsh_MobileNumberLogin::form/edit.phtml" ifconfig="sparsh_mobile_number_login/general/enable">
+                <container name="form.additional.info" as="form_additional_info"/>
+            </block>
+        </referenceContainer>
+    </body>
+</page>

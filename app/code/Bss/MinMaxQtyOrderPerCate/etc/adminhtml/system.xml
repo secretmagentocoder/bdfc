@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<!--
+**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_MinMaxQtyOrderPerCate
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2017-2018 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="bss" translate="label" sortOrder="300">
+            <label>Bss Commerce</label>
+        </tab>
+        <section id="minmaxqtypercate" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Min/Max Order Qty per Category for Customer Group</label>
+            <tab>bss</tab>
+            <resource>Bss_MinMaxQtyOrderPerCate::minmaxqtypercate</resource>
+            <group id="bssmmqpc" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Min/Max Order Qty per Category for Customer Group</label>
+                <field id="enable" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment><![CDATA[Version 1.1.0]]></comment>
+                </field>
+                <field id="show_category" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Show category</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment><![CDATA[Show all category of product in shopping cart]]></comment>
+                </field>
+                <field id="mess_err_max" translate="label" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Messages Limit Max</label>
+                    <validate>required-entry</validate>
+                </field>
+                <field id="mess_err_min" translate="label" type="text" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Messages Limit Min</label>
+                    <validate>required-entry</validate>
+                </field>
+                 <field id="min_max_qty" translate="label" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Min/max Order Quantity</label>
+                    <frontend_model>Bss\MinMaxQtyOrderPerCate\Block\Adminhtml\System\Config\Form\Minmaxqty</frontend_model>
+                    <backend_model>Bss\MinMaxQtyOrderPerCate\Model\Config\Backend\Serialized\Minmax</backend_model>
+                    <comment><![CDATA[Set Option for min/max qty per category for customer group]]></comment>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

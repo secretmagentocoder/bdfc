@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+    <!--
+    /**
+     * Copyright © Magento, Inc. All rights reserved.
+     * See COPYING.txt for license details.
+     */
+    -->
+    <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+        <body>
+            <referenceBlock name="page.main.title">
+                <action method="setPageTitle">
+                    <argument translate="true" name="title" xsi:type="string">WISHLIST</argument>
+                </action>
+            </referenceBlock>
+            <referenceBlock name="customer.wishlist" template="Ecommage_CustomerWishList::view.phtml"/>
+            <referenceBlock name="customer.wishlist.items" template="Ecommage_CustomerWishList::item/list.phtml"/>
+            <referenceBlock name="customer.wishlist.item.cart" template="Ecommage_CustomerWishList::item/column/cart.phtml"/>
+            <referenceBlock name="customer.wishlist.item.inner" >
+                <arguments>
+                    <argument name="css_class" xsi:type="string"></argument>
+                </arguments>
+            </referenceBlock>
+            <referenceBlock name="customer.wishlist.item.comment" remove="true" />
+            <referenceContainer name="customer.wishlist.buttons" remove="true"/>
+            <referenceBlock name="customer.wishlist.item.actions" >
+                <arguments>
+                    <argument name="css_class" xsi:type="string">product-items-actions</argument>
+                </arguments>
+            </referenceBlock>
+            <referenceBlock name="customer.wishlist.item.actions" remove="true"/>
+        </body>
+    </page>

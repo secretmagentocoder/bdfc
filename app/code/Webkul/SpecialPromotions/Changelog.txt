@@ -1,0 +1,42 @@
+Legend
+
++ Features
+- Bugs
+  
+-------------------------------- Version 5.0.1 --------------------------------------
+
+    + Compatible with magento Latest version 2.4.x
+    + Bug fixes
+    
+-------------------------------- Version 5.0.0 --------------------------------------
+
+    + Compatible with magento Latest version 2.4.x
+    
+
+-------------------------------- Version 3.0.1 --------------------------------------
+
+    + Compatible with magento Latest version 2.3.4
+    + Mass enable/disable and delete action in rules grid in adminend
+    - bug fixed
+
+-------------------------------- Version 3.0.0 --------------------------------------
+
+    - bug fixed
+
+-------------------------------- Version 2.2.0 --------------------------------------
+
+    + Compatible with Bundle product.
+    + disable module with command
+    - minor bug fixed
+
+-------------------------------- Version 2.1.0 --------------------------------------
+
+    + Compatible with Magento 2.3.x.
+
+-------------------------------- Version 2.0.0 --------------------------------------
+
+    + Admin can have additional promotion rules.
+    + Admin can create Promotions for cheapest/most expensive items.
+    + Admin can Add fixed and percent discounts
+    + Admin can create promotions for group items
+    + Extended Buy X get Y free Rule.

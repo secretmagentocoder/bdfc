@@ -1,0 +1,208 @@
+<?php
+/** @var \Magento\Customer\Block\Account\Dashboard\Info $block */
+/** @var \Magento\Customer\Model\Data\Customer $customer */
+$customer = $block->getCustomer();
+$helper = $this->helper('Ecommage\CustomerPersonalDetail\Helper\Data');
+$addressHelper = $this->helper('Magento\Customer\Helper\Address');
+$countryData = $helper->getCountryCollectionJson();
+$regionData = $helper->getRegionCollectionJson();
+$mobilePhone = $helper->getPhoneNumber();
+$prefixOptions = $helper->getPrefixOptions();
+$passportNo = $helper->getPassportNo();
+$nationalities = $helper->getNationalities();
+$nationalCustomer = $helper->getNationalCustomer();
+?>
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Sparsh_MobileNumberLogin/js/mobile-number": {}
+        }
+    }
+
+</script>
+
+<form class="form form-edit-account new_form_style"
+      action="<?= $block->escapeUrl($block->getUrl('ecommage_customer_update/account/update')) ?>"
+      method="post" id="form-validate" enctype="multipart/form-data"
+      data-hasrequired="* Required Fields" autocomplete="off">
+    <fieldset class="fieldset info mb-5">
+        <div class="field required">
+            <div class="control">
+                <div class="field choice field-name-prefix">
+                    <div class="control col-md-6">
+                        <select id="prefix" name="prefix"
+                                title="<?= $block->escapeHtmlAttr(__('Name Prefix')) ?>" class="input-text"
+                                aria-required="true">
+                            <?php foreach ($prefixOptions as $prefix): 
+                                $prefix = trim($prefix);?>
+                                <option
+                                    value="<?= $block->escapeHtmlAttr($prefix) ?>" <?= $block->getCustomer()->getPrefix() == $prefix ? 'selected' : '' ?>>
+                                    <?= $prefix ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="field field-name-firstname required">
+                    <div class="control">
+                        <input type="text" id="firstname" name="firstname"
+                               value="<?= $block->escapeHtmlAttr($block->getCustomer()->getFirstname() ?: $block->getCustomer()->getFirstname()) ?>"
+                               title="<?= $block->escapeHtmlAttr(__('First Name')) ?>"
+                               class="input-text required-entry" data-validate="{required:true}"
+                               aria-required="true"
+                               placeholder="FIRSTNAME">
+                    </div>
+                </div>
+                <div class="field field-name-lastname required">
+                    <div class="control">
+                        <input type="text" id="lastname" name="lastname"
+                               value="<?= $block->escapeHtmlAttr($block->getCustomer()->getLastname() ?: $block->getCustomer()->getLastname()) ?>"
+                               title="<?= $block->escapeHtmlAttr(__('Last Name')) ?>"
+                               class="input-text required-entry" data-validate="{required:true}"
+                               aria-required="true"
+                               placeholder="LASTNAME">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="field email">
+            <input type="email" disabled name="email" id="edit-email" class="input-text bg-light"
+                   value="<?= $block->escapeHtmlAttr($block->getCustomer()->getEmail()) ?>"
+                   title="<?= $block->escapeHtmlAttr(__('Email')) ?>" data-validate="{required:true}"
+            />
+        </div>
+        <div class="field dob">
+            <!-- <label for="cust_dob"><?= $block->escapeHtml(__('Date Of Birth')) ?></label> -->
+            <div class="control" style="display: flex">
+                <?php $dobValidationClass = $addressHelper->getAttributeValidationClass('cust_dob'); ?>
+                <input type="text" name="cust_dob" id="cust_dob"
+                placeholder="Date of Birth"
+                       value="<?= $helper->getDobCustomer(); ?>"
+                       title="<?= $block->escapeHtmlAttr(__('Date of Birth')) ?>"
+                       class="input-text <?= $dobValidationClass ?>"
+                />
+            </div>
+        </div>
+        <div class="field number">
+            <div class="field mobile-number requiredddfh" data-container="change-mobile-number">
+                <div class="control">
+                    <small class="text-secondary">Mobile Number</small>
+                    <?php $phoneValidationClass = $addressHelper->getAttributeValidationClass('mobile_number'); ?>
+                    <input type="text" name="mobile_number" id="mobile_number" data-input="change-mobile-number"
+                           value="<?= $block->escapeHtmlAttr($mobilePhone) ?>"
+                           title="<?= $block->escapeHtmlAttr(__('Mobile Number')) ?>"
+                           class="input-text <?= $phoneValidationClass ?>"
+                           placeholder="<?= $block->escapeHtml(__('Enter Mobile No')) ?>"/>
+                    <input type="hidden" name="country_code"
+                           value="<?= $block->escapeHtmlAttr($block->getCountryCode()) ?>">
+                </div>
+            </div>
+        </div>
+        <div class="field-grp">
+            <div class="field field-nationality field-float">
+                <div class="control">
+                    <?php $nationalValidationClass = $addressHelper->getAttributeValidationClass('national_id'); ?>
+                    <select id="nationality" name="nationality"
+                            class="validate-select nationality <?= $nationalValidationClass ?>">
+                            <?php foreach($nationalities as $item): ?>
+                                <option <?= $nationalCustomer == $item['country_id'] ? 'selected' : '' ?> value="<?= $item['country_id'] ?>"><?=$item['name']?></option>
+                            <?php endforeach;?>
+                    </select>
+                    <label for="nationality"><?= $block->escapeHtml(__('NATIONALITY')) ?></label>
+                </div>
+            </div>
+            <div class="field field-passport_no field-float">
+                <div class="control">
+                    <?php $passportNoValidationClass = $addressHelper->getAttributeValidationClass('passport_no'); ?>
+                    <input type="text" id="passport_no" name="passport_no"
+                        value="<?= $block->escapeHtmlAttr(ltrim($passportNo)) ?>"
+                        class="input-text <?= $passportNoValidationClass ?>"
+                        placeholder="<?= $block->escapeHtml(__('Passport No')) ?>"
+                    />
+                    <label for="passport_no"><?= $block->escapeHtml(__('PASSPORT NO')) ?></label>
+                </div>
+            </div>
+        </div>
+
+        <div class="field choice">
+            <input type="checkbox" name="is_subscribed" title="Allow remote shopping assistance" value="1"
+                   id="is_subscribed"
+                   class="checkbox" <?= $block->escapeHtmlAttr($helper->isSubcribed() ? 'checked' : '') ?>>
+            <label for="is_subscribed" class="label">
+                <span><?= $block->escapeHtml(__('Would you like us to send you future news and special offers by email?')) ?></span>
+            </label>
+        </div>
+        <div class="action">
+        <div class="col-md-8 col-12">
+            <div class="internal_page_full_style">
+                <button type="submit" title="save" class="action save">
+                    <span class="btn_style1 btn_style_in">
+                        <span><?= $block->escapeHtml(__('SAVE CHANGES')) ?></span>
+                    </span>
+                    <div class="content-details fadeIn-left">
+                        <span class="btn_style btn_style_in">
+                            <span><?= $block->escapeHtml(__('SAVE CHANGES')) ?></span>
+                        </span>
+                    </div>
+
+                </button>
+            </div>
+        </div>
+    </fieldset>
+</form>
+
+<script type="text/x-magento-init"><?php // @codingStandardsIgnoreLine?>
+    {
+        ".form-edit-account": {
+            "accountEdit": {
+             "countryData": <?= $countryData ?>,
+             "regionData": <?= $helper->getRegionCollectionJson() ?>,
+             "optionNational": <?= $helper->getNational() ?>,
+             "isRegionOption":<?= $helper->isRegionOption() ?>
+            }
+        }
+    }
+
+</script>
+<script type="text/x-magento-init">
+    {
+        "[data-role=change-email], [data-role=change-mobile-number], [data-role=change-password]": {
+            "changeEmailMobilePassword": {
+                "titleChangeMobileNumber": "<?= $block->escapeJs($block->escapeHtml(__('Change Mobile Number'))) ?>",
+                "titleChangeEmailAndMobileNumber": "<?= $block->escapeJs($block->escapeHtml(__('Change Email and Mobile Number'))) ?>",
+                "titleChangeMobileNumberAndPassword": "<?= $block->escapeJs($block->escapeHtml(__('Change Mobile Number and Password'))) ?>",
+                "titleChangeEmailAndMobileNumberAndPassword": "<?= $block->escapeJs($block->escapeHtml(__('Change Email, Mobile Number and Password'))) ?>"
+            }
+        }
+    }
+
+</script>
+<script type="text/x-magento-init">
+    {
+        "#form-validate": {
+            "validation": {}
+        }
+    }
+
+</script>
+<script>
+    require([
+        'jquery',
+        'mage/translate',
+        'mage/calendar'
+    ], function ($, $t) {
+       $('#cust_dob').calendar({
+        changeMonth: true,
+        dateFormat:'mm/dd/yyyy',
+        changeYear: true,
+        showButtonPanel: true,
+        currentText: $t('Go Today'),
+        closeText: $t('Close'),
+        showWeek: true,
+        showOn: "both",
+        maxDate: new Date(),
+       yearRange: '-100:+0',
+        });
+    })
+</script>

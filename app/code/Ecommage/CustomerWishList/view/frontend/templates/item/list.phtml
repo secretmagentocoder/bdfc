@@ -1,0 +1,114 @@
+<?php
+
+/** @var Items $block */
+
+use Magento\Catalog\Model\Product;
+use Magento\Wishlist\Block\Customer\Wishlist\Items;
+
+$hepler         = $this->helper('Ecommage\CustomerWishList\Helper\Data'); // @codingStandardsIgnoreLine
+$heplerPrice    = $this->helper('Magento\Framework\Pricing\Helper\Data'); // @codingStandardsIgnoreLine
+$heplerWishList = $this->helper('Magento\Wishlist\Helper\Data'); // @codingStandardsIgnoreLine
+$columns = $block->getColumns();
+?>
+<?php if (count($block->getItems())) : ?>
+    <div class="container">
+        <table class="table">
+            <thead>
+            <tr>
+                <th></th>
+                <th></th>
+                <th><?= /* @noEscape */ $block->escapeHtml(__('QTY')) ?></th>
+                <th><?= /* @noEscape */ $block->escapeHtml(__('PRICE')) ?></th>
+                <th colspan="2"><?= /* @noEscape */ $block->escapeHtml(__('TOTAL PRICE')) ?></th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php foreach ($block->getItems() as $item) : ?>
+                <?php
+                /**
+                 * @var $product Product
+                 */
+                $product = $hepler->getProductItem($item)
+                ?>
+                <tr>
+                    <td> <a href="<?= /* @noEscape */ $block->getUrl($product->getProductUrl())?>"><?= /* @noEscape */ $hepler->getImage($item->getProduct(), 'wishlist_thumbnail')->toHtml() ?></a></td>
+                    <td>
+                        <a href="<?= $hepler->getProduct($item->getProduct())->getUrl() ?>">  <?= /* @noEscape */ $block->escapeHtml(__($hepler->getProduct($item->getProduct())->getName())) ?></a>
+                      
+                        <a href="<?= /* @noEscape */ $block->getUrl($product->getProductUrl())?>"><?= /* @noEscape */ $block->escapeHtml(__($item->getProductName())) ?></a>
+                        <div class="product-item-sku">
+                            <div class="product_sku">
+                                <p class="product-sku-wl"><?= /* @noEscape */ $block->escapeHtml(__("ITEM NO : %1", $product->getSku())) ?> </p>
+                            </div>
+                            <?php if (!empty($hepler->getOption($item))): ?>
+                                <div class="product_size">
+                                    <p class="brand_title text-uppercase fw-bold"><?= /* @noEscape */ $block->escapeHtml(__('SIZE : %1', $hepler->getOption($item))) ?> </p>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+                    </td>
+                    <td class="col qty" data-th="<?= /* @noEscape */ $block->escapeHtml(__('Qty')) ?>">
+                        <div class="field qty">
+                            <div class="control qty">
+                                <label for="cart-<?= /* @noEscape */ $block->escapeHtmlAttr($item->getId()) ?>-qty" class="quantity_box">
+                                    <button type="button" id="<?= /* @noEscape */ $block->escapeHtmlAttr($item->getId()) ?>-dec"
+                                            class="qty-increase btn">+
+                                    </button>
+                                    <input id="cart-<?= /* @noEscape */ $block->escapeHtmlAttr($item->getId()) ?>-qty"
+                                           name="cart[<?= /* @noEscape */ $block->escapeHtmlAttr($item->getId()) ?>][qty]"
+                                           data-cart-item-id="<?= /* @noEscape */ $block->escapeHtmlAttr($item->getSku()) ?>"
+                                           value="<?= /* @noEscape */ $block->escapeHtmlAttr($hepler->getAddToCartQty($item)) ?>"
+                                           type="number"
+                                           size="2"
+                                           step="any"
+                                           title="<?= /* @noEscape */ $block->escapeHtmlAttr(__('Qty')) ?>"
+                                           class="input-text qty"
+                                           data-validate="{required:true,'validate-greater-than-zero':true}"
+                                           data-role="cart-item-qty"/>
+                                    <button type="button" id="<?= /* @noEscape */ $block->escapeHtmlAttr($item->getId()) ?>-upt"
+                                            class="qty-decrease btn">-
+                                    </button>
+                                </label>
+                            </div>
+                        </div>
+                    </td>
+                    <td><?= /* @noEscape */ $hepler->getProductPriceHtml($item->getProduct()) ?>
+                         <div class="button-view-offer">  <a href="<?= /* @noEscape */ $block->getUrl($product->getProductUrl())?>"><?= $block->escapeHtml(__('VIEW ALL OFFER')) ?></a></div>
+                    </td>
+                    <td><?= /* @noEscape */ $heplerPrice->currency($hepler->getTotalPrice($product) * $hepler->getAddToCartQty($item)) ?></td>
+                    <td>
+                        <?php foreach ($columns as $key => $column) : ?>
+                        <?php if ($columns[$key]->getNameInLayout() == 'customer.wishlist.item.inner' && !empty($column->setItem($item)->toHtml())): ?>
+                        <?= $column->setItem($item)->toHtml();?>
+                        <?php endif; ?>
+                         <?php endforeach; ?>
+                    </td>
+                    <td>
+                        <a class="remove-button" href="#" data-post='<?= /* @noEscape */ $heplerWishList->getRemoveParams($item) ?>'>
+                            <i class="fa fa-trash" aria-hidden="true"></i></a>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+        <a href="<?= /* @noEscape */ $block->getUrl('') ?>"><?= /* @noEscape */ $block->escapeHtml('BACK TO PAGE') ?></a>
+    </div>
+<?php else : ?>
+    <div class="message info empty">
+        <span><?= /* @noEscape */ $block->escapeHtml(__('This Wish List has no Items')) ?></span>
+    </div>
+<?php endif; ?>
+
+<script type="text/x-magento-init"><?php // @codingStandardsIgnoreLine?>
+    {
+        ".page-main": {
+            "tap_wish_list": {
+             "url" : "<?= /* @noEscape */ $block->getUrl('ecommage_wish_list/update/update') ?>"
+            }
+        }
+    }
+
+</script>

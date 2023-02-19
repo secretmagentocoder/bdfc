@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Framework\Console\CommandList">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="updateCustomer" xsi:type="object">Ecommage\RaffleTickets\Console\Command\UpdateCustomer</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Checkout\Controller\Cart\Add">
+        <plugin name="ecommage_add_cart" type="Ecommage\RaffleTickets\Plugin\Controller\Cart\Add"/>
+    </type>
+    <preference for="Ecommage\RaffleTickets\Api\Data\RaffleTicketsInterface"
+            type="Ecommage\RaffleTickets\Model\Data\RaffleTickets"/>
+   <preference for="Ecommage\RaffleTickets\Api\RaffleTicketsRepositoryInterface"
+            type="Ecommage\RaffleTickets\Model\RaffleTicketsRepository"/>
+   <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="ecommage_raffle_tickets_listing_data_source" xsi:type="string">Ecommage\RaffleTickets\Model\ResourceModel\RaffleTickets\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Ecommage\RaffleTickets\Model\ResourceModel\RaffleTickets\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">raffle_ticket_winners</argument>
+            <argument name="eventPrefix" xsi:type="string">raffle_ticket_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">raffle_grid_collection</argument>
+            <argument name="resourceModel" xsi:type="string">Ecommage\RaffleTickets\Model\ResourceModel\RaffleTickets</argument>
+        </arguments>
+    </type>  
+</config>

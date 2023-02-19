@@ -1,0 +1,17 @@
+<div class="field _required">
+    <div class="control">
+        <label class="label"><span>Arrival Date</span></label>
+        <br>
+        <input name="arrival_flight_date" class="input-text validate-date departure_flight_date-input" data-bind="datepicker, datepickerOptions: {
+                                 dateFormat: 'dd/m/yy',
+                                 yearRange: '+0:+100',
+                                 minDate:0,
+                                 showButtonPanel: true,
+                                 changeMonth: true,
+                                  showWeek: true,
+                                    changeYear: true,
+                                     showOn: 'both',
+                                }"
+               data-validate="{required:true, 'validate-date':true}"/>
+    </div>
+</div>

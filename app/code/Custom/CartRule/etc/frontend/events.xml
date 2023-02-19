@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+   <!-- <event name="checkout_cart_add_product_complete">
+      <observer name="after_add_to_cart" instance="Custom\CartRule\Observer\OverAllowanceObserver" />
+   </event>
+   <event name="checkout_cart_update_items_after">
+      <observer name="after_cart_update_item" instance="Custom\CartRule\Observer\OverAllowanceObserver" />
+   </event> -->
+   <event name="checkout_cart_add_product_complete">
+      <observer name="product_add_to_cart_auto" instance="Custom\CartRule\Observer\ProductAddToCartAutoObserver" />
+   </event>
+   <event name="checkout_cart_update_items_after">
+      <observer name="product_add_to_cart_auto" instance="Custom\CartRule\Observer\ProductAddToCartAutoObserver" />
+   </event>
+   <!-- <event name="checkout_cart_add_product_complete">
+      <observer name="after_add_to_cart" instance="Custom\CartRule\Observer\CheckoutCartAddObserver" />
+   </event>
+   <event name="checkout_cart_product_add_after">
+     <observer name="pf_checkout_cart_product_add_after" instance="Custom\CartRule\Observer\CheckoutCartAddObserver" />
+   </event> -->
+</config>

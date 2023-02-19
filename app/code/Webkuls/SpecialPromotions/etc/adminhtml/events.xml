@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Webkuls Software.
+ *
+ * @category  Webkuls
+ * @package   Webkuls_SpecialPromotions
+ * @author    Webkuls
+ * @copyright Copyright (c) Webkuls Software Private Limited (https://Webkuls.com)
+ * @license   https://store.Webkuls.com/license.html
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="salesrule_rule_condition_combine">
+        <observer name="Webkuls_special_attribute_salesrule_rule_condition_combine" instance="Webkuls\SpecialPromotions\Observer\ConditionCombineObserver" />
+    </event>
+</config>

@@ -1,0 +1,100 @@
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<!-- ko foreach: getRegion('before_details') -->
+<!-- ko template: getTemplate() --><!-- /ko -->
+<!-- /ko -->
+<div class="product-item-details">
+
+    <div class="product-item-inner">
+        <!-- ko if: (isCheckRaffle($parent.item_id) == 1) -->
+        <div class="product-item-name-block">
+            <strong class="product-item-brand" data-bind="html: getItemBrand($parent.item_id)"></strong>
+            <strong class="product-item-name" data-bind="html: getItemProductName($parent.item_id)"></strong>
+        </div>
+        <div class="product-item-sku-block">
+            <div class="details-sku">
+                <span class="label"><!-- ko i18n: 'Item No' --><!-- /ko --></span>
+                <span class="value" data-bind="text: getItemProductSku($parent.item_id)"></span>
+            </div>
+        </div>
+        <!-- ko if: getItemProductSize($parent.item_id) -->
+            <div class="product-item-size-block">
+                <div class="details-size">
+                    <span class="label"><!-- ko i18n: 'Size' --><!-- /ko --></span>
+                    <span class="value" data-bind="text: getItemProductSize($parent.item_id)"></span>
+                </div>
+            </div>
+         <!-- /ko -->
+        <!-- /ko -->
+        <div class="product-item-options-block">
+            <!-- ko if: (JSON.parse($parent.options).length > 0)-->
+            <!-- ko if: (isCheckRaffle($parent.item_id) == 2) -->
+            <div>Booked Ticket No.</div>
+            <!-- /ko -->
+            <div class="product options">
+                <div class="content">
+                    <dl class="item-options">
+                        <!--ko foreach: JSON.parse($parent.options)-->
+                        <!-- ko if: (JSON.parse($parent.is_check_raffle < 1)) -->
+                        <dt class="label" data-bind="text: label"></dt>
+                        <!-- /ko -->
+                        <!-- ko if: ($data.full_view)-->
+                        <!-- ko with: {full_viewUnsanitizedHtml: $data.full_view}-->
+                        <dd class="values" data-bind="html: full_viewUnsanitizedHtml"></dd>
+                        <!-- /ko -->
+                        <!-- /ko -->
+                        <!-- ko ifnot: ($data.full_view)-->
+                        <!-- ko with: {valueUnsanitizedHtml: $data.value}-->
+                        <dd class="values" data-bind="html: valueUnsanitizedHtml"></dd>
+                        <!-- /ko -->
+                        <!-- /ko -->
+                        <!-- /ko -->
+                    </dl>
+                </div>
+            </div>
+            <!-- /ko -->
+        </div>
+        <!-- ko if: (isCheckRaffle($parent.item_id) == 2) -->
+        <div class="product-count-ticket">
+            <div>No of Tickets</div>
+            <div data-bind="text: getCountTicket($parent.item_id)"></div>
+        </div>
+        <!-- /ko -->
+        <!-- ko if: (isCheckRaffle($parent.item_id) == 1) -->
+        <div class="product-item-gift-block">
+            <div class="details-gift">
+                <div class="product-item-gift" data-bind="class: getItemGiftWrap($parent.item_id)">
+                    <span class="label"><!-- ko i18n: 'Get your gift wrap' --><!-- /ko --></span>
+                </div>
+            </div>
+        </div>
+        <!-- /ko -->
+    </div>
+    <!-- ko if: (isCheckRaffle($parent.item_id) == 1) -->
+    <div class="product-item-inner product-item-inner-right">
+<!--        <div class="product-item-product-price-block">-->
+<!--            <div class="details-product-price">-->
+<!--                <span class="product-price" data-bind="html: getItemProductPrice($parent.item_id)"></span>-->
+<!--            </div>-->
+<!--        </div>-->
+        <div class="product-item-qty-block">
+            <div class="details-qty">
+                <span class="label"><!-- ko i18n: 'Qty' --><!-- /ko --></span>
+                <span class="value" data-bind="text: $parent.qty"></span>
+            </div>
+        </div>
+        <div class="product-item-subtotal-block">
+            <!-- ko foreach: getRegion('after_details') -->
+            <!-- ko template: getTemplate() --><!-- /ko -->
+            <!-- /ko -->
+        </div>
+    </div>
+    <!-- /ko -->
+</div>
+<!-- ko foreach: getRegion('item_message') -->
+<!-- ko template: getTemplate() --><!-- /ko -->
+<!-- /ko -->

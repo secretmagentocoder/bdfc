@@ -1,0 +1,115 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// phpcs:disable Generic.Files.LineLength.TooLong
+
+/** @var \Magento\Customer\Block\Form\Login $block */
+$helper= $this->helper('Flamingo\Checkout\Helper\Data');
+$rememberMe = $block->getLayout()->createBlock('Magento\Persistent\Block\Form\Remember');
+?>
+
+<div class="biolayout my-4">
+    <div class="bio_login_main container py-5">
+        <div class="row">
+            <div class="col-md-6 border-end-a80">
+                <div class="block-customer-login">
+                    <div class="row">
+                        <div class="div">
+                            <h3 class="text-center text-uppercase py-4 fw-bold">Login to Bahrain Duty Free</h3>
+                            <ul class="sociallogin_list">
+                                <?php echo $this->getLayout()->createBlock("Mageplaza\SocialLogin\Block\Popup\Social")->setTemplate("Mageplaza_SocialLogin::form/social.phtml")->toHtml();?>
+                            </ul>
+                        </div>
+                        <div class="col-12 mx-auto">
+                            <p class="division_div text-center">If you have Bahrain Duty Free login please use it below</p>
+                        </div>
+                        <div class="block-content" aria-labelledby="block-customer-login-heading">
+                            <form class="form form-login col-md-12"
+                                  action="<?= $block->escapeUrl($block->getPostActionUrl()) ?>"
+                                  method="post"
+                                  id="login-form"
+                                  data-mage-init='{"validation":{}}'>
+                                <?= $block->getBlockHtml('formkey') ?>
+                                <?php if (!empty($helper->getPageBefore())): ?>
+                                <input type="hidden" name="login[type]" value="1">
+                                <?php endif; ?>
+                                <div class="col-12 mx-auto fieldset_login floating">
+    
+                                    <div class="form-group label-floating">
+                                        <input name="login[username]" value="<?= $block->escapeHtmlAttr($block->getUsername()) ?>"
+                                            <?php if ($block->isAutocompleteDisabled()): ?> autocomplete="off"<?php endif; ?>
+                                               id="email" type="email"
+                                               class="floating__input form-control"
+                                               placeholder="Email Address"
+                                               data-mage-init='{"mage/trim-input":{}}'
+                                               data-validate="{required:true, 'validate-email':true}">
+                                               <label class="floating__label" for="email" data-content="Email Address"></label>
+                                    </div>
+                                    <div class="form-group label-floating">
+                                        <!-- <label for="pass" class="label"><span><?= $block->escapeHtml(__('Password')) ?></span></label> -->
+                                        <input name="login[password]" type="password"  placeholder="Password"
+                                        <?php if ($block->isAutocompleteDisabled()): ?> autocomplete="off"<?php endif; ?>
+                                           class="floating__input form-control" id="password"
+                                           title="<?= $block->escapeHtmlAttr(__('Password')) ?>"
+                                           data-validate="{required:true}">
+                                           
+                                          
+                                        <label class="floating__label" for="pass" data-content="Password"></label>
+                                           <span id="togglePassword" class="password-icon">
+                                            <i class="fa fa-eye" aria-hidden="true"></i>
+                                        </span>
+                                    </div>
+                                    <?php if ($rememberMe->isRememberMeChecked()): ?>
+                                    <div id="remember-me-box" class="field choice persistent">
+                                        <?php $rememberMeId = 'remember_me' . $rememberMe->getRandomString(10); ?>
+                                        <input type="checkbox" name="persistent_remember_me" class="checkbox" id="<?= $block->escapeHtmlAttr($rememberMeId) ?>" <?php if ($rememberMe->isRememberMeChecked()) : ?> checked="checked" <?php endif; ?> title="<?= $block->escapeHtmlAttr(__('Remember Me')) ?>" />
+                                        <label for="<?= $block->escapeHtmlAttr($rememberMeId) ?>" class="label"><span><?= $block->escapeHtml(__('Remember Me')) ?></span></label>
+                                    </div>
+                                    <?php endif; ?>
+                                    <div class="form-group bio_secondary text-end">
+                                        <a class="bio_fogot_pw" href="<?= $block->escapeUrl($block->getForgotPasswordUrl()) ?>" title="Forgot password?"><?= $block->escapeHtml(__('Forgot password?')) ?></a>
+                                    </div>
+                                    <div class="form-group pt-4">
+                                    <div class="internal_page_full_style ">
+								<button type="submit"  <?= $block->escapeHtml(__('SIGN IN')) ?> name="send" id="send2" title="SIGN IN" >
+									<span class="btn_style1 btn_style_in">
+										<span>SIGN IN</span>
+									</span>
+									<div class="content-details fadeIn-left">
+										<span class="btn_style btn_style_in">
+											<span>SIGN IN</span>
+										</span>
+									</div>
+                                        </button>
+								</div>
+							
+                                        <!-- <button type="submit" class="create-an-Account btn_style" name="send" id="send2" data-hover="SIGN IN"><span><?= $block->escapeHtml(__('SIGN IN')) ?></span></button> -->
+                                    </div>
+                                    <?= $block->getChildHtml('form_additional_info') ?>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Magento_Customer/js/block-submit-on-send": {
+                "formId": "login-form"
+            },
+            "Magento_Ui/js/core/app": {
+                "components": {
+                    "showPassword": {
+                        "component": "Magento_Customer/js/show-password",
+                        "passwordSelector": "#pass"
+                    }
+                }
+            }
+        }
+    }
+</script>

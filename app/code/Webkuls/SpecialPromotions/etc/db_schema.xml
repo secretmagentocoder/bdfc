@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+  <table name="salesrule" resource="default">
+    <column xsi:type="text" name="wkrulesrule" nullable="false" comment="Sales rules"/>
+    <column xsi:type="text" name="wkrulesrule_nqty" nullable="false" comment="wk sales rules QTY"/>
+    <column xsi:type="text" name="wkrulesrule_skip_rule" nullable="false" comment="Sales skip rules"/>
+    <column xsi:type="text" name="max_discount" nullable="false" comment="Maximum Discount"/>
+    <column xsi:type="text" name="promo_cats" nullable="false" comment="PromotionCategories"/>
+    <column xsi:type="text" name="promo_skus" nullable="false" comment="Promotion SKUs"/>
+    <column xsi:type="text" name="n_threshold" nullable="false" comment="after n product discount"/>
+  </table>
+</schema>

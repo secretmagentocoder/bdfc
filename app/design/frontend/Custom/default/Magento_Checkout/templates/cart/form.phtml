@@ -1,0 +1,110 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// phpcs:disable Magento2.Templates.ThisInTemplate
+
+/**  @var $block \Magento\Checkout\Block\Cart\Grid */
+?>
+<?php $mergedCells = ($this->helper(Magento\Tax\Helper\Data::class)->displayCartBothPrices() ? 2 : 1); ?>
+
+<?php
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$storeManager = $objectManager->get(\Magento\Store\Model\StoreManagerInterface::class);
+$website_id = $storeManager->getStore()->getWebsiteId();
+$website_name = $storeManager->getStore()->getWebsite()->getName();
+/** @var \Ecommage\CheckoutCart\Helper\Data $_helper */
+$_helper = $this->helper(Ecommage\CheckoutCart\Helper\Data::class);
+$items = $_helper->groupProductItems($block->getItems());
+$quoteData = $_helper->getCheckoutSession()->getQuote();
+?>
+
+<?= $block->getChildHtml('form_before') ?>
+<div class="form-cart">
+<div class="collection-point-wrapper" id="collection_point">
+    <div class="text-end">
+        <p><span>Collection Point</span>:
+            <strong class="<?= $storeManager->getStore()->getCode()?>_website" >
+                <span class="icon_terminal"><?php echo $block->escapeHtml(__($website_name)) ?></span>
+            </strong>
+    </div>
+</div>
+</div>
+
+<form action="<?= $block->escapeUrl($block->getUrl('checkout/cart/updatePost')) ?>"
+          method="post"
+          id="form-validate"
+          data-mage-init='{"Magento_Checkout/js/action/update-shopping-cart":
+              {"validationURL" : "<?= $block->escapeUrl($block->getUrl('checkout/cart/updateItemQty')) ?>",
+              "updateCartActionContainer": "#update_cart_action_container"}
+          }'
+          class="form form-cart">
+    <?= $block->getBlockHtml('formkey') ?>
+    <div class="cart table-wrapper<?= $mergedCells == 2 ? ' detailed' : '' ?>">
+        <?php if ($block->getPagerHtml()): ?>
+            <div class="cart-products-toolbar cart-products-toolbar-top toolbar"
+                 data-attribute="cart-products-toolbar-top"><?= $block->getPagerHtml() ?>
+            </div>
+        <?php endif ?>
+        <table id="shopping-cart-table"
+               class="cart items data table"
+               data-mage-init='{"shoppingCart":{"emptyCartButton": ".action.clear",
+               "updateCartActionContainer": "#update_cart_action_container"}}'>
+            <caption class="table-caption"><?= $block->escapeHtml(__('Shopping Cart Items')) ?></caption>
+            <thead>
+                <tr>
+                    <th class="col item" scope="col"><span></span></th>
+                    <th class="col item" scope="col"><span></span></th>
+                    <th class="col price" scope="col"><span><?= $block->escapeHtml(__('Unit Price')) ?></span></th>
+                    <th class="col qty" scope="col"><span><?= $block->escapeHtml(__('Quantity')) ?></span></th>
+                    <th class="col subtotal" scope="col"><span><?= $block->escapeHtml(__('Total')) ?></span></th>
+                    <th class="col actions" scope="col"><span><?= $block->escapeHtml(__('')) ?></span></th>
+                </tr>
+            </thead>
+
+            <?php foreach ($items as $_item): ?>
+                <?= $block->getItemHtml($_item) ?>
+            <?php endforeach ?>
+        </table>
+        <?php if ($block->getPagerHtml()): ?>
+            <div class="cart-products-toolbar cart-products-toolbar-bottom toolbar"
+                 data-attribute="cart-products-toolbar-bottom"><?= $block->getPagerHtml() ?>
+            </div>
+        <?php endif ?>
+    </div>
+
+    <?php
+    /** @var \Ecommage\CheckoutCart\Helper\Data $helperCheckRaffle */
+    $helperCheckRaffle = $this->helper(Ecommage\CheckoutCart\Helper\Data::class);
+    $checkRaffle = $helperCheckRaffle->checkRaffle();
+    if (!$checkRaffle) {
+    ?>
+    <div class="cart main actions">
+        <?php if ($block->getViewModel()->isClearShoppingCartEnabled()): ?>
+            <button type="button"
+                    name="update_cart_action"
+                    data-cart-empty=""
+                    value="empty_cart"
+                    title="<?= $block->escapeHtml(__('Clear Shopping Cart')) ?>"
+                    class="action clear" id="empty_cart_button">
+                <span><?= $block->escapeHtml(__('Clear Shopping Cart')) ?></span>
+            </button>
+        <?php endif ?> 
+        <button style="display:none;" type="submit"
+                name="update_cart_action"
+                data-cart-item-update=""
+                value="update_qty"
+                title="<?= $block->escapeHtml(__('Update Shopping Cart')) ?>"
+                class="action update">
+            <span><?= $block->escapeHtml(__('Update Shopping Cart')) ?></span>
+        </button>     
+        <input type="hidden" value="" id="update_cart_action_container" data-cart-item-update=""/>
+    </div>
+    <?php
+    }
+    ?>
+</form>
+<?= $block->getChildHtml('checkout.cart.order.actions') ?>
+<?= $block->getChildHtml('shopping.cart.table.after') ?>

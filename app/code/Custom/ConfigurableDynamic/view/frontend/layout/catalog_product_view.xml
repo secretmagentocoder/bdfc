@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="product.info.details">
+            <block class="Magento\Framework\View\Element\Template" name="product.attributes.wrap" as="additional_wrap" template="Custom_ConfigurableDynamic::block_wrap.phtml" group="detailed_info">
+                <arguments>
+                    <argument name="sort_order" xsi:type="string">20</argument>
+                    <argument name="dynamic_id" xsi:type="string">product_attributes</argument>
+                </arguments>
+            </block>
+        </referenceBlock>
+
+        <referenceBlock name="page.main.title">
+            <arguments>
+                <argument name="add_base_attribute" xsi:type="string">data-dynamic="product_name"</argument>
+            </arguments>
+        </referenceBlock>
+
+        <move element="product.attributes" destination="product.attributes.wrap" />
+    </body>
+</page>

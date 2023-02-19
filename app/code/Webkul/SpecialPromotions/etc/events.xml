@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Webkul Software
+ *
+ * @category  Webkul
+ * @package   Webkul_Mpsplitcart
+ * @author    Webkul
+ * @copyright Copyright (c) Webkul Software Private Limited (https://webkul.com)
+ * @license   https://store.webkul.com/license.html
+ */
+ -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+	<event name="controller_action_postdispatch_checkout_cart_index">
+        <observer name="webkul_specialpromotion_controller_action_predispatch_checkout_cart_index_observer" instance="Webkul\SpecialPromotions\Observer\BeforeViewCart" />
+    </event>
+    
+    <!-- <event name="controller_action_postdispatch_checkout_index_index">
+        <observer name="webkul_specialpromotion_controller_action_postdispatch_checkout_index_index_observer" instance="Webkul\SpecialPromotions\Observer\BeforeViewCart" />
+    </event>
+    <event name="controller_action_predispatch_checkout_onepage_index">
+        <observer name="webkul_specialpromotion_controller_action_predispatch_checkout_onepage_index" instance="Webkul\SpecialPromotions\Observer\BeforeViewCart" />
+    </event>
+     <event name="checkout_onepage_controller_success_action">
+        <observer name="webkul_specialpromotion_checkout_onepage_controller_success_action" instance="Webkul\SpecialPromotions\Observer\BeforeViewCart" />
+    </event> -->
+</config>

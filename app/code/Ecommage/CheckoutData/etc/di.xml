@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Checkout\Model\DefaultConfigProvider">
+        <plugin name="add_cms_block_collection_point_to_checkoutconfig" type="Ecommage\CheckoutData\Plugin\ConfigProviderPlugin" sortOrder="2"/>
+    </type>
+
+    <type name="Magento\Checkout\Block\Checkout\LayoutProcessor">
+        <plugin name="update_billing_template_layout_processor" type="Ecommage\CheckoutData\Plugin\UpdateLayoutProcessor" sortOrder="1111"/>
+    </type>
+
+<!--    <preference type="Magento\Checkout\Block\Checkout\LayoutProcessor" for="Ecommage\CheckoutData\Block\Checkout\LayoutProcessor"/>-->
+<!--    <preference type="Magento\Quote\Api\Data\TotalsItemInterface" for="Ecommage\CheckoutData\Api\Data\TotalsItemInterface"/>-->
+<!--    <preference for="Magento\Quote\Model\Cart\Totals\Item" type="Ecommage\CheckoutData\Model\Cart\Totals\Item"/>-->
+<!--    <preference for="Magento\Quote\Api\Data\TotalsItemExtensionInterface" type="Ecommage\CheckoutData\Api\Data\TotalsItemExtensionInterface"/>-->
+</config>

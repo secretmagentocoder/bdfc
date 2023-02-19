@@ -1,0 +1,43 @@
+{
+    "sdcp_preselect": {
+        "column": {
+            "preselect_id": true,
+            "product_id": true,
+            "attribute_key": true,
+            "value_key": true
+        },
+        "index": {
+            "SDCP_PRESELECT_PRODUCT_ID": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "sdcp_product_enabled": {
+        "column": {
+            "product_id": true,
+            "enabled": true,
+            "is_ajax_load": true
+        },
+        "index": {
+            "SDCP_PRODUCT_ENABLED_PRODUCT_ID": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "sdcp_custom_url": {
+        "column": {
+            "url_id": true,
+            "product_id": true,
+            "custom_url": true,
+            "parent_url": true
+        },
+        "index": {
+            "SDCP_CUSTOM_URL_PRODUCT_ID": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    }
+}

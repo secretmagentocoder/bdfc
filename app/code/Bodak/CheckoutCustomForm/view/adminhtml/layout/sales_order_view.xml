@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <block class="Magento\Backend\Block\Template" name="order_custom_fields" template="Bodak_CheckoutCustomForm::order/view/custom_fields.phtml" />
+        <block class="Magento\Backend\Block\Template" name="order_departure_fields" template="Bodak_CheckoutCustomForm::order/view/departure_fields.phtml" />
+
+        <referenceBlock name="column_name">
+            <action method="setTemplate">
+                <argument name="template" xsi:type="string">Bodak_CheckoutCustomForm::order/items/column/name.phtml</argument>
+            </action> 
+        </referenceBlock>
+    </body>
+</page>

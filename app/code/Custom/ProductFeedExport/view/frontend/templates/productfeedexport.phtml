@@ -1,0 +1,155 @@
+<?php
+
+use Magento\Framework\App\Action\Context;
+use Magento\Framework\Controller\Result\JsonFactory;
+use Magento\Framework\App\ResourceConnection;
+use Magento\Framework\App\Bootstrap;
+use Magento\Framework\App\Filesystem\DirectoryList;
+
+echo '<div class="product-feed-wrapper">';
+    echo '<div class="product-feed-container">';
+        echo '<div class="product-feed-heading product-feed-start">';
+            echo '<strong>product feed export start</strong>';
+        echo '</div>';
+        echo '<div class="product-feed-content">';
+
+            // require __DIR__ . '/app/bootstrap.php';
+            $bootstrap = Bootstrap::create(BP, $_SERVER);
+            $obj = $bootstrap->getObjectManager();
+
+            $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+            $objectManager->get('Magento\Framework\App\State')->setAreaCode('frontend');
+            $fileFactory = $objectManager->get('Magento\Framework\App\Response\Http\FileFactory');
+            $csvProcessor = $objectManager->get('Magento\Framework\File\Csv');
+            $directoryList = $objectManager->get('Magento\Framework\App\Filesystem\DirectoryList');
+            $StockState = $objectManager->get('\Magento\CatalogInventory\Api\StockStateInterface');
+            $helperImport = $objectManager->get('\Magento\Catalog\Helper\Image');
+
+            // Add Your CSV File name
+            $fileName = 'product_feed_export.csv';
+            $filePath = $directoryList->getPath(DirectoryList::MEDIA) . "/" . $fileName;
+
+            // product_feed_data
+            $product_feed_data = [];
+            $product_feed_data []= [
+                'id' => __('id'),
+                'sku' => __('sku'),
+                'title' => __('title'),
+                'product_type' => __('product_type'),
+                'description' => __('description'),
+                'link' => __('link'),
+                'image_link' => __('image_link'),
+                'brand' => __('brand'),
+                'availability' => __('availability'),
+                'quantity' => __('quantity'),
+                'price' => __('price'),
+                'sale_price' => __('sale_price'),
+                'condition' => __('condition'),
+                'google_product_category' => __('google_product_category'),
+                'gtin' => __('gtin'),
+            ];
+
+            // 
+            $productCollection = $objectManager->create('Magento\Catalog\Model\ResourceModel\Product\Collection');
+            $collection = $productCollection->addAttributeToSelect('*')->load();
+
+            $count = 1;
+            foreach ($collection as $product){
+                // print_r($product->getData());
+                $product_data = $product->getData();
+                // $product_type = $product_data['type_id'];
+                // die;
+
+                // ProductFactory
+                // $_product = $objectManager->get('Magento\Catalog\Model\ProductFactory')->create()->load($product->getId());
+                
+                // get product attributes
+                $product_id = $product->getId();
+                $product_sku = $product->getSku();
+                $product_name = $product->getName();
+                $product_type = $product->getTypeId();
+                $product_short_description = $product->getShortDescription();
+                $product_description = $product->getDescription();
+                $product_stock_qty = $StockState->getStockQty($product->getId(), $product->getStore()->getWebsiteId());
+                $product_price = $product->getPrice();
+                $product_special_price = $product->getSpecialPrice();
+                $product_url = $product->getProductUrl();
+                $product_gtin = $product->getGtin();
+                $product_google_product_category = $product->getGoogleProductCategory();
+                $product_brand = $product->getProductBrand();
+                if ($product_brand) {
+                    $product_brand = $product->getResource()->getAttribute('product_brand')->getFrontend()->getValue($product);
+                }
+                $product_availability = $product->getAvailability();
+                if ($product_availability) {
+                    $product_availability = $product->getResource()->getAttribute('availability')->getFrontend()->getValue($product);
+                }
+                $product_condition = $product->getCondition();
+
+                $product_image_url = '';
+                if (!empty($product->getImage())) {
+                    $product_image_url = $helperImport->init($product, 'product_page_image_small')->setImageFile($product->getImage())->getUrl();
+                }
+
+                // added product attributes in csv array
+                $product_feed_data[] = [
+                    $product_id,
+                    $product_sku,
+                    $product_name,
+                    $product_type,
+                    $product_short_description,
+                    $product_url,
+                    $product_image_url,
+                    $product_brand,
+                    $product_availability,
+                    $product_stock_qty,
+                    $product_price,
+                    $product_special_price,
+                    $product_condition,
+                    $product_google_product_category,
+                    $product_gtin,
+                ];
+                echo $count.'. SKU: '.$product_sku.' - added <br>';
+
+
+                // get all attributes
+                /*foreach ($product_data as $key => $value) {
+                    $attr_value = '';
+                    if (is_array($value)) {
+                        echo "yes";
+                        print_r($value);
+                        $attr_value = implode(',', $value);
+                    }else{
+                        echo "no";
+                        $attr_value = $value;
+                    }
+                    $product_feed_data[] = $attr_value;
+                }*/
+
+                if ($count > 10) {
+                    // break;
+                }
+                $count++;
+            } 
+            // print_r($product_feed_data);
+
+            // save product_feed_data in csv file
+            $csvProcessor->setEnclosure('"')->setDelimiter(',')->saveData($filePath, $product_feed_data);
+
+            // download product_feed_data.csv file
+            /*$fileFactory->create($fileName, [
+                'type' => "filename",
+                'value' => $fileName,
+                'rm' => false, // True => File will be remove from directory after download.
+            ], DirectoryList::MEDIA, 'text/csv', null);*/
+
+
+        echo '</div>';
+        echo '<div class="product-feed-heading product-feed-end">';
+            echo '<strong>product feed export end</strong>';
+        echo '</div>';
+    echo '</div>';
+echo '</div>';
+
+die;
+?>

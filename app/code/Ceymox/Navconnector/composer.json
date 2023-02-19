@@ -1,0 +1,14 @@
+{
+    "name": "ceymox/module-navconnector",
+    "description": "Extension for Api",
+    "type": "magento2-module",
+    "version": "1.0.0",
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Ceymox\\Navconnector\\": ""
+        }
+    }
+}

@@ -1,0 +1,14 @@
+<?php
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$request = $objectManager->get('Magento\Framework\App\Action\Context')->getRequest();
+?>
+
+<?php if ($request->getFullActionName() == 'checkout_onepage_success') : ?>
+
+<div id="collection_procedure_video_popup" class="modal custom-modal">
+    <div class="custom-modal-wrapper">
+        <?php echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('block_collection_procedure_video_popup')->toHtml(); ?>
+    </div>
+</div>
+
+<?php endif;?>

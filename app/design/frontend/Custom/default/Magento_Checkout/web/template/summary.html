@@ -1,0 +1,17 @@
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<div class="opc-block-summary" data-bind="blockLoader: isLoading">
+    <div class="shopping-cart-wrapper">
+        <span data-bind="i18n: 'Your Shopping Cart'" class="title"></span>
+        <span class="shopping-cart-link">
+            <a href="cart" class="cart-link"><span>Edit</span></a>
+        </span>
+    </div>
+    <!-- ko foreach: elems() -->
+        <!-- ko template: getTemplate() --><!-- /ko -->
+    <!-- /ko -->
+</div>

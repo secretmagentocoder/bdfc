@@ -1,0 +1,37 @@
+<?php
+/** @var Bodak\CheckoutCustomForm\Block\Order\CustomFields $block */
+
+/** @var Bodak\CheckoutCustomForm\Model\Data\CustomFields $customFields */
+$customFields = $block->getCustomFields($block->getOrder());
+?>
+<?php if($customFields): ?>
+    <div class="block block-order-details-view">
+        <div class="block-content">
+            <div class="box">
+                <strong class="box-title"><span><?php /* @escapeNotVerified */ echo __('Flight Details') ?></span></strong>
+                <div class="box-content">
+                    <div class="box-content-inner">
+                        <h3>Order Collection Details</h3>
+
+                        <span data-hover="Arrival" class="">
+                            <span>Arrival <span><img src="/images/arrival.png" alt="arrival" width="30px"></span></span>
+                        </span>
+                        <p>Please allow us minimum of 24 hours notice to keep your order ready for pick up.</p>
+                    </div>
+                    <div class="box-content-inner">
+                        <h3>Travelling Details</h3>
+
+                        <strong><?php /* @escapeNotVerified */ echo __('Arrival Date') ?>:</strong>
+                        <?php echo $this->escapeHtml($customFields->getArrivalFlightDate()); ?><br>
+                        <strong><?php /* @escapeNotVerified */ echo __('Arrival Time') ?>:</strong>
+                        <?php echo $this->escapeHtml($customFields->getArrivalFlightTime()); ?><br>
+                        <strong><?php /* @escapeNotVerified */ echo __('Flight No.') ?>:</strong>
+                        <?php echo $this->escapeHtml($customFields->getArrivalFlightNumber()); ?><br>
+                        <strong><?php /* @escapeNotVerified */ echo __('Collection Time') ?>:</strong>
+                        <?php echo $this->escapeHtml($customFields->getArrivalCollectionTime()); ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php endif; ?>

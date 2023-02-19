@@ -1,0 +1,38 @@
+<?php
+/**
+ * Product view template
+ *
+ * @var $block \Magento\Catalog\Block\Product\View\Description
+ */
+?>
+<?php
+$_helper = $this->helper(Magento\Catalog\Helper\Output::class);
+$_product = $block->getProduct();
+
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$connection = $objectManager->get('Magento\Framework\App\ResourceConnection')->getConnection('\Magento\Framework\App\ResourceConnection::DEFAULT_CONNECTION');
+
+if (!$_product instanceof \Magento\Catalog\Model\Product) {
+    return;
+}
+
+$product_brand = $_product->getResource()->getAttribute('product_brand')->getFrontend()->getValue($_product);
+
+echo '<div class="product-badges">';
+    $sql = "SELECT * FROM `product_badges` ORDER BY `badge_id` ASC";
+    $results = $connection->fetchAll($sql);
+    // print_r($results);
+    foreach ($results as $key => $value) {
+        $badge_id = $value['badge_id'];
+        $badge_slug = $value['badge_slug'];
+        $badge_name = $value['badge_name'];
+
+        $product_is_badges = $_product->getData($badge_slug);
+        if ($product_is_badges == true) {
+            echo '<div class="badges '.$badge_slug.'">';
+                echo '<img src="/images/badges/'.$badge_slug.'.png" alt="'.$badge_name.'" />';
+            echo '</div>';
+        }
+    }
+echo '</div>';
+?>

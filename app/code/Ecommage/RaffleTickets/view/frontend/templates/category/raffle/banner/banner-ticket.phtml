@@ -1,0 +1,21 @@
+<?php
+ /** @var $block \Magento\Framework\View\Element\Template  */
+$helper = $this->helper('Ecommage\RaffleTickets\Helper\Data');
+$image = $helper->getAlsoBuy()->getData();
+
+?>
+<?php if ($helper->getActionName()) : ?>
+<div class="title-also-buy"><?= $block->escapeHtml(__('AlSO BUY')) ?></div>
+<div class="banner-tickets">
+    <?php foreach ($image as $products): ?>
+            <?php if(!empty($products)) :?>
+            <?php $product = $helper->getProduct($products['entity_id']);?>
+            <?php if ($product->getSmallImage()): ?>
+                <a href="<?= $block->escapeUrl($block->getBaseUrl(). $product->getUrlKey())?>"><img src="<?= $helper->getTopBannerImageUrl($product->getSmallImage())?>"></a>
+            <?php endif; ?>
+               
+            <?php endif; ?>
+    <?php endforeach; ?>
+</div>
+<?php endif; ?>
+    

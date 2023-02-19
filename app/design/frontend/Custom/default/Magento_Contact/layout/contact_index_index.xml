@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="../../../../../../../lib/internal/Magento/Framework/View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="contactForm">
+            <action method="setTemplate">
+                <argument name="template" xsi:type="string">Magento_Contact::form.phtml</argument>
+            </action>
+        </referenceBlock>
+
+        <referenceContainer name="content">
+            <block class="Magento\Cms\Block\Block" name="block_contact_us_details">
+                <arguments>
+                    <argument name="block_id" xsi:type="string">block_contact_us_details</argument>
+                </arguments>
+            </block>
+        </referenceContainer>
+
+        <referenceContainer name="content">
+            <container name="content.row.contact-info" htmlTag="div" htmlClass="contact-info" />
+        </referenceContainer>
+
+        <move element="contactForm" destination="content.row.contact-info" before="-" />
+        <move element="block_contact_us_details" destination="content.row.contact-info" />
+
+    </body>
+</page>

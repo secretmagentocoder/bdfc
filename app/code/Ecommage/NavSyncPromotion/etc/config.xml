@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <nav>
+            <system>
+                <company>BDFC</company>
+                <host>http://88.201.70.74:7048/DynamicsNAV71/OData</host>
+                <offer_header>WebOfferHeader</offer_header>
+                <offer_line>WebOfferLine</offer_line>
+                <ticket_list>TicketList</ticket_list>
+                <user>Navtest</user>
+                <pwd>Bdds$123</pwd>
+            </system>            
+        </nav>
+    </default>
+</config>

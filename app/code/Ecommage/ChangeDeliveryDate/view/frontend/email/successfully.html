@@ -1,0 +1,27 @@
+<!--
+/**
+ * Copyright © Ecommage, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<!--@subject {{trans "Collection date for receipt no"}} {{var receipt_no}} {{trans "changed successfully"}} @-->
+<!--@vars {
+"var new_date":"New Date",
+"var old_date":"Old Date",
+"var mobile_no":"Mobile No",
+"var receipt_no":"Receipt No",
+"var customer_name":"Customer Name",
+"var customer_email":"Customer Email",
+"var customer_prefix":"Customer Prefix",
+"var sender_email":"Sender Email",
+"var sender_name":"Sender Name"
+} @-->
+
+{{template config_path="design/email/header_template"}}
+<p class="greeting">Dear {{var customer_prefix}}, {{var customer_name}}</p>
+<p>
+<p>Receipt No: {{var receipt_no}}</p>
+<p>Mobile No: {{var mobile_no}}</p>
+<p>New Date: {{var new_date}}</p>
+</p>
+{{template config_path="design/email/footer_template"}}

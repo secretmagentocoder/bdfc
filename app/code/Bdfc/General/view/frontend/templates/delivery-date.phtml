@@ -1,0 +1,103 @@
+<?php
+/**
+ * @package Bdfc_General
+ */
+
+/** @var DeliveryForm $block */
+
+/** @var SecureHtmlRenderer $secureRenderer */
+
+use Ecommage\ChangeDeliveryDate\Block\Widget\DeliveryForm;
+use Ecommage\ChangeDeliveryDate\Helper\Data;
+use Ecommage\ChangeDeliveryDate\Helper\CountryCodes;
+use Magento\Framework\View\Helper\SecureHtmlRenderer;
+
+$helper = $this->helper(Data::class);
+$_helper = $this->helper(CountryCodes::class);
+$mobileNo = $_helper->getFullMobileNo($block->getCountryCode(), $block->getMobileNo());
+?>
+<?php if (!$block->isLogin()): ?>
+    <div class="message info not-login">
+        <div>  <?= $block->escapeHtml(__('Please login to change the delivery date')) ?></div>
+    </div>
+<?php else: ?>
+    
+    <div class="pagebuilder-column ps-3" data-content-type="column" data-appearance="align-top" data-background-images="{}"
+         data-element="main" data-pb-style="QPPU69J">
+        <div data-content-type="html" data-appearance="default" data-element="main" data-decoded="true">
+            <form method="post" id="verifyOrderDetails" class="form"
+                  action="<?= $block->escapeJs($block->getAjaxUrl()) ?>"
+                  data-hasrequired="<?= $block->escapeHtmlAttr(__('* Required Fields')) ?>"
+                  data-mage-init='{"validation":{}}'>
+                <div class="field field-receipt_no required">
+                    <label for="receipt_no">
+                        <span><?= $block->escapeHtml(__('Receipt No')) ?></span>
+                    </label>
+                    <input name="receipt_no"
+                           value="<?= $block->escapeHtmlAttr($helper->getDeliveryPersistor('receipt_no')) ?>"
+                           type="text" class="input-text" id="receipt_no"
+                           placeholder="<?= $block->escapeHtmlAttr(__('Enter Receipt No')) ?>"
+                           data-validate="{required:true, 'validate-alphanum':true}" autocomplete="off">
+                </div>
+                <div class="field field-mobile_no disabled">
+                    <label for="mobile_no">
+                        <span><?= $block->escapeHtml(__('Enter Mobile No')) ?></span>
+                    </label>
+                    <input name="mobile_no"
+                           value="<?= $block->escapeHtmlAttr($mobileNo) ?>"
+                           type="text" class="input-text" id="mobile_no"
+                           placeholder="<?= $block->escapeHtmlAttr(__('Enter Mobile No with country code (Eg : +9731234567')) ?>"
+                           data-validate="{required:true}" autocomplete="off">
+                    <div class="note-mess py-3 d-none"><?= $block->escapeHtml(__('You have to provide mobile number in the Personal details page to change the collection Date.')) ?></div>
+                </div>
+                <div class="field field-new_date">
+                    <label class="label" for="new_date">
+                        <span><?= $block->escapeHtml(__('New Date')) ?></span>
+                    </label>
+                    <div class="control new_date">
+                        <input name="new_date" readonly="true"
+                               value="<?= $block->escapeHtmlAttr($helper->getDeliveryPersistor('new_date')) ?>"
+                               type="text" class="input-text  datetime-validation" id="new_date"
+                               placeholder="<?= $block->escapeHtmlAttr(__('New Date')) ?>"
+                               autocomplete="off">
+                    </div>
+                </div>
+                <div class="action">
+                </div>
+                <div class="actions-toolbar">
+                    <div class="primary" id="change_date">
+                        <input type="hidden" name="isAjax" value="1"/>
+                        <input type="hidden" name="type" value="check"/>
+                        <input type="hidden" name="form_key"
+                               value="<?= $block->escapeHtmlAttr($block->getFormKey()) ?>"/>
+                               <div class="col-md-12 col-12">
+                <div class="internal_page_full_style">
+                    <button type="submit">
+                        <span class="btn_style1 btn_style_in">
+                            <span><?= $block->escapeHtml(__('Update Details')) ?></span>
+                        </span>
+                        <div class="content-details fadeIn-left">
+                            <span class="btn_style btn_style_in">
+                                <span><?= $block->escapeHtml(__('Update Details')) ?></span>
+                            </span>
+                        </div>
+
+                    </button>
+                </div>
+
+            </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script type="text/x-magento-init">
+        {
+            "#verifyOrderDetails": {
+                  "Ecommage_ChangeDeliveryDate/js/delivery-change": {
+                        "ajaxUrl":"<?= $block->escapeJs($block->getAjaxUrl()) ?>"
+                    }
+            }
+        }
+    </script>
+<?php endif; ?>

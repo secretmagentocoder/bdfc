@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * @package Ceymox_Navconnector
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework-message-queue:etc/consumer.xsd">
+    <consumer name="NavOrderCreate"
+              queue="nav_order_create"
+              connection="db"
+              handler="Ceymox\Navconnector\Model\OrderCreateHandler::processOrder"/>
+    <consumer name="NavCreditmemoCreate"
+              queue="nav_creditmemo_create"
+              connection="db"
+              handler="Ceymox\Navconnector\Model\CreditmemoCreateHandler::processCreditMemo"/>
+</config>

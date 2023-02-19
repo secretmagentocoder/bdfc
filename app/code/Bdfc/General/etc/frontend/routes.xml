@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * 
+ * @package Bdfc_General
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:App/etc/routes.xsd">
+    <router id="standard">
+        <route id="bdfc_general" frontName="bdfc_general">
+            <module name="Bdfc_General" />
+        </route>
+    </router>
+</config>

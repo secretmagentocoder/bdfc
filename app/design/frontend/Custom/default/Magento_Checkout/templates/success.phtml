@@ -1,0 +1,185 @@
+
+
+
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+?>
+<?php /** @var $block \Magento\Checkout\Block\Onepage\Success */ ?>
+
+
+<section id="success_area" class="pt-5 mt-5">
+<div class="col-md-12">
+    <div class="col-md-8">
+        <h4 class="fw-600 text_color">THANK YOU FOR SHOPING</h4>
+        <p>We'll Emailand SMS you an order confirmation with you shopping details and tracking information</p>
+    </div>
+    <div class="col-md-4">
+        <i class="fa fa-share-alt"></i>
+        <i class="fa fa-print"></i>
+        <i class="fa fa-download"></i>
+    </div>
+</div>
+
+<?php if ($block->getOrderId()):?>
+
+
+
+<?php
+$lid = $this->getOrderId();
+// echo "Order ID:".$lid."<br/>";
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$order = $objectManager->create('Magento\Sales\Model\Order')->load($lid);
+$status = $order['status'];
+$date = $order['created_at'];
+$currencycode = $order['store_currency_code'];
+
+$totall = $order->getGrandTotal();
+$getSubtotal = $order->getSubtotal();
+$getDiscountAmount = $order->getDiscountAmount();
+
+// echo "Order Total:".$totall."<br/>";
+$shippingAddress = $order->getShippingAddress();
+// echo "Telephone No:".$shippingAddress->getTelephone()."<br/>";
+// echo "postcode".$shippingAddress->getPostcode()."<br/>";
+
+?>
+
+
+
+ 
+
+
+<div class="col-md-12">
+    <div class="col-md-8">
+        <table>
+            <tr>
+                <td><strong>Name:</strong> </td>
+                <td><?php echo $shippingAddress->getName(); ?></td>
+            </tr>
+            <tr>
+                <td><strong>Mobile no:</strong> </td>
+                <td><?php echo $shippingAddress->getTelephone(); ?></td>
+            </tr>
+            <tr>
+                <td><strong>Email:</strong> </td>
+                <td><?php echo $shippingAddress->getEmail(); ?></td>
+            </tr>
+        </table>
+        <p>VAT Reg NO. :</p>
+        <a href="#">Click to view the collection producre video</a>
+    </div>
+    <div class="col-md-4">
+        <table>
+            <tr>
+                <td><strong>Order No:</strong> </td>
+                <td><?php echo $lid; ?></td>
+            </tr>
+            <tr>
+                <td><strong>Order Date:</strong> </td>
+                <td><?php echo $date; ?></td>
+            </tr>
+            <tr>
+                <td><strong>Order Status:</strong> </td>
+                <td><?php echo $status; ?></td>
+            </tr>
+            <tr>
+                <td><strong>Collection Point:</strong> </td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><strong>Flight No:</strong> </td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><strong>Collection Date:</strong> </td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><strong>Collection Time:</strong> </td>
+                <td></td>
+            </tr>            
+        </table>
+    </div>
+</div>
+<?php endif;?>
+
+<div class="col-md-12">
+    <div class="col-md-8">
+        <table class="table table-striped">
+
+            <tr>
+                <th></th>
+                <th>ITEM NO</th>
+                <th>PRODUCT DETAILS</th>
+                <th>QTY</th>
+                <th>TOTAL</th>
+            </tr>
+            <?php $items = $order->getAllItems();
+
+            foreach($items as $i):
+            ?>
+
+
+              <tr>
+                <td><img src="<?php echo $i->getProductUrl(); ?>" alt=""></td>
+                <td><?php echo $i->getSku(); ?></td>
+                <td><?php echo $i->getName(); ?> </td>
+                <td><?php echo round($i->getQtyOrdered()); ?></td>
+                <td class="totalvalue"> <?php echo $i->getPrice(); ?></td>
+
+            </tr>
+
+            <?php  unset($i); ?>
+
+           
+           <?php endforeach; ?>
+            
+        </table>
+    </div>
+    <div class="col-md-4">
+
+        <table class="table table-striped">
+            <tr>
+                <td>Total :</td>
+                <td><?php echo $currencycode; ?></td>
+                <td id="total"><?php echo $totall; ?></td>
+            </tr>
+            <tr>
+                <td>Total Discount:</td>
+                <td><?php echo $currencycode; ?></td>
+                <td id="discount"><?php echo $getDiscountAmount; ?></td>
+            </tr>
+
+            <tr>
+                <td>Total after Discount:</td>
+                <td><?php echo $currencycode; ?></td>
+                <td id="afterdiscount"><?php $getSubtotal=$totall-$getDiscountAmount;?><?php echo $getSubtotal; ?></td>
+            </tr>
+            <tr>
+                <td>Total Cart Value:</td>
+                <td><?php echo $currencycode; ?></td>
+                <td id="cartvalue"><?php echo $getSubtotal; ?></td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div class="col-md-12">
+    <div class="col-md-8">
+        <a href="https://bdf.lyxelandflamingotech.in/" type="button" class="btn btn-primary" style="color:white;">BACK TO HOME</a>
+        <p>We would appreciate if your shopping experience with Bahrain Duty Free</p>
+    </div>
+</div>
+</section>
+
+<style type="text/css">
+    .page-title-wrapper {
+    display: none;
+}
+div#registration {
+    display: none;
+}
+</style>

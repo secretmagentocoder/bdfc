@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:App/etc/routes.xsd">
+    <router id="standard">
+        <route id="ecommage_custom_excise" frontName="ecommage_custom_excise">
+            <module name="Magento_CustomExcise" />
+        </route>
+    </router>
+</config>

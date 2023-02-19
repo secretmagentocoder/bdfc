@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * 
+ * @package Bdfc_General
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="customer_register_success">
+        <observer name="ecommage_custom_add_address_new_account" disabled="true" />
+    </event>
+</config>

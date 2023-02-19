@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Magento\Sales\Model\Order\Pdf\Invoice" type="Amasty\Orderattr\Model\Order\Pdf\Invoice" />
+    <preference for="Magento\Sales\Model\Order\Pdf\Shipment" type="Amasty\Orderattr\Model\Order\Pdf\Shipment" />
+    
+    <type name="Magento\Sales\Block\Adminhtml\Order\Create\Form\Account">
+        <plugin name="Amasty_Orderattr::addOrderAttributesToOrderCreateForm" type="Amasty\Orderattr\Block\Adminhtml\Order\Plugin\CreateFormOrderAttributes" />
+    </type>
+    <type name="Magento\Sales\Model\AdminOrder\Create">
+        <plugin name="amastyOrderattrCreate" type="Amasty\Orderattr\Model\Entity\Adapter\Order\Plugin\Admin\CreateOrderPlugin"/>
+    </type>
+    <type name="Magento\Sales\Block\Adminhtml\Order\View\Info">
+        <plugin name="Amasty_Orderattr::OrderEditAttributesList" type="Amasty\Orderattr\Block\Adminhtml\Order\Plugin\OrderView" />
+    </type>
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <plugin name="Amasty_Orderattr::addAttributesToGrids" type="Amasty\Orderattr\Model\ResourceModel\Value\Plugin\Order\Grid\SearchResult" />
+    </type>
+    <type name="Magento\Ui\Component\Listing\Columns">
+        <plugin name="Amasty_Orderattr::OrderAddAttributesGridColumns" type="Amasty\Orderattr\Model\ResourceModel\Value\Plugin\Order\Grid\Columns" />
+    </type>
+
+    <type name="Magento\Eav\Model\Attribute\Data\Select">
+        <plugin name="Amasty_Orderattr::AttributeDataSelectPlugin" type="Amasty\Orderattr\Model\Attribute\Data\SelectPlugin" />
+    </type>
+
+
+    <virtualType name="OrderEditFactoryForm" type="Magento\Framework\Data\FormFactory">
+        <arguments>
+            <argument name="instanceName" xsi:type="string">Amasty\Orderattr\Block\Adminhtml\Order\Create\Form\Attributes\Data\Form</argument>
+        </arguments>
+    </virtualType>
+    <type name="Amasty\Orderattr\Block\Adminhtml\Order\Create\Form\Attributes">
+        <arguments>
+            <argument name="formFactory" xsi:type="object">OrderEditFactoryForm</argument>
+        </arguments>
+    </type>
+</config>

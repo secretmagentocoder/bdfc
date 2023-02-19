@@ -1,0 +1,6 @@
+.payment-method-content .actions-toolbar button.checkout{
+    display: none !important;
+}
+form[data-role=email-with-possible-login]{
+    display: none;
+}

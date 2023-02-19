@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="nav" translate="label" type="text" sortOrder="102" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Dynamics NAV</label>
+            <tab>service</tab>
+            <resource>Ecommage_NavSyncPromotion::config_nav</resource>
+            <group id="system" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>NAV Settings</label>
+                <field id="company" translate="label comment" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Company</label>
+                </field>
+                <field id="host" translate="label comment" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Host</label>
+                </field>
+                <field id="user" translate="label comment" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>User</label>
+                </field>
+                <field id="pwd" translate="label comment" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Password</label>
+                </field>
+                <field id="offer_header" translate="label comment" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Web Offer Header</label>
+                </field>
+                <field id="offer_line" translate="label comment" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Web Offer Line</label>
+                </field>
+            </group>           
+            <group id="magento_credentials" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Magento Credentials</label>
+                <field id="magento_user" translate="label comment" type="text" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Magento User Name</label>
+                </field>
+                <field id="magento_pswd" translate="label comment" type="password" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Magento Password</label>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>
+

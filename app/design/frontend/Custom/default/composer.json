@@ -1,0 +1,22 @@
+{
+    "name": "Custom/default",
+    "description": "Digital Experience Theme",
+    "config": {
+        "sort-packages": true
+    },
+    "require": {
+        "php": "~5.6|~7.0|~7.1|~7.2|~7.3|~7.4|~7.5",
+        "magento/framework": "*",
+        "Custom/default": "*"
+    },
+    "type": "magento2-theme",
+    "license": [
+        "OSL-3.0",
+        "AFL-3.0"
+    ],
+    "autoload": {
+        "files": [
+            "registration.php"
+        ]
+    }
+}

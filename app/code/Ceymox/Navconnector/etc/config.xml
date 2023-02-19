@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <nav>
+            <nav_sync>
+                <enable_order_sync>0</enable_order_sync>
+                <enable_credit_memo_sync>0</enable_credit_memo_sync>
+                <creditmemo_prefix>RT</creditmemo_prefix>
+                <enable_status_update_cron>0</enable_status_update_cron>
+                <cron_schedule>*/30 * * * *</cron_schedule>
+            </nav_sync>
+        </nav>
+    </default>
+</config>

@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magetop
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the Magetop.com license that is
+ * available through the world-wide-web at this URL:
+ * https://www.magetop.com/LICENSE.txt
+ * 
+ * DISCLAIMER
+ * 
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ * 
+ * @category   Magetop
+ * @package    Magetop_Brand
+ * @copyright  Copyright (c) 2014 Magetop (https://www.magetop.com/)
+ * @license    https://www.magetop.com/LICENSE.txt
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../Backend/etc/menu.xsd">
+	<menu>
+        <add id="Magetop_Brand::main_menu" title="Shop By Brand" module="Magetop_Brand" sortOrder="20" resource="Magetop_Brand::main_menu" />
+		<add id="Magetop_Brand::brand" title="Brand" module="Magetop_Brand" sortOrder="40" resource="Magetop_Brand::brand" parent="Magetop_Brand::main_menu"/>
+		<add id="Magetop_Brand::brand_new" title="Add New Brand" module="Magetop_Brand" sortOrder="10" parent="Magetop_Brand::brand" action="magetopbrand/brand/new" resource="Magetop_Brand::brand"/>
+		<add id="Magetop_Brand::brand_manage" title="Manage Brands" module="Magetop_Brand" sortOrder="20" parent="Magetop_Brand::brand" action="magetopbrand/brand/index" resource="Magetop_Brand::brand"/>
+		<add id="Magetop_Brand::brand_group_manage" title="Manage Groups" module="Magetop_Brand" sortOrder="40" parent="Magetop_Brand::brand" action="magetopbrand/group/index" resource="Magetop_Brand::group"/>
+		<add id="Magetop_Brand::import" title="Import Brands Products" module="Magetop_Brand" sortOrder="45" parent="Magetop_Brand::brand" action="magetopbrand/import/index" resource="Magetop_Brand::import"/>
+        <add id="Magetop_Brand::configuration" title="Settings" module="Magetop_Brand" sortOrder="50" parent="Magetop_Brand::brand" action="adminhtml/system_config/edit/section/magetopbrand" resource="Magetop_Brand::config_brand"/>
+	</menu>
+</config>

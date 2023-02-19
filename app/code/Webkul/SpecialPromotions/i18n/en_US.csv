@@ -1,0 +1,109 @@
+Customer Attribute,Customer Attribute
+Actions,Actions
+Active,Active
+After N,After N
+Apply,Apply
+Apply to Shipping Amount,Apply to Shipping Amount
+As Default,As Default
+Average Order Value,Average Order Value
+Back,Back
+Buy N Products,Buy N Products
+Buy X Get Y (X and Y are different products),Buy X Get Y (X and Y are different products)
+Buy X get Y free (discount amount is Y),Buy X get Y free (discount amount is Y)
+Calculate Discount Based On,Calculate Discount Based On
+Cart Price Rule,Cart Price Rule
+Check Special Option Values,Check Special Option Values
+Conditions,Conditions
+Coupon,Coupon
+Coupon Code,Coupon Code
+Currently Active,Currently Active
+Custom Options SKU,Custom Options SKU
+Customer Groups,Customer Groups
+Default Rule Label for All Store Views,Default Rule Label for All Store Views
+Description,Description
+Discard subsequent rules,Discard subsequent rules
+Discount Amount,Discount Amount
+Discount Amount (in %),Discount Amount (in %)
+Discount amount is applied to subtotal and shipping amount separately,Discount amount is applied to subtotal and shipping amount separately
+Discount amount is applied to subtotal only,Discount amount is applied to subtotal only
+Discount Qty Step (Buy X),Discount Qty Step (Buy X)
+Duration After order is Placed,Duration After order is Placed
+Each Group of N,Each Group of N
+Each N-th,Each N-th
+Each Product (step),Each Product (step)
+Each Product After N,Each Product After N
+"Enter the category ids seperated by comma for Y products. Ex : 12,75","Enter the category ids seperated by comma for Y products. Ex : 12,75"
+Enter Y products separated by comma.,Enter Y products separated by comma.
+equals or greater than,equals or greater than
+equals or less than,equals or less than
+Fixed amount discount,Fixed amount discount
+Fixed amount discount for whole cart,Fixed amount discount for whole cart
+Fixed Discount:  Buy X get Y with $5 Off,Fixed Discount:  Buy X get Y with $5 Off
+"Fixed Discount: each 3-d, 6-th, 9-th with $10 0ff","Fixed Discount: each 3-d, 6-th, 9-th with $10 0ff"
+"Fixed Discount: each 3d, 7th, 11th with $10 0ff after 5 items added to the cart","Fixed Discount: each 3d, 7th, 11th with $10 0ff after 5 items added to the cart"
+Fixed price for product set,Fixed price for product set
+Fixed Price: Buy X get Y for $7.45,Fixed Price: Buy X get Y for $7.45
+Fixed Price: Each 5 items for $50,Fixed Price: Each 5 items for $50
+"Fixed Price: each 5th, 10th, 15th for $67","Fixed Price: each 5th, 10th, 15th for $67"
+"Fixed Price: each 5th, 7th, 9th for $79.90 after 5 items added to the cart","Fixed Price: each 5th, 7th, 9th for $79.90 after 5 items added to the cart"
+From,From
+General,General
+Get $Y for each $X spent,Get $Y for each $X spent
+greater than,greater than
+If %1 %2 %3 for a subselection of items in cart matching %4 of these conditions:,If %1 %2 %3 for a subselection of items in cart matching %4 of these conditions:
+If you select and save the rule you will be able to generate multiple coupon codes.,If you select and save the rule you will be able to generate multiple coupon codes.
+Inactive,Inactive
+is,is
+is not,is not
+is not one of,is not one of
+is one of,is one of
+Labels,Labels
+less than,less than
+Manage Coupon Codes,Manage Coupon Codes
+Max Amount of Discount,Max Amount of Discount
+Maximum Qty Discount is Applied To,Maximum Qty Discount is Applied To
+Most Expensive,Most Expensive
+No,No
+Number of Placed Orders,Number of Placed Orders
+Number of Products with Discount,Number of Products with Discount
+Number of X Products,Number of X Products
+Number of Y Products,Number of Y Products
+Nunber of completed Orders,Nunber of completed Orders
+Order Status,Order Status
+Orders Subselection,Orders Subselection
+Original Price,Original Price
+Percent discount for product set,Percent discount for product set
+Percent Discount: Buy X get Y Free,Percent Discount: Buy X get Y Free
+"Percent Discount: each 1st, 3rd, 5th with 10% 0ff after 5 items added to the cart","Percent Discount: each 1st, 3rd, 5th with 10% 0ff after 5 items added to the cart"
+"Percent Discount: each 2-d, 4-th, 6-th with 10% 0ff","Percent Discount: each 2-d, 4-th, 6-th with 10% 0ff"
+Percent Discount: Each 5 items with 15% off,Percent Discount: Each 5 items with 15% off
+Percent of product price discount,Percent of product price discount
+Please Choose Condition,Please Choose Condition
+Popular,Popular
+Price (Special Price if Set),Price (Special Price if Set)
+Price After Previous Discount(s),Price After Previous Discount(s)
+Priority,Priority
+Product Set,Product Set
+Promo Categories,Promo Categories
+Promo SKU,Promo SKU
+Public In RSS Feed,Public In RSS Feed
+Purchase History,Purchase History
+Rule Information,Rule Information
+Rule Name,Rule Name
+Skip Configurable Items if child Special Price,Skip Configurable Items if child Special Price
+Skip If Discounted,Skip If Discounted
+Skip Items With Special Price,Skip Items With Special Price
+Skip Items with Special Price,Skip Items with Special Price
+Skip Items with Tier Price,Skip Items with Tier Price
+Skip Settings,Skip Settings
+Special Promotions,Special Promotions
+"The Cheapest, also for Buy 1 get 1 free","The Cheapest, also for Buy 1 get 1 free"
+To,To
+Total Sales Amount,Total Sales Amount
+Usage limit enforced for logged in customers only.,Usage limit enforced for logged in customers only.
+Use Auto Generation,Use Auto Generation
+Uses per Coupon,Uses per Coupon
+Uses per Customer,Uses per Customer
+Webkul,Webkul
+Websites,Websites
+Yes,Yes

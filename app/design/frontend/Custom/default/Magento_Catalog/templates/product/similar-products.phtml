@@ -1,0 +1,231 @@
+<?php
+
+/**
+ * Product view template
+ *
+ * @var $block \Magento\Catalog\Block\Product\View\Description
+ */
+?>
+<?php
+$_helper = $this->helper(Magento\Catalog\Helper\Output::class);
+$_product = $block->getProduct();
+
+if (!$_product instanceof \Magento\Catalog\Model\Product) {
+	return;
+}
+
+
+$brandcode = $_product->getSubBrandCode();
+
+$product_id = $_product->getId();
+
+
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$productCollection = $objectManager->create('Magento\Catalog\Model\ResourceModel\Product\CollectionFactory');
+
+$_productCollection = $productCollection->create()
+	->addAttributeToSelect('*')
+	->addAttributeToFilter('sub_brand_code', array('eq' => $brandcode))
+	->addAttributeToFilter('entity_id', array('neq' => $product_id))
+	->setPageSize(5) // only get 10 products 
+	->setCurPage(1)
+	->load();
+?>
+
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+use Magento\Framework\App\Action\Action;
+
+/** @var \Magento\Catalog\Helper\Output $_helper */
+$_helper = $block->getData('outputHelper');
+
+$home_url = $block->getBaseUrl();
+
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$connection = $objectManager->get('Magento\Framework\App\ResourceConnection')->getConnection('\Magento\Framework\App\ResourceConnection::DEFAULT_CONNECTION');
+?>
+
+<div class="product-similar-products pt-5 mt-0">
+
+
+	<?php if ($_productCollection->count()) : ?>
+		
+		<div class="similar-products-title pb-5">
+			<h3 class="widget-title base_line"><span>Similar Products</span></h3>
+		</div>
+		<?php
+		$viewMode = 'list';
+		$imageDisplayArea = 'category_page_list';
+		$showDescription = true;
+		$templateType = \Magento\Catalog\Block\Product\ReviewRendererInterface::FULL_VIEW;
+
+		$showWishlist = true;
+		$showCompare = true;
+		$showCart = true;
+
+		/**
+		 * Position for actions regarding image size changing in vde if needed
+		 */
+		$pos = $block->getPositioned();
+		?>
+		<div class="block widget block-products-list grid">
+			<div class="block-content">
+				<div class="products-grid grid">
+					<ol class="product-items widget-product-grid bestsellers_slider">
+						<?php /** @var $_product \Magento\Catalog\Model\Product */ ?>
+						<?php foreach ($_productCollection as $_product) : ?>							
+							<?php							
+								$age_limit = 0;
+								$age_limit_category = '';
+								$productConfigHelper = $this->helper('Bdfc\General\Helper\ProductConfig');
+
+								$ageData = $productConfigHelper->getAgeLimit($_product->getCategoryIds());
+								if (! empty($ageData)) {
+									$age_limit = (isset($ageData['age_limit'])) ? $ageData['age_limit'] : 0;
+									$age_limit_category = (isset($ageData['age_limit_category'])) ? $ageData['age_limit_category'] : '';
+								}                    
+							?>
+							<?php
+
+							$product_brand = $_product->getData('product_brand');
+							$product_brand_arr = explode(",", $product_brand);
+							$product_brand_html = '';
+							$count = '0';
+							if (!empty($product_brand_arr)) {
+								foreach ($product_brand_arr as $value) {
+									if (!empty($value)) {
+										if ($count != '0') {
+											$product_brand_html .= ', ';
+										}
+										$brand_id = $value;
+										$query = $connection->select()->from('magetop_brand', ['*'])->where('brand_id = ?', $brand_id);
+										$result = $connection->fetchRow($query);
+										$brand_name = $result['name'];
+										$brand_url_key = $result['url_key'];
+										$brand_url = $home_url . 'brand/' . $brand_url_key . '.html';
+										$product_brand_html .= '<a href="' . $brand_url . '" title="' . $brand_name . '">' . $brand_name . '</a>';
+									}
+									$count++;
+								}
+							}
+							?>
+							<li class="product-item hp">
+								<div class="product-item-info card h-100" id="product-item-info_<?= /* @noEscape */ $_product->getId() ?>" data-container="product-<?= /* @noEscape */ $viewMode ?>">
+									<?php
+									echo '<div class="product-badges">';
+									$sql = "SELECT * FROM `product_badges` ORDER BY `badge_id` ASC";
+									$results = $connection->fetchAll($sql);
+									foreach ($results as $key => $value) {
+										$badge_id = $value['badge_id'];
+										$badge_slug = $value['badge_slug'];
+										$badge_name = $value['badge_name'];
+
+										$product_is_badges = $_product->getData($badge_slug);
+										if ($product_is_badges == true) {
+											echo '<div class="badges ' . $badge_slug . '">';
+											echo '<img src="/images/badges/' . $badge_slug . '.png" alt="' . $badge_name . '" />';
+											echo '</div>';
+										}
+									}
+									echo '</div>';
+									?>
+									<?php
+									$productImage = $block->getImage($_product, $imageDisplayArea);
+									if ($pos != null) {
+										$position = 'left:' . $productImage->getWidth() . 'px;'
+											. 'top:' . $productImage->getHeight() . 'px;';
+									}
+									?>
+									<?php // Product Image 
+									?>
+									<a href="<?= $escaper->escapeUrl($_product->getProductUrl()) ?>" class="product photo product-item-photo" tabindex="-1">
+										<?= $productImage->toHtml() ?>
+									</a>
+									<div class="product details product-item-details">
+										<?php $_productNameStripped = $block->stripTags($_product->getName(), null, true); ?>
+										<strong class="product-item-name">
+											<div class="product-brand">
+												<?php echo $product_brand_html; ?>
+											</div>
+											<a title="<?= $block->escapeHtml($_product->getName()) ?>" href="<?= $block->escapeUrl($block->getProductUrl($_product)) ?>" class="product-item-link">
+												<h5 class="card_title"><?= $block->escapeHtml($_product->getName()) ?></h5>
+											</a>
+										</strong>
+										<?= $block->getReviewsSummaryHtml($_product, $templateType) ?>
+										<?= /* @noEscape */ $block->getProductPrice($_product) ?>
+
+										<?= $block->getProductDetailsHtml($_product) ?>
+
+										<?php if ($showWishlist || $showCompare || $showCart) : ?>
+											<div class="product-item-inner">
+												<div class="product actions product-item-actions">
+													<?php if ($showCart) : ?>
+														<div class="actions-primary">
+															<?php if ($_product->isSaleable()) : ?>
+																<?php $postParams = $block->getAddToCartPostParams($_product); ?>
+																<form class="product-addtocart-form" data-role="tocart-form" data-product-sku="<?= $block->escapeHtml($_product->getSku()) ?>" action="<?= $block->escapeUrl($postParams['action']) ?>" method="post">
+																	<input type="hidden" name="product" value="<?= $block->escapeHtmlAttr($postParams['data']['product']) ?>">
+																	<input type="hidden" name="<?= /* @noEscape */ Action::PARAM_NAME_URL_ENCODED ?>" value="<?= /* @noEscape */ $postParams['data'][Action::PARAM_NAME_URL_ENCODED] ?>">
+																	<input type="hidden" name="product_in_age" value="<?php echo $age_limit > 0 ? "Yes" : "No"; ?>">
+																	<input type="hidden" name="age_limit_category" value="<?php echo $age_limit_category !='' ? $age_limit_category: "LIQUOR & TOBACCO"; ?>">
+																	<input type="hidden" name="age_limit" value="<?php echo $age_limit ?>">
+																	<?= $block->getBlockHtml('formkey') ?>
+																	<button type="submit" title="<?= $block->escapeHtml(__('Add to Cart')) ?>" class="action tocart primary">
+																		<span><?= $block->escapeHtml(__('Add to Cart')) ?></span>
+																	</button>
+																</form>
+															<?php else : ?>
+																<?php if ($_product->getIsSalable()) : ?>
+																	<div class="stock available"><span><?= $block->escapeHtml(__('In stock')) ?></span></div>
+																<?php else : ?>
+																	<div class="stock unavailable"><span><?= $block->escapeHtml(__('Out of stock')) ?></span></div>
+																<?php endif; ?>
+															<?php endif; ?>
+														</div>
+													<?php endif; ?>
+													<?php if ($showWishlist || $showCompare) : ?>
+														<div class="actions-secondary" data-role="add-to-links">
+															<?php if ($this->helper(\Magento\Wishlist\Helper\Data::class)->isAllow() && $showWishlist) : ?>
+																<a href="#" data-post='<?= /* @noEscape */ $block->getAddToWishlistParams($_product) ?>' class="action towishlist" data-action="add-to-wishlist" title="<?= $block->escapeHtmlAttr(__('Add to Wish List')) ?>">
+																	<span><?= $block->escapeHtml(__('Add to Wish List')) ?></span>
+																</a>
+															<?php endif; ?>
+															<?php if ($block->getAddToCompareUrl() && $showCompare) : ?>
+																<?php $compareHelper = $this->helper(\Magento\Catalog\Helper\Product\Compare::class); ?>
+																<a href="#" class="action tocompare" data-post='<?= /* @noEscape */ $compareHelper->getPostDataParams($_product) ?>' title="<?= $block->escapeHtmlAttr(__('Add to Compare')) ?>">
+																	<span><?= $block->escapeHtml(__('Add to Compare')) ?></span>
+																</a>
+															<?php endif; ?>
+														</div>
+													<?php endif; ?>
+												</div>
+											</div>
+										<?php endif; ?>
+									</div>
+								</div>
+								<?= strpos($pos, $viewMode . '-actions') ?
+									/* @noEscape */ $secureRenderer->renderStyleAsTag(
+										$position,
+										'product-item-info_' . $_product->getId() . ' div.product-item-actions'
+									) : '' ?>
+							</li>
+						<?php endforeach; ?>
+					</ol>
+				</div>
+			</div>
+		</div>
+		<script type="text/x-magento-init">
+			{
+        "[data-role=tocart-form], .form.map.checkout": {
+            "catalogAddToCart": {
+                "product_sku": "<?= $escaper->escapeJs($_product->getSku()) ?>"
+            }
+        }
+    }
+    </script>
+	<?php endif; ?>
+</div>

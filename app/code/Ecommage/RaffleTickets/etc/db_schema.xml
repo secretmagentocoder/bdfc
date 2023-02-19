@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!--
+ /**
+ * @package Ecommage_RaffleTickets
+ */
+-->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="raffle_ticket_winners" resource="default" engine="innodb" comment="Raffle ticket winners">
+        <column xsi:type="int" name="id" unsigned="true" nullable="false" padding="10" identity="true" comment="Id"/>
+        <column xsi:type="smallint" name="show_winner" nullable="false" comment="Show Title"/>
+        <column xsi:type="int" name="raffle_product_id" unsigned="true" nullable="false" padding="10" comment="Raffle Product ID"/>
+        <column xsi:type="varchar" name="raffle_product_name" nullable="false" length="250" comment="Product Name"/>
+        <column xsi:type="varchar" name="raffle_product_series" nullable="false" length="250" comment="Ticket Series"/>
+        <column xsi:type="varchar" name="winner_ticket_number" nullable="false" length="250" comment="Winner Ticket Number"/>
+        <column xsi:type="varchar" name="winner_name" nullable="true" length="250" comment="Winner Name"/>
+        <column xsi:type="varchar" name="nationality" nullable="true" length="250" comment="Nationality"/>
+        <column xsi:type="varchar" name="prize" nullable="true" length="250" comment="Price"/>
+        <column xsi:type="datetime" name="draw_date" nullable="false" comment="Draw Date"/>
+        <column xsi:type="varchar" name="media" nullable="true" length="250" comment="Media"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="id"/>
+        </constraint>
+    </table>
+</schema>

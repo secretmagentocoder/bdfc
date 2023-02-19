@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Webkuls Software.
+ *
+ * @category  Webkuls
+ * @package   Webkuls_SpecialPromotions
+ * @author    Webkuls
+ * @copyright Copyright (c) Webkuls Software Private Limited (https://Webkuls.com)
+ * @license   https://store.Webkuls.com/license.html
+ */-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="sales_rule_form_page_head_components">
+          <action method="setTemplate">
+              <argument name="template" xsi:type="string">Webkuls_SpecialPromotions::promo/salesrulejs.phtml</argument>
+          </action>
+        </referenceBlock>
+    </body>
+</page>

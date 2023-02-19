@@ -1,0 +1,171 @@
+<?php
+/**
+ * Mageplaza
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Mageplaza.com license that is
+ * available through the world-wide-web at this URL:
+ * https://www.mageplaza.com/LICENSE.txt
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ *
+ * @category    Mageplaza
+ * @package     Mageplaza_SocialShare
+ * @copyright   Copyright (c) Mageplaza (https://www.mageplaza.com/)
+ * @license     https://www.mageplaza.com/LICENSE.txt
+ */
+?>
+
+<?php /** @var \Mageplaza\SocialShare\Block\SocialShare $block */ ?>
+
+<?php if ($block->isEnable()): ?>
+    <?php if ($block->isThisPageEnable() && $block->isThisPositionEnable()): ?>
+        <style type="text/css">
+		    
+            .a2a_svg, .a2a_count {
+                border-radius: <?= /* @noEscape */ $block->getBorderRadius()?> !important;
+            }
+
+            <?php if ($block->isDisplayInline()):?>
+            .mp_social_share_inline, .mp_social_share_inline_under_cart {
+                display: flex;
+                border-radius: 7px;
+                padding: 7px 7px 7px 5px;
+                <?= /* @noEscape */ $block->getBackgroundColor()?>
+            }
+
+            .mp_social_share_inline {
+                width: fit-content;
+                justify-content: flex-end;
+                margin-top: -10px;
+                margin-bottom: 15px;
+                <?= $block->getPosition() === 'bottom_content' ? 'float: right;' : 'float: left;' ?>
+            }
+
+            .mp_social_share_inline_under_cart {
+                justify-content: flex-start;
+                float: left;
+            }
+            <?php else: ?>
+            .mp_social_share_float {
+                <?php if ($block->isVerticalStyle($block->getFloatStyle())): ?>
+                    <?= /* @noEscape */ $block->getFloatMargin('top')?>
+                <?php endif;?>
+                <?= /* @noEscape */ $block->getFloatPosition()?>
+                <?= /* @noEscape */ $block->getBackgroundColor()?>
+                z-index: 10;
+            }
+
+                <?php if (!$block->isVerticalStyle($block->getFloatStyle())):?>
+            .a2a_floating_style.a2a_default_style {
+                    <?= /* @noEscape */ $block->getFloatMargin('bottom')?>
+            }
+                <?php endif;?>
+
+            @media only screen and (min-width: 430px) {.navigation { z-index: 1; }}
+            @media only screen and (max-width: 777px) {
+                .mp_social_share_inline {
+                    width: fit-content;
+                    justify-content: flex-end;
+                    margin-top: -10px;
+                    margin-bottom: 15px;
+                    float: none;
+                }
+            }
+
+            .footer-bottom .container .logo { z-index: 0;}
+            <?php endif;?>
+        </style>
+
+        <div class="<?= /* @noEscape */ $block->getContainerClass($block->getDisplayType()) ?>">
+		    <p>Share : </p>
+            <div class="a2a_kit <?= /* @noEscape */ $block->getDisplayType() ?>
+            <?= /* @noEscape */ $block->getButtonSize() ?>
+            <?= /* @noEscape */ $block->getFloatStyle() ?>">
+
+                <?php foreach ($block->getEnableService() as $enableService): ?>
+                    <?php if ($block->isImageEnable($enableService)): ?>
+                        <a class="a2a_button_<?= /* @noEscape */ $enableService ?>
+                        <?= /* @noEscape */ $block->getShareCounter($enableService) ?>">
+                            <img src="<?= /* @noEscape */ $block->getImageUrl($enableService) ?>"
+                                <?= /* @noEscape */ $block->setImageSize($block->getButtonSize()) ?>
+                                 alt="<?= /* @noEscape */ $enableService ?>">
+                        </a>
+                    <?php else: ?>
+                        <a class="a2a_button_<?= /* @noEscape */ $enableService ?>
+                        <?= /* @noEscape */ $block->getShareCounter($enableService) ?>">
+						<?php 
+							if($enableService == "facebook")
+							{ ?>
+						<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-meta" viewBox="0 0 16 16">
+						<path fill-rule="evenodd" d="M8.217 5.243C9.145 3.988 10.171 3 11.483 3 13.96 3 16 6.153 16.001 9.907c0 2.29-.986 3.725-2.757 3.725-1.543 0-2.395-.866-3.924-3.424l-.667-1.123-.118-.197a54.944 54.944 0 0 0-.53-.877l-1.178 2.08c-1.673 2.925-2.615 3.541-3.923 3.541C1.086 13.632 0 12.217 0 9.973 0 6.388 1.995 3 4.598 3c.319 0 .625.039.924.122.31.086.611.22.913.407.577.359 1.154.915 1.782 1.714Zm1.516 2.224c-.252-.41-.494-.787-.727-1.133L9 6.326c.845-1.305 1.543-1.954 2.372-1.954 1.723 0 3.102 2.537 3.102 5.653 0 1.188-.39 1.877-1.195 1.877-.773 0-1.142-.51-2.61-2.87l-.937-1.565ZM4.846 4.756c.725.1 1.385.634 2.34 2.001A212.13 212.13 0 0 0 5.551 9.3c-1.357 2.126-1.826 2.603-2.581 2.603-.777 0-1.24-.682-1.24-1.9 0-2.602 1.298-5.264 2.846-5.264.091 0 .181.006.27.018Z"></path>
+						</svg>
+								
+						<?php }if($enableService == "pinterest") { ?>  
+							<i class="fa fa-pinterest-p" aria-hidden="true"></i>
+						<?php } ?>
+						<?php if($enableService == "linkedin") { ?>
+						<i class="fa fa-linkedin" aria-hidden="true"></i>
+							
+						<?php } ?>
+						<?php if($enableService == "whatsapp") { ?>
+							<i class="fa fa-whatsapp" aria-hidden="true"></i>
+						<?php } ?>
+							
+
+							 
+						  
+						 
+						</a>
+						
+						  
+						
+						
+						<style>
+						/* svg{
+							display:none !important;
+						}
+						svg.bi.bi-meta {
+							margin-top: 15px;
+							margin-left: 6px;
+							display: block !important;
+							width : 17px
+						} */
+						i.fa.fa-linkedin {
+							margin-top: 4px;
+							margin-left: 2px;
+						}
+						i.fa.fa-whatsapp {
+							margin-top: 5px;
+							margin-left: 2px;
+						}
+						i.fa.fa-pinterest-p {
+							margin-top: 5px;
+							margin-left: 2px;
+						}
+						</style>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+
+                <?php if ($block->isAddMoreShare()): ?>
+                    <a class="a2a_dd <?= /* @noEscape */ $block->getShareCounter('a2a_dd') ?>"
+                       href="https://www.addtoany.com/share"></a>
+                <?php endif; ?>
+            </div>
+        </div>
+
+        <script type="text/javascript">
+            var a2a_config = a2a_config || {};
+
+            a2a_config.icon_color ="<?= /* @noEscape */ $block->getIconColor() ?>";
+            a2a_config.num_services = <?= /* @noEscape */ $block->getNumberOfService() ?>;
+            a2a_config.onclick = <?= /* @noEscape */ $block->getMenuType() ?>;
+            a2a_config.thanks = {postShare: <?= /* @noEscape */ $block->getThankYou() ?>,};
+            a2a_config.exclude_services = [<?= /* @noEscape */ $block->getDisabledServices() ?>];
+        </script>
+    <?php endif; ?>
+<?php endif; ?>

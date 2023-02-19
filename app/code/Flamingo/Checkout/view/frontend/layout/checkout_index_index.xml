@@ -1,0 +1,135 @@
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="age_varification_popup" remove="true" />
+        <move element="cart_items" destination="sidebar" before="totals"/>
+        
+        <referenceBlock name="checkout.root">
+            <arguments>
+                <argument name="jsLayout" xsi:type="array">
+                    <item name="components" xsi:type="array">
+                        <item name="checkout" xsi:type="array">
+                            <item name="children" xsi:type="array">
+                                <item name="progressBar" xsi:type="array">
+                                    <item name="config" xsi:type="array">
+                                        <item name="componentDisabled" xsi:type="boolean">true</item>
+                                    </item>
+                                </item>
+                                <item name="steps" xsi:type="array">
+                                    <item name="children" xsi:type="array">
+
+                                        <!-- <item name="personal-information-step" xsi:type="array">
+                                            <item name="component" xsi:type="string">uiComponent</item>
+                                            <item name="sortOrder" xsi:type="string">1</item>
+                                            <item name="children" xsi:type="array">
+                                                <item name="step-config" xsi:type="array">
+                                                    <item name="component" xsi:type="string">uiComponent</item>
+                                                    <item name="children" xsi:type="array">
+                                                        <item name="personal-information-validation" xsi:type="array">
+                                                            <item name="children" xsi:type="array">
+                                                            </item>
+                                                        </item>
+                                                    </item>
+                                                </item>
+                                                <item name="personalInformation" xsi:type="array">
+                                                    <item name="config" xsi:type="array">
+                                                        <item name="deps" xsi:type="array">
+                                                            <item name="0" xsi:type="string">checkout.steps.personal-information-step.step-config</item>
+                                                            <item name="1" xsi:type="string">checkoutProvider</item>
+                                                        </item>
+                                                    </item>
+                                                    <item name="component" xsi:type="string">Flamingo_Checkout/js/view/personal-information</item>
+                                                    <item name="provider" xsi:type="string">checkoutProvider</item>
+                                                    <item name="sortOrder" xsi:type="string">1</item>
+                                                    <item name="children" xsi:type="array">
+                                                        <item name="personal-information-address-fieldset" xsi:type="array">
+                                                            <item name="component" xsi:type="string">uiComponent</item>
+                                                            <item name="config" xsi:type="array">
+                                                                <item name="deps" xsi:type="array">
+                                                                    <item name="0" xsi:type="string">checkoutProvider</item>
+                                                                </item>
+                                                            </item>
+                                                            <item name="displayArea" xsi:type="string">additional-fieldsets</item>
+                                                            <item name="children" xsi:type="array">
+                                                                <item name="firstname" xsi:type="array">
+                                                                    <item name="sortOrder" xsi:type="string">100</item>
+                                                                </item>
+                                                                <item name="lastname" xsi:type="array">
+                                                                    <item name="sortOrder" xsi:type="string">110</item>
+                                                                </item>
+                                                            </item>
+                                                        </item>
+                                                    </item>
+                                                </item>
+                                            </item>
+                                        </item> -->
+                                        <!-- The new step personal information -->
+                                        <!-- <item name="order-personal-information-step" xsi:type="array">
+                                            <item name="component" xsi:type="string">Flamingo_Checkout/js/view/checkout-personal-information-step</item>
+                                            <item name="sortOrder" xsi:type="string">1</item>
+                                            <item name="children" xsi:type="array">
+                                                <item name="personalInformation" xsi:type="array">
+                                                    <item name="children" xsi:type="array">
+                                                        <item name="personal-information-checkout-form" xsi:type="array">
+                                                            <item name="component" xsi:type="string">uiComponent</item>
+                                                            <item name="displayArea" xsi:type="string">personal-information-checkout-form</item>
+                                                            <item name="children" xsi:type="array">
+                                                                <item name="personal-information-checkout-form-container" xsi:type="array">
+                                                                    <item name="sortOrder" xsi:type="string">0</item>
+                                                                    <item name="component" xsi:type="string">Flamingo_Checkout/js/view/checkout/personal-information-checkout-form</item>
+                                                                    <item name="provider" xsi:type="string">checkoutProvider</item>
+                                                                    <item name="config" xsi:type="array">
+                                                                        <item name="template" xsi:type="string">Flamingo_Checkout/checkout/personal-information-checkout-form</item>
+                                                                    </item>
+                                                                    <item name="children" xsi:type="array">
+                                                                        <item name="personal-information-checkout-form-fieldset" xsi:type="array">
+                                                                            <item name="component" xsi:type="string">uiComponent</item>
+                                                                            <item name="displayArea" xsi:type="string">personal-information-checkout-form-fields</item>
+                                                                            <item name="children" xsi:type="array">
+                                                                                <item name="personal_information_checkout_buyer_name" xsi:type="array">
+                                                                                    <item name="component" xsi:type="string">Magento_Ui/js/form/element/abstract</item>
+                                                                                    <item name="config" xsi:type="array">
+                                                                                        <item name="customScope" xsi:type="string">customCheckoutForm</item>
+                                                                                        <item name="template" xsi:type="string">ui/form/field</item>
+                                                                                        <item name="elementTmpl" xsi:type="string">ui/form/element/input</item>
+                                                                                    </item>
+                                                                                    <item name="provider" xsi:type="string">checkoutProvider</item>
+                                                                                    <item name="dataScope" xsi:type="string">customCheckoutForm.checkout_buyer_name</item>
+                                                                                    <item name="label" xsi:type="string">First Name</item>
+                                                                                    <item name="sortOrder" xsi:type="string">1</item>
+                                                                                </item>
+                                                                            </item>
+                                                                        </item>
+                                                                    </item>
+                                                                </item>
+                                                            </item>
+                                                        </item>
+                                                    </item>
+                                                </item>
+                                            </item>
+                                        </item> -->
+                                        <!-- The new step personal information -->
+
+                                    </item>
+                                </item>
+                                <item name="sidebar" xsi:type="array">
+                                    <item name="children" xsi:type="array">
+                                        <item name="summary" xsi:type="array">
+                                            <item name="children" xsi:type="array">
+                                                <item name="totals" xsi:type="array">
+                                                    <item name="sortOrder" xsi:type="string">99</item>
+                                                </item>
+                                                <item name="cart_items" xsi:type="array">
+                                                    <item name="sortOrder" xsi:type="string">0</item>
+                                                </item>
+                                            </item>
+                                        </item>
+                                    </item>
+                                </item>
+                            </item>
+                        </item>
+                    </item>
+                </argument>
+            </arguments>
+        </referenceBlock>
+    </body>
+</page>

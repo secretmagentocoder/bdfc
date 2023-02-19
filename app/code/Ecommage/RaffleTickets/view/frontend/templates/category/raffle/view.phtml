@@ -1,0 +1,97 @@
+<?php
+/**
+ * @var $block \Ecommage\RaffleTickets\Block\Raffle\CategoryTicket
+ */
+
+$helper = $this->helper('Ecommage\RaffleTickets\Helper\Data');
+$helperCheckout = $this->helper('Ecommage\CustomerCheckoutSuccess\Helper\Data');
+$product = $helperCheckout->getProduct($helper->getCurrentProduct()->getEntityId());
+$options = $helper->setOptionNumber($product->getOptions());
+$data = $helper->getAllOption();
+$number = $helper->getCountOption($options);
+$priceHelper = $this->helper('Magento\Framework\Pricing\Helper\Data');
+$taxHelper = $this->helper('Magento\Catalog\Helper\Data');
+
+$blockOption = $block->getBlockOption();
+
+?>
+<style>
+    .title-ticket h2 {
+    font-weight: 600;
+}
+.product-name {
+    font-size: 20px !important;
+    padding: 10px 0px;
+    font-weight: 600;
+}
+.product-series, .product-price {
+    font-weight: 600;
+}
+.product-tickets-remaining {
+    color: #b58484;
+    font-size: 18px !important;
+    padding: 10px 0px;
+}
+.product-custom-option {
+    visibility: hidden;
+}
+.field.choice.admin__field.admin__field-option input[type="checkbox"]{
+visibility: hidden !important;
+position: absolute !important;
+}
+.breadcrumbs {
+    display: none;
+}
+label.label.admin__field-label {
+    border: 1px solid #ccc;
+    background-color: #fff;
+    padding: 5px;
+    width: 40px;
+    text-align: center;
+}
+div#options-87-list {
+    justify-content: space-between;
+    background-color: #f9f9f9;
+    padding: 20px 10px;
+}
+.main_class{background-color: black;}
+    </style>
+<div class="content-ticket pt-5">
+    <div class="title-ticket">
+        <h2 class="fw-700"><?= $block->escapeHtml(__('SELECT YOUR TICKETS'))?></h2>
+        <div class="product-name"><?= $block->escapeHtml(__($product->getName())) ?></div>
+        <div class="product-series"><?= $block->escapeHtml(__('Series: %1',$product->getSeries())) ?></div>
+        <div class="product-price"><?= $block->escapeHtml(__('Tickets Price: '))?><span class="product-price-tickets">
+            <?php $price = $taxHelper->getTaxPrice($product, $product->getFinalPrice(), true)?>
+            <?= $priceHelper->currency($price, true, false) ?>
+        </span></div>
+        <div class="product-tickets-remaining"><?= $block->escapeHtml(__('Tickets Remaining: %1', count($options))) ?></div>
+    </div>
+    <div class="box_ticket_area row ">
+        <div class="col-md-8">
+    <div class="action">
+        <button class="btn-submit-number" data-type="all" type="submit"><?=$block->escapeHtml(__('ALL (%1)',count($options))) ?></button>
+                <button class="btn-submit-number" data-type="odd" type="submit"><?=$block->escapeHtml(__('ODD (%1)',array_key_exists('odd',$number) ? count($number['odd']) : 0)) ?></button>
+                <button class="btn-submit-number" data-type="even" type="submit"><?=$block->escapeHtml(__('EVEN (%1)',array_key_exists('even',$number) ? count($number['even']) : 0)) ?></button>
+    </div>
+    </div>
+    <div class="col-md-4">
+    <input class="search-tickets" name="search" placeholder="<?= $block->escapeHtml(__('Search Tickets No')) ?>" type="text"><span class="btn_search" width="20px"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" xmlns:v="https://vecta.io/nano"><path d="M29.71 28.29l-6.5-6.5h-.07a12 12 0 1 0-1.39 1.39v.07l6.5 6.5a1 1 0 0 0 1.42 0 1 1 0 0 0 .04-1.46zM14 24a10 10 0 1 1 10-10 10 10 0 0 1-10 10z"/></svg></span>
+    </div>
+    </div>
+</div>
+<script type="text/x-magento-init"><?php // @codingStandardsIgnoreLine?>
+    {
+        ".page-main": {
+            "raffle_ticket": {
+                "optionConfig": <?= /* @noEscape */ $blockOption->getJsonConfig() ?>,
+                "type" : ".btn-submit-number",
+                "addToCartUrl": "<?= /* @noEscape */$block->getUrl('checkout/cart/add'); ?>",
+                "buyNowCartUrl": "<?= /* @noEscape */ $block->getUrl('ecommage_raffle_tickets/action/add'); ?>",
+                "breadcrumbsUrl": "<?= /* @noEscape */ $block->getUrl($helper->getConfigBreadcrumbsUrl()); ?>"
+            }
+        }
+    }
+</script>
+
+

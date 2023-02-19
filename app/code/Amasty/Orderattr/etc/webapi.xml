@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
+
+    <route url="/V1/amasty_orderattr/entityData" method="POST">
+        <service class="Amasty\Orderattr\Api\EntityDataRepositoryInterface" method="save"/>
+        <resources>
+            <resource ref="Amasty_Orderattr::order_attributes" />
+        </resources>
+    </route>
+    <route url="/V1/amasty_orderattr/entityData/:entityId" method="PUT">
+        <service class="Amasty\Orderattr\Api\EntityDataRepositoryInterface" method="save"/>
+        <resources>
+            <resource ref="Amasty_Orderattr::order_attributes" />
+        </resources>
+    </route>
+    <route url="/V1/amasty_orderattr/entityData/:entityId" method="DELETE">
+        <service class="Amasty\Orderattr\Api\EntityDataRepositoryInterface" method="deleteById"/>
+        <resources>
+            <resource ref="Amasty_Orderattr::order_attributes" />
+        </resources>
+    </route>
+    <route url="/V1/amasty_orderattr/entityData" method="GET">
+        <service class="Amasty\Orderattr\Api\EntityDataRepositoryInterface" method="getById"/>
+        <resources>
+            <resource ref="Amasty_Orderattr::order_attributes" />
+        </resources>
+    </route>
+    <route url="/V1/amasty_orderattr/entityData/all" method="GET">
+        <service class="Amasty\Orderattr\Api\EntityDataRepositoryInterface" method="getList" />
+        <resources>
+            <resource ref="Amasty_Orderattr::order_attributes" />
+        </resources>
+    </route>
+    <route url="/V1/amasty_orderattr/checkoutData" method="POST">
+        <service class="Amasty\Orderattr\Api\CheckoutDataRepositoryInterface" method="save"/>
+        <resources>
+            <resource ref="self" />
+        </resources>
+        <data>
+            <parameter name="amastyCartId" force="true">%amasty_cart_id%</parameter>
+        </data>
+    </route>
+    <route url="/V1/amasty_orderattr/guestCheckoutData" method="POST">
+        <service class="Amasty\Orderattr\Api\GuestCheckoutDataRepositoryInterface" method="save"/>
+        <resources>
+            <resource ref="anonymous" />
+        </resources>
+    </route>
+</routes>

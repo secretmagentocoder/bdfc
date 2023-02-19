@@ -1,0 +1,273 @@
+// /**
+//  * Copyright © Magento, Inc. All rights reserved.
+//  * See COPYING.txt for license details.
+//  */
+
+@layout-column-main__sidebar-offset: 2%;
+@layout-column__additional-sidebar-offset: @layout-column-main__sidebar-offset;
+
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+
+    .columns {
+        #lib-layout-columns();
+
+        .column.main {
+            &:extend(.abs-add-box-sizing all);
+            .lib-css(padding-bottom, @indent__xl);
+            .lib-vendor-prefix-flex-basis(auto);
+            .lib-vendor-prefix-flex-grow(1);
+            .lib-vendor-prefix-order(1);
+            width: 100%;
+        }
+
+        .sidebar-main {
+            &:extend(.abs-add-box-sizing all);
+            .lib-vendor-prefix-flex-grow(1);
+            .lib-vendor-prefix-flex-basis(100%);
+            .lib-vendor-prefix-order(1);
+        }
+
+        .sidebar-additional {
+            &:extend(.abs-add-box-sizing all);
+            .lib-vendor-prefix-flex-grow(1);
+            .lib-vendor-prefix-flex-basis(100%);
+            .lib-vendor-prefix-order(2);
+        }
+    }
+}
+
+//
+//  Mobile
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+    .navigation,
+    .page-wrapper > .breadcrumbs,
+    .page-header .header.panel,
+    .header.content,
+    .footer.content,
+    .page-main,
+    .page-wrapper > .widget,
+    .page-wrapper > .page-bottom,
+    .block.category.event,
+    .top-container {
+        padding-left: @layout__width-xs-indent;
+        padding-right: @layout__width-xs-indent;
+    }
+
+    .page-main {
+        .account &,
+        .cms-privacy-policy & {
+            padding-top: 41px;
+            position: relative;
+        }
+    }
+}
+
+//
+//  Desktop
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+    .navigation,
+    .page-wrapper > .breadcrumbs,
+    .page-header .header.panel,
+    .header.content,
+    .footer.content,
+    .page-wrapper > .widget,
+    .page-wrapper > .page-bottom,
+    .block.category.event,
+    .top-container,
+    .page-main,
+    .container {
+        box-sizing: border-box;
+        margin-left: auto;
+        margin-right: auto;
+        max-width: @layout__max-width;
+        padding-left: @layout-indent__width;
+        padding-right: @layout-indent__width;
+        width: 100%;
+    }
+
+    .page-main {
+        width: 100%;
+    }
+
+    .columns {
+        display: block;
+    }
+
+    .column.main {
+        #lib-layout-columns > .main();
+        &:extend(.abs-add-box-sizing-desktop all);
+        min-height: 300px;
+    }
+
+    .sidebar-main {
+        #lib-layout-columns > .left();
+        padding-right: @layout-column-main__sidebar-offset;
+        &:extend(.abs-add-box-sizing-desktop all);
+    }
+
+    .page-layout-2columns-right .sidebar-main {
+        padding-left: @layout-column-main__sidebar-offset;
+        padding-right: 0;
+    }
+
+    .sidebar-additional {
+        #lib-layout-columns > .right();
+        clear: right;
+        padding-left: @layout-column__additional-sidebar-offset;
+        &:extend(.abs-add-box-sizing-desktop all);
+    }
+
+    .page-layout-2columns-left {
+        .main {
+            padding-left: @layout-column__additional-sidebar-offset
+        }
+
+        .sidebar-additional {
+            clear: left;
+            float: left;
+            padding-left: 0;
+        }
+    }
+
+    .panel.header {
+        padding: 10px 20px;
+    }
+
+    nav.navigation {
+        display: none !important;
+    }
+}
+
+& when (@media-common = true) {
+    header {
+        &.page-header {
+            background: #fff;
+        }
+    }
+    .box {
+        width: 100%;
+        height: 70px;
+        position: relative;
+        top: -50px;
+
+        .box-1 {
+            width: 50%;
+            background-color: @bg-color;
+            height: 75%;
+            border-radius: 0px 70px 0px 0px;
+        }
+
+        .box-2 {
+            position: absolute;
+            background-color: @bg-color;
+            height: 75%;
+            width: 50%;
+            right: 0;
+            top: 0;
+            border-radius: 70px 0px 0px 0px;
+        }
+    }
+
+    .span_btn {
+        width: 60px;
+        vertical-align: super;
+        display: inline-block;
+        margin: 0px 10px;
+        height: 2px;
+        background-color: #000;
+    }
+
+    .landing_head {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .internal_page_full_style span {
+        &.btn_style1 {
+            &.btn_style_in {
+                &:extend(.abs-btn-back all);
+            }
+        }
+    }
+
+    .internal_page_full_style {
+        .btn_style {
+            &:extend(.abs-btn-front-floater all);
+        }
+    }
+
+    .border-end-a80 {
+        position: relative;
+        &::after {
+            content: '';
+            width: 1px;
+            height: 80%;
+            background-color: rgba(112, 112, 112, .5);
+            position: absolute;
+            top: 12%;
+            right: 0;
+        }
+    }
+
+    .slick-slider {
+        .slick-arrow {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+
+            &:before,
+            &:after {
+                color: #b7b7b7;
+                font-size: 24px;
+                opacity: 1;
+            }
+
+            &:hover {
+                &:before {
+                    color: #b7b7b7;
+                }
+            }
+            
+
+            &.slick-prev {
+                left: 0;
+                @media (min-width: 1720px) {
+                    left: -4rem;
+                }
+            }
+
+            &.slick-next {
+                right: 0;
+
+                @media (min-width: 1720px) {
+                    right: -4rem;
+                }
+            }
+       } 
+    }
+
+    .home-page-slider {
+        &.slick-slider {
+            .slick-arrow {
+                z-index: 1;
+
+                &.slick-prev {
+                    left: 2rem;
+                }
+
+                &.slick-next {
+                    right: 2rem;
+                }
+            }
+        }
+    }
+}

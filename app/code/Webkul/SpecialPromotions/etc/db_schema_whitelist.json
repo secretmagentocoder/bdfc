@@ -1,0 +1,13 @@
+{
+    "salesrule": {
+        "column": {
+            "wkrulesrule": true,
+            "wkrulesrule_nqty": true,
+            "wkrulesrule_skip_rule": true,
+            "max_discount": true,
+            "promo_cats": true,
+            "promo_skus": true,
+            "n_threshold": true
+        }
+    }
+}

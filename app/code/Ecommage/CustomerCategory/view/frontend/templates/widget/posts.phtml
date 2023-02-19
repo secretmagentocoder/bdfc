@@ -1,0 +1,41 @@
+<?php
+/** @var \Ecommage\CustomerCategory\Block\Posts $block */
+    if($block->getData('draw_image') || $block->getData('winner_image')):
+?>
+    <?php
+    $urlDrawImage = $block->getUrlImage($block->getData('draw_image'));
+    $urlDrawImage = $block->getStoreManagerData(). $urlDrawImage;
+
+    $urlWinnerImage = $block->getUrlImage($block->getData('winner_image'));
+    $urlWinnerImage = $block->getStoreManagerData(). $urlWinnerImage;
+    ?>
+
+    <table class="draw-image">
+        <img src="<?php echo $urlDrawImage; ?>" class="img-fluid" />
+        <div style="display: flex;justify-content: center;">
+            <h3 class='posts'>WATCH LIVE DRAW</h3>
+            <a href="<?= $block->getData('draw_link') ?>"
+               class="action print"
+               target="_blank"
+               rel="noopener">
+                <span>VIEW ALL DRAW</span>
+            </a>
+        </div>
+
+    </table>
+
+    <table class="winner-image">
+        <img src="<?php echo $urlWinnerImage; ?>" class="img-fluid2" />
+        <div style="display: flex;justify-content: center;">
+        <h3 class='posts2'>RECENT WINNER</h3>
+            <a href="<?= $block->getData('winner_link') ?>"
+               class="action print2"
+               target="_blank"
+               rel="noopener">
+                <span>VIEW ALL WINNER</span>
+            </a>
+        </div>
+
+    <table>
+
+<?php endif; ?>

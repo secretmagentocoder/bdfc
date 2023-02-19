@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="ecommage_display_video" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Config Video</label>
+            <tab>catalog</tab>
+            <resource>Magento_CatalogInventory::cataloginventory</resource>
+            <group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>General Configuration</label>
+                <field id="link" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Link Video</label>
+                    <comment>This video will display on the order history.</comment>
+                </field>
+                <field id="link_point" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Link Collection Point</label>
+                </field>
+                <field id="cmspage" translate="label comment" type="select"
+                        sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Select CMS Page</label>
+                    <source_model>Ecommage\CustomerOrderHistory\Model\Config\Source\Cms</source_model>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

@@ -1,0 +1,57 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/** @var \Magento\Store\Block\Switcher $block */
+?>
+<?php if (count($block->getGroups())>1) : ?>
+    <div class="row col-xxl-6 col-xl-6 col-lg-8 col-md-10 col-sm-12 mx-auto py-5">
+        
+        <?php foreach ($block->getGroups() as $_group) : ?>
+            <?php if (($_group->getId() == '2')) : ?>
+                <div class="col-md-6">
+                    <a href="#" data-post='<?= /* @noEscape */ $block->getTargetStorePostData($_group->getDefaultStore()) ?>'>
+                        <span data-hover="<?= $block->escapeHtml($_group->getName()) ?> Terminal" class="btn_style">
+                            <span><?= $block->escapeHtml($_group->getName()) ?> Terminal <span><img src="/images/arrival.png" alt="arrival" width="30px"></span></span>
+                        </span>
+                    </a>
+                </div>
+            <?php endif; ?>
+        <?php endforeach; ?>
+        
+        <?php foreach ($block->getGroups() as $_group) : ?>
+            <?php if (($_group->getId() == '3')) : ?>
+                <div class="col-md-6">
+                    <a href="#" data-post='<?= /* @noEscape */ $block->getTargetStorePostData($_group->getDefaultStore()) ?>'>
+                        <span data-hover="<?= $block->escapeHtml($_group->getName()) ?> Terminal" class="btn_style">
+                            <span><?= $block->escapeHtml($_group->getName()) ?> Terminal <span><img src="/images/departure.png" alt="departure" width="30px"></span></span>
+                        </span>
+                    </a>
+                </div>
+            <?php endif; ?>
+        <?php endforeach; ?>
+
+        <div class="col-md-6">
+            <a href="#" target="_blank">
+                <span data-hover="Buy Tickets " class="btn_style">
+                    <span>Buy Tickets <span><img src="/images/ticket.png" alt="arrival" width="30px"></span></span>
+                </span>
+            </a>
+        </div>
+
+        <?php foreach ($block->getGroups() as $_group) : ?>
+            <?php if (($_group->getId() == '1')) : ?>
+                <div class="col-md-6">
+                    <a href="#" data-post='<?= /* @noEscape */ $block->getTargetStorePostData($_group->getDefaultStore()) ?>'>
+                        <span data-hover="<?= $block->escapeHtml($_group->getName()) ?>" class="btn_style">
+                            <span><?= $block->escapeHtml($_group->getName()) ?> <span><img src="/images/home-delivery.png" alt="home-delivery" width="30px"></span></span>
+                        </span>
+                    </a>
+                </div>
+            <?php endif; ?>
+        <?php endforeach; ?>
+
+    </div>
+<?php endif; ?>

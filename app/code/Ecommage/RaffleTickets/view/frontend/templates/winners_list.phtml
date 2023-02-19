@@ -1,0 +1,49 @@
+<?php
+/**
+ * @var Ecommage\RaffleTickets\Block\Raffle\Winners $block
+ */
+?>
+<?php
+$raffle_winners = $block->getRaffleWinners();
+?>
+<div class="raffle_winners_data">
+    <?php if (count($raffle_winners) > 0): ?>
+        <div class="table-wrapper winners-tbl">
+            <table class="data table">
+                <thead>
+                    <th class = "table-dark"><?= $block->escapeHtmlAttr(__('RAFFLES')) ?></th>
+                    <th class ="table-dark"><?= $block->escapeHtmlAttr(__('TICKETS'))?></th>
+                    <th class ="table-dark"><?= $block->escapeHtmlAttr(__('DRAW WINNER')) ?></th>
+                    <th class ="table-dark"><?= $block->escapeHtmlAttr(__('NATIONALITY')) ?></th>
+                    <th class ="table-dark"><?= $block->escapeHtmlAttr(__('PRIZE')) ?></th>
+                    <th class ="table-dark"><?= $block->escapeHtmlAttr(__('DRAW DATE')) ?></th>
+                    <th class ="table-dark"><?= $block->escapeHtmlAttr(__('MEDIA'))?></th>
+                </thead>
+                <tbody>
+                    <?php foreach ($raffle_winners as $items): ?>
+                        <tr>
+                            <td data-th="RAFFLES"><?= $block->escapeHtmlAttr($items['raffle_product_series']) ?></td>
+                            <td data-th="TICKETS"><?= $block->escapeHtmlAttr($items['winner_ticket_number']) ?></td>
+                            <td data-th="DRAW WINNER"><?= $block->escapeHtmlAttr($items['winner_name'])?></td>
+                            <td data-th="NATIONALITY"><?= $block->escapeHtmlAttr($block->getCountryName($items['nationality'])) ?></td>
+                            <td data-th="PRIZE"><?= $block->escapeHtmlAttr($items['prize']) ?></td>
+                            <td data-th="DRAW DATE"><?php $date= new Zend_Date(strtotime($items['draw_date']));
+                            echo $block->escapeHtmlAttr($date->toString('dd-MMM-yyyy'))?></td>
+                            <?php if (filter_var($items['media'], FILTER_VALIDATE_URL)): ?>
+                            <td data-th="MEDIA">
+                                <a href="#" target="_blank" onclick="window.open('<?= $block->escapeHtmlAttr($items['media'])?>?rel=0', 'video', 'width=800, height=600');"><?= $block->escapeHtmlAttr(__('Click Here')) ?></a>
+                            </td>
+                            <?php else: ?>
+                                <td data-th="MEDIA">
+                                    <?= $block->escapeHtmlAttr(__('Media not available')) ?>
+                                </td>
+                            <?php endif; ?>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+    <?php else:
+        $block->escapeHtmlAttr(__('No data found'));
+    endif; ?>
+</div>

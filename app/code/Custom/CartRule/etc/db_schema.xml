@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="quote" resource="default">
+        <column xsi:type="decimal" name="handling_charges"  scale="4" precision="20" unsigned="false" nullable="true" comment="Handling Charges"/>
+        <column xsi:type="decimal" name="handling_charges_tax"  scale="4" precision="20" unsigned="false" nullable="true" comment="Handling Charges Tax"/>
+        <column xsi:type="decimal" name="base_handling_charges"  scale="4" precision="20" unsigned="false" nullable="true" comment="Base Handling Charges"/>
+        <column xsi:type="decimal" name="base_handling_charges_tax"  scale="4" precision="20" unsigned="false" nullable="true" comment="Base Handling Charges Tax"/>    
+    </table>
+    <table name="sales_order" resource="default">
+        <column xsi:type="decimal" name="handling_charges"  scale="4" precision="20" unsigned="false" nullable="true" comment="Handling Charges"/>
+        <column xsi:type="decimal" name="handling_charges_tax"  scale="4" precision="20" unsigned="false" nullable="true" comment="Handling Charges Tax"/>
+        <column xsi:type="decimal" name="base_handling_charges"  scale="4" precision="20" unsigned="false" nullable="true" comment="Base Handling Charges"/>
+        <column xsi:type="decimal" name="base_handling_charges_tax"  scale="4" precision="20" unsigned="false" nullable="true" comment="Base Handling Charges Tax"/>      
+    </table>
+    <table name="quote_item" resource="default">
+        <column xsi:type="decimal" name="handling_charges"  scale="4" precision="20" unsigned="false" nullable="true" comment="Handling Charges"/>
+        <column xsi:type="decimal" name="handling_charges_tax"  scale="4" precision="20" unsigned="false" nullable="true" comment="Handling Charges Tax"/>
+        <column xsi:type="decimal" name="base_handling_charges"  scale="4" precision="20" unsigned="false" nullable="true" comment="Base Handling Charges"/>
+        <column xsi:type="decimal" name="base_handling_charges_tax"  scale="4" precision="20" unsigned="false" nullable="true" comment="Base Handling Charges Tax"/>    
+        <column xsi:type="decimal" name="base_custom_duty_per_item"  scale="4" precision="20" unsigned="false" nullable="true" comment="Base Custom Duty Per Item"/>
+        <column xsi:type="decimal" name="custom_considered_qty"  scale="4" precision="20" unsigned="false" nullable="true" comment="Custom Considered Qty"/>
+    </table>
+    <table name="sales_order_item" resource="default">
+        <column xsi:type="decimal" name="handling_charges"  scale="4" precision="20" unsigned="false" nullable="true" comment="Handling Charges"/>
+        <column xsi:type="decimal" name="handling_charges_tax"  scale="4" precision="20" unsigned="false" nullable="true" comment="Handling Charges Tax"/>
+        <column xsi:type="decimal" name="base_handling_charges"  scale="4" precision="20" unsigned="false" nullable="true" comment="Base Handling Charges"/>
+        <column xsi:type="decimal" name="base_handling_charges_tax"  scale="4" precision="20" unsigned="false" nullable="true" comment="Base Handling Charges Tax"/>      
+        <column xsi:type="decimal" name="base_custom_duty_per_item"  scale="4" precision="20" unsigned="false" nullable="true" comment="Base Custom Duty Per Item"/>
+        <column xsi:type="decimal" name="custom_considered_qty"  scale="4" precision="20" unsigned="false" nullable="true" comment="Custom Considered Qty"/>      
+    </table>
+</schema>

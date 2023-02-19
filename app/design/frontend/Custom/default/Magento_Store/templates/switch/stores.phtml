@@ -1,0 +1,53 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/** @var \Magento\Store\Block\Switcher $block */
+?>
+<?php if (count($block->getGroups())>1) : ?>
+<div class="switcher store switcher-store" id="switcher-store">
+    <div class="actions dropdown options switcher-options">
+        <?php foreach ($block->getGroups() as $_group) : ?>
+            <?php if ($_group->getId() == $block->getCurrentGroupId()) : ?>
+                <div class="action toggle switcher-trigger"
+                     role="button"
+                     tabindex="0"
+                     data-mage-init='{"dropdown":{}}'
+                     data-toggle="dropdown"
+                     data-trigger-keypress-button="true"
+                     id="switcher-store-trigger">
+                    <strong>
+                        <span><?= $block->escapeHtml(__('Shop Online For')) ?></span>
+                        <span><?= $block->escapeHtml($_group->getName()) ?></span>
+                    </strong>
+                </div>
+            <?php endif; ?>
+        <?php endforeach; ?>
+        <!-- <div class="dropdown-content p-3"> -->
+	        <ul class="dropdown switcher-dropdown" data-target="dropdown">
+	            <?php foreach ($block->getGroups() as $_group) : ?>
+                    <?php
+                    $active_class = "active";
+                    if (($_group->getId() == $block->getCurrentGroupId())) :
+                        $active_class = "active";
+                    else :
+                        $active_class = "";
+                    endif;
+                    ?>
+	                <?php //if (!($_group->getId() == $block->getCurrentGroupId())) : ?>
+	                    <li class="switcher-option <?= $active_class ?>">
+	                        <a href="#" data-post='<?= /* @noEscape */ $block->getTargetStorePostData($_group->getDefaultStore()) ?>'>
+	                            <?= $block->escapeHtml($_group->getName()) ?>
+	                        </a>
+	                    </li>
+	                <?php //endif; ?>
+	            <?php endforeach; ?>
+                <p class="font_size m-0">Please Note:Home Delivery service is available within Bahrain Only</p>
+	        </ul>
+	        <!-- <p class="font_size m-0">Please Note:Home Delivery service is available within Bharain Only</p> -->
+        <!-- </div> -->
+    </div>
+</div>
+<?php endif; ?>

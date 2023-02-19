@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Bodak\CheckoutCustomForm\Api\Data\CustomFieldsInterface" type="Bodak\CheckoutCustomForm\Model\Data\CustomFields" />
+    <preference for="Bodak\CheckoutCustomForm\Api\CustomFieldsRepositoryInterface" type="Bodak\CheckoutCustomForm\Model\CustomFieldsRepository" />
+    <preference for="Bodak\CheckoutCustomForm\Api\CustomFieldsGuestRepositoryInterface" type="Bodak\CheckoutCustomForm\Model\CustomFieldsGuestRepository" />
+
+    <preference for="Bodak\CheckoutCustomForm\Api\Data\DepartureFieldsInterface" type="Bodak\CheckoutCustomForm\Model\Data\DepartureFields" />
+    <preference for="Bodak\CheckoutCustomForm\Api\DepartureFieldsRepositoryInterface" type="Bodak\CheckoutCustomForm\Model\DepartureFieldsRepository" />
+    <preference for="Bodak\CheckoutCustomForm\Api\DepartureFieldsGuestRepositoryInterface" type="Bodak\CheckoutCustomForm\Model\DepartureFieldsGuestRepository" />
+    <type name="Magento\Checkout\Model\Cart\CheckoutSummaryConfigProvider">
+        <plugin name="AddAttPlug" type="Bodak\CheckoutCustomForm\Plugin\CustomConfigProvider" />
+    </type>
+
+    <type name="Magento\Checkout\CustomerData\AbstractItem">
+        <plugin name="extra_data" type="Bodak\CheckoutCustomForm\Plugin\Checkout\CustomerData\Cart"/>
+    </type>
+
+<!-- 
+    <type name="Magento\Tax\Model\Sales\Total\Quote\Tax">
+        <plugin name="custom_tax" type="Bodak\CheckoutCustomForm\Plugin\Model\Sales\Total\Quote\Tax" sortOrder="1" />
+    </type>
+
+    <type name="Magento\Checkout\Model\GuestTotalsInformationManagement">
+        <plugin name="guest_total_infomation_checkoutcart" type="Bodak\CheckoutCustomForm\Plugin\Checkout\CustomerData\CollectTotalCartGuest"/>
+    </type>
+
+    <type name="Magento\Checkout\Model\TotalsInformationManagement">
+        <plugin name="login_total_infomation_checkoutcart" type="Bodak\CheckoutCustomForm\Plugin\Checkout\CustomerData\CollectTotalCartLogin"/>
+    </type> -->
+</config>

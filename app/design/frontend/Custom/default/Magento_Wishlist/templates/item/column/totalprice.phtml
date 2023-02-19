@@ -1,0 +1,41 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/** @var \Magento\Wishlist\Block\Customer\Wishlist\Item\Column\Cart $block */
+?>
+<?php
+$_item = $block->getItem();
+$product = $_item->getProduct();
+
+$wishlistTotal = 0;
+$wishlistTotal = $wishlistTotal + ($product->getFinalPrice() * $_item->getQty());
+
+$price = $wishlistTotal;
+
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$storeManager = $objectManager->get(\Magento\Store\Model\StoreManagerInterface::class);
+$currencyFactory = $objectManager->create('Magento\Directory\Model\CurrencyFactory'); 
+
+$curentCurrencyCode =  $storeManager->getStore()
+    ->getCurrentCurrency()
+    ->getCode();
+$baseCurrencyCode =  $storeManager->getStore()
+    ->getBaseCurrency()
+    ->getCode();
+
+if($baseCurrencyCode != $curentCurrencyCode){
+    $rate = $currencyFactory->create()
+        ->load($baseCurrencyCode)
+        ->getAnyRate($curentCurrencyCode);
+
+    $price = $price * $rate;
+}
+$item_total_price = number_format($price, '2');
+?>
+
+<span class="item-price">
+    <span class="price"><?php echo $curentCurrencyCode;?> <?php echo $item_total_price;?></span>
+</span>

@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * 
+ * @package Ceymox_Navconnector
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="sales_order_creditmemo_save_after">
+        <observer name="update_nav_creditmemo_data" instance="Ceymox\Navconnector\Observer\UpdateCreditMemoToNav"/>
+    </event>
+</config>

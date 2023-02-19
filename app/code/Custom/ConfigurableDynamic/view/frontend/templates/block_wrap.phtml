@@ -1,0 +1,5 @@
+<?php /** @var \Magento\Framework\View\Element\Template $block */ ?>
+<div <?= $block->hasData('html_class') ? 'class="' . $block->getData('html_class') . '"' : '' ?>
+        data-dynamic="<?= $block->getData('dynamic_id') ?>">
+    <?= $block->getChildHtml() ?>
+</div>

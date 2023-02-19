@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="custom_category_calculation" resource="default" engine="innodb" comment="Magetop Blog Table">
+        <column xsi:type="int" name="id" padding="10" unsigned="true" nullable="false" identity="true"/>
+        <column xsi:type="varchar" name="Code" length="100" nullable="true" comment="Category Code"/>
+        <column xsi:type="varchar" name="Parent_Custom_Category" length="100" nullable="true" comment="Parent Custom Category"/>
+        <column xsi:type="varchar" name="Custom_Category_Code" length="55"  nullable="true" comment="Custom Category Code"/>
+        <column xsi:type="varchar" name="Active" length="10" nullable="true" comment="Is Active"/>
+        <column xsi:type="text" name="Location_Type" nullable="true"  comment="Location Type"/>
+        <column xsi:type="int" name="Limit_Quantity" padding="10" nullable="false" identity="false"  comment="Quantity Limit"/>
+        <column xsi:type="varchar" name="Limit_UOM" length="10" nullable="true" comment="UOM Limit"/>
+        <column xsi:type="varchar" name="Custom_Calculation_Type" length="100" nullable="true" comment="Custom Calculation Type"/>
+        <column xsi:type="varchar" name="Custom_Charge_Amount"  length="100" nullable="true" comment="Custom Calculation Type"/>
+        <column xsi:type="varchar" name="Parent_Category" length="100" nullable="true" comment="Parent Category"/>
+        <column xsi:type="varchar" name="Parent_Category_Limit_Quanity" length="100" nullable="true" comment="Parent Category Qty Limit"/>
+        <column xsi:type="varchar" name="Description" length="100" nullable="true" comment="Parent Category Qty Limit"/>
+<!--        <column xsi:type="text" name="store_no" nullable="true" comment="Parent Category Qty Limit"/>-->
+<!--        <column xsi:type="text" name="income_expense_account_no" nullable="true" comment="Income Expense Account NoGL_Account"/>-->
+<!--        <column xsi:type="text" name="gl_account" nullable="true" comment="GL Account"/>-->
+        <column xsi:type="text" name="Starting_Date" nullable="true" comment="Staring Date"/>
+        <column xsi:type="timestamp" name="created_at" on_update="false" nullable="true" default="CURRENT_TIMESTAMP" comment="Creation time"/>
+        <column xsi:type="timestamp" name="updated_at" on_update="true" nullable="true" default="CURRENT_TIMESTAMP" comment="Update time"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="id"/>
+        </constraint>
+        <index referenceId="KL_SYNC_CREATED_AT">
+            <column name="created_at"/>
+        </index>
+        <index referenceId="KL_SYNC_UPDATED_AT">
+            <column name="updated_at"/>
+        </index>
+    </table>
+</schema>

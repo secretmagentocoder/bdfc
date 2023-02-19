@@ -1,0 +1,168 @@
+<?php
+/**
+ * Mega Menu HTML File.
+ *
+ * @category  Site Search & Navigation
+ * @package   Rootways_Megamenu
+ * @author    Developer RootwaysInc <developer@rootways.com>
+ * @copyright 2021 Rootways Inc. (https://www.rootways.com)
+ * @license   Rootways Custom License
+ * @link      https://www.rootways.com/media/extension_doc/license_agreement.pdf
+*/
+$categories = $this->getStoreCategories(true,false,true);
+$categoryHelper = $this->getCategoryHelper();
+$_objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$helper = $this->helper('Rootways\Megamenu\Helper\Data');
+$requiredSettings = $helper->getRequiredSettings();
+
+if ($requiredSettings['is_active'] == 1) { ?>
+    <?php if ($requiredSettings['topmenualignmenttype'] != 3) { ?>
+        <div class="page-main">
+    <?php } ?>
+        <span class="rw-navclose"></span>
+        <nav class="rootmenu d-flex" data-action="navigation">
+            <ul id="rw-menutop" class="mobile-sub rootmenu-list">
+                <?php if ($requiredSettings['show_home'] == 1) { ?>
+                    <li><a <?php if ($this->getIsHomePage() == 1) { echo 'class="active"'; } ?> href="<?= $block->getStoreBaseUrl(); ?>" title="Home" ><span class="fa fa-home homeicon"></span><em><?= __('Home')?></em></a></li>
+                <?php }
+                echo $this->viewAllCategoriesHTML();
+                $view_more_array = array();
+                $main_cat_cnt = 1;
+                foreach ($categories as $category) {
+                    $main_category_load = $_objectManager->create('Magento\Catalog\Model\Category')->load($category->getId());
+                    echo $this->getCustomLinks($main_category_load->getId());
+                    
+                    if ($helper->getConfig('rootmegamenu_option/general/show_view_more') == 1) {
+                        if ($helper->getConfig('rootmegamenu_option/general/view_more') == '') {
+                            $view_more_after = 8;
+                        } else {
+                            $view_more_after = $helper->getConfig('rootmegamenu_option/general/view_more');
+                        }
+                        if ($main_cat_cnt > $view_more_after) {
+                            $view_more_array[$main_category_load->getName()] = $main_category_load->getURL();
+                            continue;
+                        }
+                    }
+
+                    if (!$main_category_load->getIsActive()) {
+                        continue;
+                    }
+                    $active_cls = $this->_getMenuItemAttributes($category);
+                    //file_put_contents('vishmenu.txt','ELSE = '.$request->getFullActionName().print_r($item->getId(), true), FILE_APPEND);
+                    $custom_cls = '';
+                    if ($main_category_load->getMegamenuTypeClass() != '') {
+                       $custom_cls .= $main_category_load->getMegamenuTypeClass();
+                    }
+                    if ($main_category_load->getMegamenuTypeHalfPos() == 1) {
+                       $custom_cls .= ' dropdown_left';
+                    }
+                    if ($custom_cls == '') {
+                        $custom_cls .= 'nav-'.$main_cat_cnt.' category-item';
+                    } else {
+                        $custom_cls .= ' nav-'.$main_cat_cnt.' category-item';
+                    }
+                    if ($main_category_load->getMegamenuType() == 2) {
+                         $custom_cls .= ' rw-vertical-menu';
+                    }
+                    ?>
+                    <li class="<?php echo $custom_cls; ?>">
+                       <a class="<?php echo $active_cls; ?>" href="<?php echo $categoryHelper->getCategoryUrl($main_category_load) ?>">
+                            <?php if ( $helper->getConfig('rootmegamenu_option/general/topmenu_icon') == 1 && $main_category_load->getImageUrl() != '') { ?>
+                                <span class="main-category-name">
+                                    <i class="main-category-icon"><img src="<?php echo $main_category_load->getImageUrl(); ?>"/></i>
+                                    <em><?php echo $category->getName();?></em>
+                                </span>
+                            <?php } else {
+                                echo $main_category_load->getName();
+                            } ?>
+                           <?php if ( $main_category_load->getMegamenuTypeLabeltx() != '' ) {
+                                echo '<span class="roottag"><em class="rootmenutag" style="background-color: #'.$main_category_load->getMegamenuTypeLabelclr().'">'.$main_category_load->getMegamenuTypeLabeltx().'</em></span>';
+                            } ?>
+                        </a>
+                        <?php
+                        if ($main_category_load->getMegamenuType() == 1) {
+                            echo $this->simpletMenu($category, $main_cat_cnt);
+                        } elseif ($main_category_load->getMegamenuType() == 2) {
+                            echo $this->megadropdown($category, $main_cat_cnt);
+                        } elseif ($main_category_load->getMegamenuType() == 3) {
+                            echo $this->dropdownTitle($category, $main_cat_cnt);
+                        } elseif ($main_category_load->getMegamenuType() == 4) {
+                            echo $this->halfMenu($category, $main_cat_cnt);
+                        } elseif ($main_category_load->getMegamenuType() == 5) {
+                             echo $this->halfTitleMenu($category, $main_cat_cnt);
+                        } elseif ($main_category_load->getMegamenuType() == 6) {
+                             echo $this->fullWidthMenu($category, $main_cat_cnt);
+                        } elseif ($main_category_load->getMegamenuType() == 7) {
+                            echo $this->fullTitleMenu($category, $main_cat_cnt);
+                        } elseif ($main_category_load->getMegamenuType() == 8) {
+                            echo $this->tabMenu($category, $main_cat_cnt);
+                        } elseif ($main_category_load->getMegamenuType() == 9) {
+                            echo $this->tabHorizontal($category, $main_cat_cnt);
+                        } elseif ($main_category_load->getMegamenuType() == 10) {
+                            echo $this->productMenu($category, $main_cat_cnt);
+                        } elseif ($main_category_load->getMegamenuType() == 14) {
+                            echo $this->categoryProductMenu($category, $main_cat_cnt);
+                        } elseif ($main_category_load->getMegamenuType() == 11) {
+                            echo $this->multiTabbing($category, $main_cat_cnt);
+                        } elseif ($main_category_load->getMegamenuType() == 12) {
+                            echo $this->halfMenuContentOnly($category, $main_cat_cnt);
+                        } elseif ($main_category_load->getMegamenuType() == 13) {
+                            echo $this->fullWidthContentOnly($category, $main_cat_cnt);
+                        } elseif ($main_category_load->getMegamenuType() == 15) {
+                            echo $this->halfMenuImageOnly($category, $main_cat_cnt);
+                        } elseif ($main_category_load->getMegamenuType() == 16) {
+                            echo $this->fullWidthImageOnly($category, $main_cat_cnt);
+                        } else {
+                            echo $this->simpletMenu($category, $main_cat_cnt);
+                        } ?>
+                    </li>
+                    <?php $main_cat_cnt++; ?>
+                <?php } ?>
+
+                <?php echo $this->getCustomLinks(false);?>
+
+                <?php if ($requiredSettings['show_contactus'] == 1 || $requiredSettings['show_contactus'] == 2) { ?>
+                     <?= $this->contactus() ?>
+                <?php } ?>
+
+                <?php if ($view_more_array != NULL) { ?>
+                    <li class="level0 view-more">
+                        <a class="has-sub-cat" href="javaScript:void(0);"><?= __('More') ?> <i aria-hidden="true" class="fa fa-regular fa-plus"></i></a>
+                        <ul class="megamenu fullmenu clearfix categoriesmenu">
+                            <div class="container d-flex justify-content-end custom-more-menu">
+                            <?php foreach ($view_more_array as $key => $value) { ?>
+                                <li><a href="<?=$value?>"><?=$key?></a></li>
+                            <?php } ?>
+                            </div>
+                        </ul>
+                    </li>
+                <?php } ?>
+                
+                <?php echo $this->getSocialShare();?>
+                
+                <?php /* ?>
+                <li>
+                <?php echo $this->getChildHtml("store_language_nav"); ?>
+                </li>
+                <?php */ ?>
+            </ul>
+            <?php echo $this->getLayout()->createBlock("Custom\Websiteswitcher\Block\WebsiteSwitcher")->setTemplate("Magento_Store::switch/websites.phtml")->toHtml();?>
+            <?php if( $this->act() != '' ) {
+                echo $act_data = base64_decode($this->act());
+            } ?>
+        </nav>
+    <?php if ($requiredSettings['topmenualignmenttype'] != 3) { ?>
+        </div>
+    <?php } ?>
+<?php } else { ?>
+    <?php $columnsLimit = $block->getColumnsLimit() ?: 0; ?>
+    <?php $_menu = $block->getHtml('level-top', 'submenu', $columnsLimit) ?>
+
+    <nav class="navigation" data-action="navigation">
+        <ul data-mage-init='{"menu":{"responsive":true, "expanded":true, "position":{"my":"left top","at":"left bottom"}}}'>
+            <?php /* @escapeNotVerified */ echo $_menu; ?>
+            <?php /* @escapeNotVerified */ echo $block->getChildHtml(); ?>
+        </ul>
+        <?php echo $this->getLayout()->createBlock("Custom\Websiteswitcher\Block\WebsiteSwitcher")->setTemplate("Magento_Store::switch/websites.phtml")->toHtml();?>
+    </nav>
+<?php }

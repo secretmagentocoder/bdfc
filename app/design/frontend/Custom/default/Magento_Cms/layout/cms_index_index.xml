@@ -1,0 +1,27 @@
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body> 
+        <!-- <referenceBlock name="header.container" remove="true" />  
+        <referenceBlock name="footer" remove="true" />
+        <referenceBlock name="page.main.title" remove="true" />
+        <referenceContainer name="copyright" remove="true"/>
+        <referenceBlock name="navigation.sections" remove="true" />
+        <move element="page.wrapper" destination="main-content" before="-" /> -->
+
+
+        <!-- <block class="Magento\Cms\Block\Block" name="block_home_slider">
+            <arguments>
+                <argument name="block_id" xsi:type="string">block_home_slider</argument>
+            </arguments>
+        </block>
+        <move element="block_home_slider" destination="main.content" before="-"/> -->
+
+        
+        <!-- <block class="Magento\Cms\Block\Block" name="block_footer_top">
+            <arguments>
+                <argument name="block_id" xsi:type="string">block_footer_top</argument>
+            </arguments>
+        </block>
+        <move element="block_footer_top" destination="main.content" after="-"/> -->
+
+    </body> 
+</page> 

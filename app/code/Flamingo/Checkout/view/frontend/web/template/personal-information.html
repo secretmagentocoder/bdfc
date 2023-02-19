@@ -1,0 +1,27 @@
+<!--Use 'stepCode' as id attribute-->
+<li id="opc-personal-information-checkout-form"
+    data-bind="fadeVisible: visible()">
+    <div class="personal-information-checkout-form">
+        <div class="step-title" data-bind="i18n: stepTitle" data-role="title"></div>
+        <div id="checkout-step-personal-information" class="step-content" data-role="content">
+
+            <form data-bind="submit: setPersonalInformation" novalidate="novalidate">
+
+                <div id="personal-information-form" class="fieldset address">
+                    <!-- ko foreach: getRegion('additional-fieldsets') -->
+                        <!-- ko template: getTemplate() --><!-- /ko -->
+                    <!--/ko-->
+                </div>
+
+                <div class="actions-toolbar">
+                    <div class="primary">
+                        <button data-role="opc-continue" type="submit" class="button action continue primary">
+                            <span data-bind="i18n: 'Next'">Next</span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</li>

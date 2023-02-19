@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Webkuls Software.
+ *
+ * @category  Webkuls
+ * @package   Webkuls_SpecialPromotions
+ * @author    Webkuls
+ * @copyright Copyright (c)  Webkuls Software Private Limited (https://Webkuls.com)
+ * @license   https://store.Webkuls.com/license.html
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Magento\SalesRule\Model\Rule\Action\Discount\CalculatorFactory"    type="Webkuls\SpecialPromotions\Model\Rule\Action\Discount\CalculatorFactory"/>
+    <preference for="Magento\SalesRule\Model\Rule\Condition\Product"    type="Webkuls\SpecialPromotions\Model\Rule\Condition\Product"/>
+    <preference for="Magento\SalesRule\Model\Rule\Action\Discount\ByPercent"    type="Webkuls\SpecialPromotions\Model\Rule\Action\Discount\ByPercent"/>
+    <preference for="Magento\SalesRule\Model\Rule\Action\Discount\ByFixed"    type="Webkuls\SpecialPromotions\Model\Rule\Action\Discount\ByFixed"/>
+    <preference for="Magento\SalesRule\Model\Rule\Action\Discount\CartFixed"    type="Webkuls\SpecialPromotions\Model\Rule\Action\Discount\CartFixed"/>
+    <preference for="Magento\SalesRule\Model\Rule\Action\Discount\BuyXGetY"     type="Webkuls\SpecialPromotions\Model\Rule\Action\Discount\BuyXGetY"/>
+    <preference for="Magento\Checkout\Model\Session" type="Webkuls\SpecialPromotions\Model\Checkout\Session" />
+    <type name="Magento\Framework\Console\CommandList">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="disable_promo" xsi:type="object">Webkuls\SpecialPromotions\Console\Command\DisablePromotion</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Webkuls\SpecialPromotions\Logger\Handler">
+        <arguments>
+            <argument name="filesystem" xsi:type="object">Magento\Framework\Filesystem\Driver\File</argument>
+        </arguments>
+    </type>
+    <type name="Webkuls\SpecialPromotions\Logger\Logger">
+        <arguments>
+            <argument name="name" xsi:type="string">wk_specialpromotions_logger</argument>
+            <argument name="handlers" xsi:type="array">
+                <item name="system" xsi:type="object">Webkuls\SpecialPromotions\Logger\Handler</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Magento\SalesRule\Model\Utility">
+        <plugin name="Webkuls_SpecialPromotions::ValidatorUtility" type="Webkuls\SpecialPromotions\Plugin\Model\ValidatorUtility" sortOrder="1" />
+    </type>
+
+    <type name='Magento\SalesRule\Model\RulesApplier'>
+        <plugin name='Webkuls_discountlabel_plugin' type='Webkuls\SpecialPromotions\Plugin\DiscountLabels' sortOrder='10' disabled='false'  />
+    </type>
+</config>

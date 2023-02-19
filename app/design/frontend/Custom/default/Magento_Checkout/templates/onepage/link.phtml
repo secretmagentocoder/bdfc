@@ -1,0 +1,76 @@
+<?php
+
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+use Magento\Checkout\Block\Onepage\Link;
+use Magento\Framework\Escaper;
+
+/**
+ * @var Link $block
+ * @var Escaper $escaper
+ */
+?>
+<?php 
+$helper = $this->helper(\Ecommage\CheckoutCart\Helper\Data::class);
+$baseUrl = $helper->getContinueCartUrl();
+?>
+<?php if ($block->isPossibleOnepageCheckout()) : ?>
+    <a class="mb-3 d-block continue_shoping" href="<?= $block->escapeUrl($baseUrl) ?>"><?= $block->escapeHtml(__('Continue Shopping')) ?></a>
+    <div class="internal_page_full_style">
+        <button type="submit" title="<?= $escaper->escapeHtmlAttr(__('Proceed to Checkout')) ?>" data-mage-init='{
+                "Magento_Checkout/js/proceed-to-checkout":{
+                    "checkoutUrl":"<?= $escaper->escapeJs($block->getUrl('checkoutlogin')) ?>"
+                }
+            }'>
+            <span class="btn_style1 btn_style_in">
+                <span>Proceed to Checkout</span>
+            </span>
+            <div class="content-details fadeIn-left">
+                <span class="btn_style btn_style_in">
+                    <span>Proceed to Checkout</span>
+                </span>
+            </div>
+        </button>
+    </div>
+    <!-- <button type="button"
+            data-role="proceed-to-checkout"
+			data-hover="Proceed to Checkout"
+            title="<?= $escaper->escapeHtmlAttr(__('Proceed to Checkout')) ?>"
+            data-mage-init='{
+                "Magento_Checkout/js/proceed-to-checkout":{
+                    "checkoutUrl":"<?= $escaper->escapeJs($block->getUrl('checkoutlogin')) ?>"
+                }
+            }'
+            class="btn_style action primary checkout<?= ($block->isDisabled()) ? ' disabled' : '' ?> proceed"
+            <?php if ($block->isDisabled()) : ?>
+                disabled="disabled"
+            <?php endif; ?>>
+        <span><?= $escaper->escapeHtml(__('Proceed to Checkout')) ?></span>
+    </button> -->
+<?php endif ?>
+<style>
+    button.btn_style.action.primary.checkout.proceed {
+        max-width: 360px;
+        width: 273px !important;
+        min-height: 50px;
+        margin: auto;
+        display: block !important;
+        margin-bottom: 30px;
+        background: #000000 !important;
+        outline: none;
+        position: relative;
+        padding: 10px 10px !important;
+        border-radius: 50px;
+        overflow: hidden;
+        border: none !important;
+        color: #ffffff !important;
+    }
+
+    .btn_style.action.primary.checkout.proceed:before {
+
+        padding: 9px 10px !important;
+    }
+</style>

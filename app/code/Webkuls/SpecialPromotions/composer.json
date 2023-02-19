@@ -1,0 +1,20 @@
+{
+    "name": "Webkulss/module-specialpromotions",
+    "description": "Webkulss SpecialPromotions Module for Magento2",
+    "require": {
+        "magento/project-community-edition": "2.*.*"
+    },
+    "type": "magento2-module",
+    "version": "5.0.1",
+    "license": [
+        "proprietary"
+    ],
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Webkulss\\SpecialPromotions\\": ""
+        }
+    }
+}

@@ -1,0 +1,64 @@
+//
+//  Font system theme
+//  ____________________________________________
+
+//
+//  Variables
+//  -----------------------------------------------
+
+@font-family-name__base: 'Montserrat';
+@font-family__base: @font-family-name__base, @font-family__sans-serif;
+@font-awesome: 'FontAwesome';
+@font-awesome5brands: "Font Awesome 5 Brands";
+@font-awesome5: "Font Awesome 5 Pro";
+
+.font5(){
+    font-family: @font-awesome5;
+    line-height: 1;
+}
+
+//
+//  Common
+//  ---------------------------------------------
+
+& when (@media-common = true) {
+
+    .lib-font-face(
+        @family-name: @font-awesome,
+        @font-path: '@{baseDir}fonts/FontAwesome/fontawesome-webfont',
+        @font-weight: normal,
+        @font-style: normal,
+        @font-display: swap
+    );
+    // Font awesome 5
+    .lib-font-face(
+        @family-name: @font-awesome5brands,
+        @font-path: '@{baseDir}fonts/Fontawesome5/Brands/fa-brands-400',
+        @font-weight: normal,
+        @font-style: normal,
+        @font-display: swap
+    );
+    .lib-font-face(
+        @family-name: @font-awesome5,
+        @font-path: '@{baseDir}fonts/Fontawesome5/Light/fa-light-300',
+        @font-weight: 300,
+        @font-style: normal,
+        @font-display: swap
+    );
+    .lib-font-face(
+        @family-name: @font-awesome5,
+        @font-path: '@{baseDir}fonts/Fontawesome5/Regular/fa-regular-400',
+        @font-weight: 400,
+        @font-style: normal,
+        @font-display: swap
+    );
+    .lib-font-face(
+        @family-name: @font-awesome5,
+        @font-path: '@{baseDir}fonts/Fontawesome5/Solid/fa-solid-900',
+        @font-weight: 900,
+        @font-style: normal,
+        @font-display: swap
+    );
+    // End Font awesome 5
+
+}

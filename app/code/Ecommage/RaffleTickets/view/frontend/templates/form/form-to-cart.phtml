@@ -1,0 +1,49 @@
+
+
+<?php
+/** @var \Magento\Framework\View\Element\Template $block */
+?>
+
+<div class="title-booked"><?= $block->escapeHtml('YOUR CART') ?></div>
+
+<div class="tab-right" id="tab-right" style="display: none">
+<div class="row py-3" id="font_raffles">
+    <div class="col-md-6"><div class="booked-ticket-no"><div><?= $block->escapeHtml(__('Booked Ticket No.')) ?></div> <div class="title-booked font_raflles_style"></div></div></div>
+    <div class="col-md-6 text-end"><div class="nos-of-ticket"><div><?= $block->escapeHtml(__('No. Of Ticket')) ?></div> <div class="no-of-title font_raflles_style">1</div></div></div>
+</div>
+    <div class="tickets-excl-vat display_flex"><span><?= $block->escapeHtml(__('Ticket Excl. VAT')) ?></span> <span class="ticket-excl-vat"></span></div>
+    <div class="totals-vat display_flex"><span><?= $block->escapeHtml(__('Total VAT')) ?></span> <span class="total-vat"></span></div>
+    <div class="total-cart-value display_flex"><span><?= $block->escapeHtml(__('Total Cart Value')) ?></span> <span class="total-cart-title"></span> </div>
+</div>
+<div class="box_raffle_new_card">
+<a href="<?= $block->escapeUrl($block->getUrl('raffle-ticket')) ?>"><?= $block->escapeHtml(__('Continue Shopping')) ?></a>
+<?php $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+
+$listBlock = $objectManager->get('\Magento\Catalog\Block\Product\ListProduct');
+$product = $objectManager->get('\Magento\Catalog\Api\ProductRepositoryInterface')->getById($block->getRequest()->getParam('id'));
+
+$addToCartUrl =  $listBlock->getAddToCartUrl($product); ?>
+<div class="form_raffle_div">
+<form data-role="tocart-form" action="<?php echo $addToCartUrl; ?>" method="post">
+
+    <?= $block->getBlockHtml('formkey')?>
+
+    <div class="internal_page_full_style">
+    <button type="button" id="product-addtocart-button" title="Add to Cart" class="action tocart">
+                    <span class="btn_style1 btn_style_in">
+                        <span>Add to Cart</span>
+                    </span>
+                    <div class="content-details fadeIn-left">
+                        <span class="btn_style btn_style_in">
+                            <span>Add to Cart</span>
+                        </span>
+                    </div>
+            </div>
+    <!-- <button type="button" id="product-addtocart-button" title="Add to Cart" class="action tocart primary">
+
+        <span>Add to Cart</span>
+    </button> -->
+</form>
+</div>
+</div>
+<?= $block->getLayout()->createBlock('Magento\Framework\View\Element\Template')->setTemplate('Ecommage_RaffleTickets::category/raffle/banner/banner-ticket.phtml')->toHtml(); ?>

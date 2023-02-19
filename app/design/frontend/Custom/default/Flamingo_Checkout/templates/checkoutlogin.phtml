@@ -1,0 +1,139 @@
+<?php
+$base_url = $block->getBaseUrl();
+$forgot_password_url = $block->getUrl('customer/account/forgotpassword');
+$create_account_url = $block->getUrl('customer/account/create');
+$checkout_url = $block->getUrl('checkout');
+
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$context = $objectManager->get('Magento\Framework\App\Http\Context');
+$isLoggedIn = $context->getValue(\Magento\Customer\Model\Context::CONTEXT_AUTH);
+$helper= $this->helper('Flamingo\Checkout\Helper\Data');
+$redirect = $objectManager->get('\Magento\Framework\App\Response\Http');
+$rememberMe = $block->getLayout()->createBlock('Magento\Persistent\Block\Form\Remember');
+if($isLoggedIn) {
+	$redirect->setRedirect($checkout_url);
+}
+?>
+
+<div class="biolayout my-4">
+	<div class="bio_login_main container py-5">
+		<div class="row">
+			<div class="col-md-6 border-end-a80">
+				<div class="block-customer-login">
+					<div class="row">
+						<div class="div">
+							<h3 class="text-center text-uppercase py-4 fw-bold">Login to Bahrain Duty Free</h3>
+							<ul class="sociallogin_list">
+								<?php echo $this->getLayout()->createBlock("Mageplaza\SocialLogin\Block\Popup\Social")->setTemplate("Mageplaza_SocialLogin::form/social.phtml")->toHtml();?>
+							</ul>
+						</div>
+						<div class="col-12 mx-auto">
+							<p class="division_div text-center">If you have Bahrain Duty Free login please use it below
+							</p>
+						</div>
+						<div id="btn_full">
+							<form class="form form-login col-md-12 " action="<?=$block->getUrl('customer/account/loginPost')?>"
+								method="post" data-mage-init='{"validation":{}}'>
+								<div class="mx-auto fieldset_login floating">
+									<div class="form-group label-floating">
+										<input type="email" name="login[username]" class="floating__input form-control"
+											placeholder="Email Address" title="Enter your Email Address"
+											data-mage-init='{"mage/trim-input":{}}'
+											data-validate="{required:true, 'validate-email':true}">
+											<label class="floating__label" for="email" data-content="Email Address"></label>
+									</div>
+									<div class="form-group label-floating">
+										
+										<input type="password" name="login[password]" placeholder="Password" class="floating__input form-control" id="password"
+											title="Enter your Password" data-validate="{required:true}">
+											<label class="floating__label" for="pass" data-content="Password"></label>
+                                           <span id="togglePassword" class="password-icon">
+                                            <i class="fa fa-eye" aria-hidden="true"></i>
+                                        </span>
+									</div>
+									<?php if ($rememberMe->isRememberMeChecked()): ?>
+                                    <div id="remember-me-box" class="field choice persistent">
+                                        <?php $rememberMeId = 'remember_me' . $rememberMe->getRandomString(10); ?>
+                                        <input type="checkbox" name="persistent_remember_me" class="checkbox" id="<?= $block->escapeHtmlAttr($rememberMeId) ?>" <?php if ($rememberMe->isRememberMeChecked()) : ?> checked="checked" <?php endif; ?> title="<?= $block->escapeHtmlAttr(__('Remember Me')) ?>" />
+                                        <label for="<?= $block->escapeHtmlAttr($rememberMeId) ?>" class="label"><span><?= $block->escapeHtml(__('Remember Me')) ?></span></label>
+                                    </div>
+                                    <?php endif; ?>
+									<div class="form-group bio_secondary text-end">
+										<a class="bio_fogot_pw" href="<?php echo $forgot_password_url; ?>">Forgot
+											password?</a>
+									</div>
+									<div class="form-group pt-4">
+										<input type="hidden" name="login[checkout]" value="1">
+                                        <?php if (!empty($helper->getPageBefore())): ?>
+                                            <input type="hidden" name="login[type]" value="1">
+                                        <?php endif; ?>
+										<div class="internal_page_full_style">
+											<button type="submit" id="submitcontact">
+												<span class="btn_style1 btn_style_in">
+													<span>SIGN IN</span>
+												</span>
+												<div class="content-details fadeIn-left">
+													<span class="btn_style btn_style_in">
+														<span>SIGN IN</span>
+													</span>
+												</div>
+											</button>
+										</div>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- <div class="col-md-1 col-sm-0 col-0">
+				<div class="border_new"></div>
+			</div> -->
+			<div class="col-md-6">
+				<div class="guest_checkout_box">
+					<div class="row">
+						<h3 class="text-uppercase py-4 fw-bold">Create an Account</h3>
+						<p class="fw-bold mt-3">Creating an account with Bahrain Duty Free:</p>
+						<ul class="list_style_new">
+							<li>Easy to track and update your order</li>
+							<li>Receive our latest news and offers</li>
+							<li>Save your details to make your next purchase quicker</li>
+							<li>Create a Wishlist</li>
+						</ul>
+						<div class="col-md-12">
+							<div class="internal_page_full_style ">
+								<a href="<?php echo $create_account_url; ?>">
+									<span class="btn_style1 btn_style_in">
+										<span>Create an Account</span>
+									</span>
+									<div class="content-details fadeIn-left">
+										<span class="btn_style btn_style_in">
+											<span>Create an Account</span>
+										</span>
+									</div>
+								</a>
+								</div>
+							</div>
+						
+						<div class="pt-5 mt-3">
+							<p>If you don't travel often through Bahrain Airport you can opt for our Guest Checkout.</p>
+							<div class="col-md-12">
+							<div class="internal_page_full_style">
+								<a href="<?php echo $checkout_url; ?>">
+									<span class="btn_style1 btn_style_in">
+										<span>Checkout as Guest</span>
+									</span>
+									<div class="content-details fadeIn-left">
+										<span class="btn_style btn_style_in">
+											<span>Checkout as Guest</span>
+										</span>
+									</div>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

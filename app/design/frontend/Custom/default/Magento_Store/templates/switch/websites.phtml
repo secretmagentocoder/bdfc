@@ -1,0 +1,103 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/** @var \Custom\Websiteswitcher\Block\WebsiteSwitcher $block */
+?>
+<?php
+$websites = $block->getWebsites();
+$websiteId = $block->getCurrentWebsiteId();
+
+// echo "<pre>"; print_r($websites);die(" jdsghjgds");
+?>
+<?php if (count($block->getWebsites()) > 1): ?>
+<div class="switcher website switcher-website" id="switcher-website">
+    <div class="actions dropdown options switcher-options">
+        <?php foreach ($websites as $website): ?>
+            <?php if ($websiteId == $website->getId()): ?>
+                <div class="action toggle switcher-trigger"
+                     role="button"
+                     tabindex="0"
+                     data-mage-init='{"dropdown":{}}'
+                     data-toggle="dropdown"
+                     data-trigger-keypress-button="true"
+                     id="switcher-website-trigger">
+                    <?php
+                    $website_tag_line = '';
+                    $website_code = $website->getCode();
+                    if ($website_code == 'arrival_website') {
+                        $website_tag_line = 'Click & collect from ';
+                    }
+                    if ($website_code == 'departure_website') {
+                        $website_tag_line = 'Click & collect from ';
+                    }
+                    if ($website_code == 'delivery_website') {
+                        $website_tag_line = 'Shop & delivered at ';
+                    }
+                    if ($website_code == 'Raffle_Tickets') {
+                        $website_tag_line = 'Buy & Win at ';
+                    }
+                    ?>
+                    <strong class="<?php echo $website->getCode();?>">
+                        <span class="website-tagline"><?php echo $block->escapeHtml($website_tag_line) ?></span>
+                        <span class="icon_terminal"><?php echo $block->escapeHtml($website->getName()) ?></span>
+                    </strong>
+                </div>
+            <?php endif; ?>
+        <?php endforeach; ?>
+        <ul class="dropdown switcher-dropdown" data-target="dropdown">
+            <?php foreach ($websites as $website): ?>
+                <?php
+                $active_class = "";
+                if ($websiteId == $website->getId()) :
+                    $active_class = "active";
+                else :
+                    $active_class = "";
+                endif;
+                ?>
+                <?php if (!(1 == $website->getId())): ?>
+                    <?php
+                    $website_url = '';
+                    $website_url = $website->getDefaultStore()->getCurrentUrl();
+                    if (is_null($website->getDefaultStore()->getCurrentUrl())) {
+                        $website_url = '#';
+                    }else{
+                        $website_url = $website->getDefaultStore()->getCurrentUrl();
+                    }
+                    ?>
+                    <?php
+                    $website_class = "";
+                    $website_tag_line = '';
+                    $website_code = $website->getCode();
+                    if ($website_code == 'arrival_website') {
+                        $website_tag_line = 'Click & collect from ';
+                        $website_class = "";
+                    }
+                    if ($website_code == 'departure_website') {
+                        $website_tag_line = 'Click & collect from ';
+                        $website_class = "";
+                    }
+                    if ($website_code == 'delivery_website') {
+                        $website_tag_line = 'Shop & delivered at ';
+                        $website_class = "delivery-tagline";
+                    }
+                    if ($website_code == 'Raffle_Tickets') {
+                        $website_tag_line = 'Buy & Win at ';
+                        $website_class = "delivery-tagline";
+                    }
+                    ?>
+                    <li class="switcher-option <?= $active_class ?>">
+                        <a href='<?php echo $website_url; ?>' style='text-transform: capitalize;'>
+                            <span class="website-tagline <?= $website_class ?>"><?php echo $block->escapeHtml($website_tag_line) ?></span>
+                            <?php echo $block->escapeHtml($website->getName()) ?>
+                        </a>
+                    </li>
+                <?php endif; ?>
+            <?php endforeach; ?>
+            <p class="font_size m-0">Please Note: Home Delivery service is available within Bahrain Only</p>
+        </ul>
+    </div>
+</div>
+<?php endif; ?>

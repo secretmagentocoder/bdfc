@@ -1,0 +1,45 @@
+<?php
+$helper = $this->helper('Ecommage\OrderRaffle\Helper\Data');
+$orderInfo = $block->getCustomCollection();
+?>
+<div class="">
+    <div class="order-history" id="order-history-content"></div>
+    <?php if (!empty($orderInfo)): ?>
+        <div class="table-wrapper orders-history">
+        <table class="data table table-order-items history" id="my-orders-table">
+            <caption class="table-caption"><?php echo __('Grid Record') ?></caption>
+        <thead>
+            <tr>
+                <th scope="col" class="col id"><?php echo __('Order ID') ?></th>
+                <th scope="col" class="col title"><?php echo __('Ordered At') ?></th>
+                <th scope="col" class="col product"><?php echo __('Product Details') ?></th>
+                <th scope="col" class="col amount"><?php echo __('Price') ?></th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($orderInfo as $item) :?>
+            <tr>
+                <td data-th="<?= $block->escapeHtml(__('ID')) ?>" class="col id">
+                    <?php echo $item->getIncrementId() ?>
+                </td>
+                <td data-th="<?= $block->escapeHtml(__('Created At')) ?>"
+                    class="col title"><?php echo date('Y-m-d', strtotime($item->getCreatedAt())); ?></td>
+                <td data-th="<?= $block->escapeHtml(__('Name')) ?>" class="col product">
+                    <?php echo $item->getName() ?>
+                    <?= $block->getTicketData($item->getProductOptions())?>
+                </td>
+                <td data-th="<?= $block->escapeHtml(__('Price')) ?>"
+                    class="col amount"><?php echo $block->getFormattedPrice($item->getRowTotalInclTax()) ?></td>
+        </tr>
+        <?php endforeach;?>
+        </tbody>
+    </table>
+</div>
+  <?php if ($block->getPagerHtml()): ?>
+    <div class="order-products-toolbar toolbar bottom"><?php echo $block->getPagerHtml(); ?></div>
+  <?php endif ?>
+<?php else: ?>
+  <div class="message info empty"><span><?php echo __('No any record.'); ?></span></div>
+<?php endif ?>
+</div>
+

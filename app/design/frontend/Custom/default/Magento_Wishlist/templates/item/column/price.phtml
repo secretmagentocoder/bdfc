@@ -1,0 +1,21 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/** @var \Magento\Wishlist\Block\Customer\Wishlist\Item\Column\Cart $block */
+?>
+<?php
+$_item = $block->getItem();
+$product = $_item->getProduct();
+
+$abstractProductBlock = $block->getLayout()->createBlock('\Magento\Catalog\Block\Product\AbstractProduct');
+$product_price_html = $abstractProductBlock->getProductPrice($product);
+?>
+
+<?php echo $product_price_html;?>
+
+<?php /*foreach ($block->getChildNames() as $childName) : ?>
+    <?= $block->getLayout()->renderElement($childName, false) ?>
+<?php endforeach;*/?>

@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magetop
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the Magetop.com license that is
+ * available through the world-wide-web at this URL:
+ * https://www.magetop.com/LICENSE.txt
+ * 
+ * DISCLAIMER
+ * 
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ * 
+ * @category   Magetop
+ * @package    Magetop_Brand
+ * @copyright  Copyright (c) 2014 Magetop (https://www.magetop.com/)
+ * @license    https://www.magetop.com/LICENSE.txt
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="catalog_product_edit_action">
+        <observer name="magetop_brand_loadproductbrand" instance="Magetop\Brand\Observer\LoadProductBrand" />
+    </event>
+    <event name="controller_action_catalog_product_save_entity_after">
+        <observer name="magetop_brand_saveproductbrand" instance="Magetop\Brand\Observer\SaveProductBrand" />
+    </event>
+    <event name="catalog_product_save_after">
+        <observer name="magetop_brand_saveproductbrand" instance="Magetop\Brand\Observer\SaveProductBrandModel" />
+    </event>
+    <event name="catalog_product_attribute_update_after">
+    	<observer name="magetop_brand_saveattributeproductbrand" instance="Magetop\Brand\Observer\MassUpdateAttributeBrandModel" />
+    </event>
+</config>

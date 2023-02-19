@@ -1,0 +1,273 @@
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Sparsh_MobileNumberLogin/js/mobile-number": {}
+        }
+    }
+</script>
+<div class="shipping-address-item" css="'selected-item' : isSelected() , 'not-selected-item':!isSelected()" if="isSelected() == true">
+    <div id="custom-shipping-new-address-form" class="fieldset address">
+        <div class="custom-checkout-step shipping-address-personal">
+            <div class="co-step-title active"
+                 data-bind="click: showPrevStep, attr: {'data-prev-step': 'shipping-address-personal'}">1. Personal Information
+            </div>
+            <div class="co-step-content active">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="field _required">
+                            <label class="label"><span>FIRST NAME</span></label>
+                            <div class="control">
+                                <input class="input-text" type="text" name="firstname"
+                                       data-bind="attr: {'value': getCustomerData().firstname}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="field _required">
+                            <label class="label"><span>LAST NAME</span></label>
+                            <div class="control">
+                                <input class="input-text" type="text" name="lastname"
+                                       data-bind="attr: {'value': getCustomerData().lastname}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="field _required">
+                            <label class="label"><span>EMAIL ADDRESS</span></label>
+                            <div class="control">
+                                <input class="input-text" type="email" name="email"
+                                       data-bind="attr: {'value': getCustomerData().email}"
+                                       data-validate="{required:true, 'validate-email':true}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="field mobile-number required" data-container="change-mobile-number"><label
+                            class="label"><span>MOBILE ADDRESS</span></label>
+                            <div class="control">
+                                  <input type="hidden" data-bind="attr:{'value': window.checkoutConfig.customerData.custom_attributes.country_code ? window.checkoutConfig.customerData.custom_attributes.country_code.value : ''},
+                                 mageInit: {'Sparsh_MobileNumberLogin/js/mobile-number':{}}" name="country_code">
+                                <input type="text" name="mobile_number" id="mobile_number"
+                                       data-input="change-mobile-number"
+                                       data-bind="attr: {'value': getCustomerAttribute().mobile_number ? getCustomerAttribute().mobile_number.value : ''}"
+                                       class="input-text"
+                                       data-validate="{required:true}">
+                                 </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="field _required">
+                            <div class="control">
+                                <label class="label"><span>DATE OF BIRTH</span></label>
+                                <br>
+                                <input name="customer_dob" class="input-text validate-date" data-bind="attr: {'value': getDobFormat()},datepicker, datepickerOptions: {
+                                    yearRange: '-1000:+0',
+                                     dateFormat: 'dd/mm/yy',
+                                     showButtonPanel: true,
+                                     changeMonth: true,
+                                      showWeek: true,
+                                       maxDate: '+1',
+                                        changeYear: true,
+                                         showOn: 'both',
+                                }" data-validate="{required:true, 'validate-date':true}"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6" if="window.checkoutConfig.storeCode != 'home_delivery'">
+                        <div class="field _required" >
+                            <label class="label"><span>PASSPORT NO./NATIONALY ID</span></label>
+                            <div class="control">
+                                <input class="input-text" type="text" name="passport_no" data-validate="{required:true}"
+                                       data-bind="attr: {'value': getCustomerAttribute().passport_no?getCustomerAttribute().passport_no.value:''}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6" if="window.checkoutConfig.storeCode == 'home_delivery'">
+                        <div class="field _required">
+                            <label class="label"><span>NATIONALY</span></label>
+                            <div class="control">
+                                <select data-bind="value: getNationalityCustomer()" id="opption-select-login" name="nationality">
+                                    <!-- ko foreach: { data: window.checkoutConfig.nationalities, as: 'item' } -->
+                                    <option data-bind="attr:{'value': item.country_id},text: item.name"></option>
+                                    <!-- /ko -->
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div data-bind="text: console.log(window.checkoutConfig)"></div>
+                <div class="row" if="window.checkoutConfig.storeCode != 'home_delivery'">
+                    <div class="col-sm-6">
+                        <div class="col-sm-6">
+                            <div class="field _required">
+                                <label class="label"><span>NATIONALY</span></label>
+                                <div class="control">
+                                    <select data-bind="value: getNationalityCustomer()" id="opption-select-login" name="nationality">
+                                        <!-- ko foreach: { data: window.checkoutConfig.nationalities, as: 'item' } -->
+                                        <option data-bind="attr:{'value': item.country_id},text: item.name"></option>
+                                        <!-- /ko -->
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="field _required" >
+                            <label class="label"><span>RESIDING COUNTRY</span></label>
+                            <div class="control">
+                                <!-- <input class="input-text" type="text" name="country_customer"
+                                       data-validate="{required:true}"
+                                       data-bind="attr: {'value': getCustomerAttribute().country_code ? getCountryName(getCustomerAttribute().country_code.value) : ''}"> -->
+                                <select data-bind="value: getCountryCodeCustomer()" name="country_customer" id="">
+                                    <!-- ko foreach: { data: window.checkoutConfig.countryCollectionData, as: 'item' } -->
+                                        <option data-bind="attr:{'value': item.code_id},text: item.name, selected: item.code_id == window.checkoutConfig.customerData.custom_attributes.country_code.value ? true : false"></option>
+
+                                        <!-- /ko -->
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row mt-3">
+                    <div class="col-sm-12">
+                        <p class="note text-secondary">
+                            NOTE: Tickets will be emailed to your registered email address.
+                        </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="personal_information_response"></div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="actions-toolbar">
+                            <div class="primary">
+                                <button type="submit" class="button action continue primary"
+                                        data-bind="click: setPersonalInformation">
+                                    <span translate="'Continue'"/>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="custom-checkout-step shipping-address-delivery" data-bind="fadeVisible: home_delivery_form_visible()">
+            <div class="co-step-title" data-bind="click: showPrevStep, attr: {'data-prev-step': 'shipping-address-delivery'}">2. Delivery Details</div>
+            <div class="co-step-content">
+                <span class="pull-right">
+                    <span>Home Delivery</span>
+                    <!-- <p>We deliver within Bahrain only.</p> -->
+                </span>
+                <p>Deliver at</p>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <select name="deliver_at" id="">
+                            <!-- ko foreach: { data: window.checkoutConfig.getOptionDeliverAt, as: 'item' } -->
+                            <option data-bind="attr: {'value': item.label},text:item.label"></option>
+                            <!-- /ko -->
+                        </select>
+                    </div>
+
+                    <each args="data: address().street, as: 'element'">
+                        <!--             ko if:($index() == 0)           -->
+                        <div class="col-sm-12">
+                            <div class="field _required">
+                                <div class="control">
+                                    <label class="label"><span></span></label>
+                                    <input class="input-text" type="text"
+                                           data-bind="attr: {'value': element, 'name': 'street[]'}"
+                                           placeholder="FLAT NO.">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /ko -->
+                        <!--             ko if:($index() == 1)           -->
+                        <div class="col-sm-12">
+                            <div class="field _required">
+                                <div class="control">
+                                    <label class="label"><span></span></label>
+                                    <input class="input-text" type="text"
+                                           data-bind="attr: {'value': element, 'name': 'street[]'}"
+                                           placeholder="BUILDING NO.">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /ko -->
+                        <!--             ko if:($index() == 2)           -->
+                        <div class="col-sm-12">
+                            <div class="field _required">
+                                <div class="control">
+                                    <label class="label"><span></span></label>
+                                    <input class="input-text" type="text"
+                                           data-bind="attr: {'value': element, 'name': 'street[]'}"
+                                           placeholder="ROAD NO.">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /ko -->
+                        <!--             ko if:($index() == 3)           -->
+                        <div class="col-sm-12">
+                            <div class="field _required">
+                                <div class="control">
+                                    <label class="label"><span></span></label>
+                                    <input class="input-text" type="text"
+                                           data-bind="attr: {'value': element, 'name': 'street[]'}"
+                                           placeholder="BLOCK">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /ko -->
+                    </each>
+
+                    <div class="row">
+                        <div class="field">
+                            <div class="control">
+                                <input id="save_address" type="checkbox" checked name="save_address">
+                                <label for="save_address">Save your shipping address</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="delivery_response-step"></div>
+                    </div>
+                    <!-- <div class="step-content">
+                        <div class="actions-toolbar" id="shipping-method-buttons-custom">
+                            <div class="primary">
+                                <button data-role="opc-continue-home" type="submit" class="button-continue">
+                                    <span translate="'Continue'"/>
+                                </button>
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/x-magento-init">
+    {
+        "[data-role=change-email], [data-role=change-mobile-number], [data-role=change-password]": {
+            "changeEmailMobilePassword": {
+                "titleChangeMobileNumber": "Change Mobile Number",
+                "titleChangeEmailAndMobileNumber": "Change Email and Mobile Number",
+                "titleChangeMobileNumberAndPassword": "Change Mobile Number and Password",
+                "titleChangeEmailAndMobileNumberAndPassword": "Change Email, Mobile Number and Password"
+            }
+        }
+    }
+
+</script>
+

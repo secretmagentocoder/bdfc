@@ -1,0 +1,223 @@
+<?php
+/**
+ * Webkul Software.
+ *
+ * @category  Webkul
+ * @package   Webkul_SpecialPromotions
+ * @author    Webkul
+ * @copyright Copyright (c) Webkul Software Private Limited (https://webkul.com)
+ * @license   https://store.webkul.com/license.html
+ */
+?>
+
+<script>
+require([
+    'jquery',
+    "uiRegistry",
+    'Magento_Ui/js/modal/alert',
+    'prototype'
+], function(jQuery, registry, alert) {
+
+    jQuery(document).ready(function(){
+        jQuery('body').on('click',".fieldset-wrapper-title", function(){
+            jQuery('body select[name=simple_action]').trigger('change');
+        });
+        jQuery('body').on('change','select[name=simple_action]',function(){
+            jQuery('body input[name=discount_step]').parent().parent().find('label span')
+            .text("<?= /* @noEscape */ __('Discount Qty Step (Buy X)'); ?>");
+            jQuery('body input[name=discount_amount]').parent().parent()
+            .find('label span').text("<?= /* @noEscape */ __('Discount Amount'); ?>");
+            jQuery('body input[name=apply_to_shipping]').parent().parent().parent().show();
+            jQuery('body input[name=n_threshold]').parent().parent().show();
+            jQuery('body input[name=wkrulesrule_nqty]').parent().parent().hide();
+            if ( 
+                jQuery(this).val() == 'by_percent' || jQuery(this).val() == 'by_fixed' 
+                || jQuery(this).val() == 'cart_fixed'
+            ) {
+                jQuery('body select[name=wkrulesrule]').parent().parent().hide();
+                jQuery('body input[name=max_discount]').parent().parent().hide();
+                jQuery('body input[name=n_threshold]').parent().parent().hide();
+                jQuery('body input[name=promo_cats]').parent().parent().hide();
+                jQuery('body input[name=promo_skus]').parent().parent().hide();
+                jQuery('body select[name=wkrulesrule_skip_rule]').parent().parent().hide();
+                if (jQuery(this).val() == 'buy_x_get_y') {
+                    jQuery('body input[name=discount_step]').parent().parent()
+                    .find('label span').text("<?= /* @noEscape */ __('Buy N Products'); ?>");
+                    jQuery('body input[name=discount_amount]').parent().parent()
+                    .find('label span').text("<?= /* @noEscape */ __('Number of Products with Discount'); ?>");
+                }
+            } else if(
+                jQuery(this).val() == 'cheapest' || jQuery(this).val() == 'most_expensive' 
+                || jQuery(this).val() == 'money_amount'
+                ) {
+                jQuery('body input[name=max_discount]').parent().parent().show();
+                jQuery('body input[name=n_threshold]').parent().parent().hide();
+                jQuery('body select[name=wkrulesrule]').parent().parent().show();
+                jQuery('body select[name=wkrulesrule_skip_rule]').parent().parent().show();
+                jQuery('body input[name=promo_cats]').parent().parent().hide();
+                jQuery('body input[name=promo_skus]').parent().parent().hide();
+                if (jQuery(this).val() == 'cheapest' || jQuery(this).val() == 'most_expensive') {
+                    jQuery('body input[name=discount_amount]').parent().parent()
+                    .find('label span').text("<?= /* @noEscape */ __('Discount Amount (in %)'); ?>");
+                }
+            } else if (
+                jQuery(this).val() == 'buy_x_get_n_percent_discount' 
+                || jQuery(this).val() == 'buy_x_get_n_fixed_discount' 
+                || jQuery(this).val() == 'buy_x_get_n_fixed_price' 
+                ) {
+                jQuery('body input[name=wkrulesrule_nqty]').parent().parent().show();
+                jQuery('body input[name=discount_step]').parent().parent()
+                .find('label span').text("<?= /* @noEscape */ __('Number of X Products'); ?>");
+                jQuery('body input[name=max_discount]').parent().parent().show();
+                jQuery('body input[name=n_threshold]').parent().parent().hide();
+                jQuery('body select[name=wkrulesrule]').parent().parent().show();
+                jQuery('body select[name=wkrulesrule_skip_rule]').parent().parent().show();
+                jQuery('body input[name=promo_cats]').parent().parent().show();
+                jQuery('body input[name=promo_skus]').parent().parent().show();
+                if (jQuery(this).val() == 'buy_x_get_n_percent_discount') {
+                    jQuery('body input[name=discount_amount]').parent().parent().find('label span')
+                    .text("<?= /* @noEscape */ __('Discount Amount (in %)'); ?>");
+                }
+            } else if(
+                jQuery(this).val() == 'each_n_percent_discount' 
+                || jQuery(this).val() == 'each_n_fixed_discount' || 
+                jQuery(this).val() == 'each_n_fixed_price') {
+                jQuery('body input[name=discount_step]').parent().parent().find('label span')
+                .text("<?= /* @noEscape */ __('Each N-th'); ?>");
+                jQuery('body input[name=max_discount]').parent().parent().show();
+                jQuery('body select[name=wkrulesrule]').parent().parent().show();
+                jQuery('body select[name=wkrulesrule_skip_rule]').parent().parent().show();
+                jQuery('body input[name=promo_cats]').parent().parent().hide();
+                jQuery('body input[name=promo_skus]').parent().parent().hide();
+                jQuery('body input[name=n_threshold]').parent().parent().hide();
+                if( jQuery(this).val() == 'each_n_fixed_price' ) {
+                    jQuery('body input[name=apply_to_shipping]').parent().parent().parent().hide();
+                }
+                if( jQuery(this).val() == 'each_n_percent_discount' ) {
+                    jQuery('body input[name=discount_amount]').parent().parent().find('label span')
+                    .text("<?= /* @noEscape */ __('Discount Amount (in %)'); ?>");
+                }
+            } else if(
+                    jQuery(this).val() == 'each_product_aft_nth_percent' 
+                    || jQuery(this).val() == 'each_product_aft_nth_fixed' 
+                    || jQuery(this).val() == 'each_product_aft_nth_fixed_price'
+                    ) {
+                jQuery('body input[name=discount_step]').parent().parent().find('label span')
+                .text("<?= /* @noEscape */ __('Each Product (step)'); ?>");
+                jQuery('body input[name=max_discount]').parent().parent().show();
+                jQuery('body select[name=wkrulesrule]').parent().parent().show();
+                jQuery('body select[name=wkrulesrule_skip_rule]').parent().parent().show();
+                jQuery('body input[name=n_threshold]').parent().parent().show();
+                jQuery('body input[name=promo_cats]').parent().parent().hide();
+                jQuery('body input[name=promo_skus]').parent().parent().hide();
+                if(jQuery(this).val() == 'each_product_aft_nth_fixed_price') {
+                   jQuery('body input[name=apply_to_shipping]').parent().parent().parent().hide();
+                }
+                if(jQuery(this).val() == 'each_product_aft_nth_percent') {
+                    jQuery('body input[name=discount_amount]').parent().parent().find('label span')
+                    .text("<?= /* @noEscape */ __('Discount Amount (in %)'); ?>");
+                }
+            } else if(jQuery(this).val() == 'group_nth' || jQuery(this).val() == 'group_n_percent_discount') {
+                jQuery('body input[name=max_discount]').parent().parent().show();
+                jQuery('body select[name=wkrulesrule]').parent().parent().hide();
+                jQuery('body select[name=wkrulesrule_skip_rule]').parent().parent().show();
+                jQuery('body input[name=n_threshold]').parent().parent().hide();
+                jQuery('body input[name=promo_cats]').parent().parent().hide();
+                jQuery('body input[name=promo_skus]').parent().parent().hide();
+                jQuery('body input[name=apply_to_shipping]').parent().parent().parent().hide();
+                jQuery('body select[name=wkrulesrule]').parent().parent().hide();
+                if(jQuery(this).val() == 'group_n_percent_discount') {
+                    jQuery('body input[name=discount_amount]').parent().parent()
+                    .find('label span').text("<?= /* @noEscape */ __('Discount Amount (in %)'); ?>");
+                    jQuery('body select[name=wkrulesrule]').parent().parent().show();
+                    jQuery('body input[name=apply_to_shipping]').parent().parent().parent().show();
+                    jQuery('body select[name=wkrulesrule_skip_rule]').parent().parent().show();
+                }
+            } else if(
+                jQuery(this).val() == 'product_set_percent' 
+                || jQuery(this).val() == 'product_set_discount_fixed'
+                ) {
+                jQuery('body input[name=max_discount]').parent().parent().show();
+                jQuery('body select[name=wkrulesrule]').parent().parent().hide();
+                jQuery('body select[name=wkrulesrule_skip_rule]').parent().parent().hide();
+                jQuery('body input[name=n_threshold]').parent().parent().hide();
+                jQuery('body input[name=promo_cats]').parent().parent().show();
+                jQuery('body input[name=promo_skus]').parent().parent().show();
+                jQuery('body select[name=wkrulesrule]').parent().parent().hide();
+                if (jQuery(this).val() == 'product_set_percent') {
+                    jQuery('body input[name=discount_amount]').parent().parent()
+                    .find('label span').text("<?= /* @noEscape */ __('Discount Amount (in %)'); ?>");
+                }
+            }
+
+        });
+    });
+
+//<![CDATA[
+function refreshCouponCodesGrid(grid, gridMassAction, transport) {
+    grid.reload();
+    gridMassAction.unselectAll();
+}
+
+function generateCouponCodes(idPrefix, generateUrl, grid) {
+    $(idPrefix + 'information_fieldset').removeClassName('ignore-validate');
+    var validationResult = $(idPrefix + 'information_fieldset').select('input',
+            'select', 'textarea').collect( function(elm) {
+        return jQuery.validator.validateElement(elm);
+    }).all();
+    $(idPrefix + 'information_fieldset').addClassName('ignore-validate');
+
+    if (!validationResult) {
+        return;
+    }
+    var elements = $(idPrefix + 'information_fieldset').select('input', 'select', 'textarea');
+
+    elements = elements.concat(
+        $$('#rule_uses_per_coupon'),
+        $$('#rule_uses_per_customer'),
+        $$('#rule_to_date')
+    );
+
+    var params = Form.serializeElements(elements, true);
+    params.form_key = FORM_KEY;
+    if ($$('#'+idPrefix + 'information_fieldset .messages')) {
+        $$('#'+idPrefix + 'information_fieldset .messages')[0].update();
+    }
+    if ($('messages')) {
+        $('messages').update();
+    }
+    var couponCodesGrid = eval(grid);
+    new Ajax.Request(generateUrl, {
+        parameters :params,
+        method :'post',
+        onComplete : function (transport, param){
+            var response = false;
+            if (transport && transport.responseText) {
+                try {
+                    response = JSON.parse(transport.responseText);
+                } catch (e) {
+                    console.warn('An error occured while parsing response');
+                }
+            }
+            if (couponCodesGrid) {
+                couponCodesGrid.reload();
+            }
+            if (response && response.messages) {
+                if ($$('#'+idPrefix + 'information_fieldset .messages')) {
+                    $$('#'+idPrefix + 'information_fieldset .messages')[0].update(response.messages);
+                } else if ($('messages')) {
+                    $('messages').update(response.messages);
+                }
+            }
+            if (response && response.error) {
+                alert({
+                    content: response.error
+                });
+            }
+        }
+    });
+}
+window.generateCouponCodes = generateCouponCodes;
+window.refreshCouponCodesGrid = refreshCouponCodesGrid;
+});
+</script>

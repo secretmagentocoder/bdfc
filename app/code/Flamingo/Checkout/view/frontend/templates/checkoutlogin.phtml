@@ -1,0 +1,137 @@
+<?php
+$base_url = $block->getBaseUrl();
+$forgot_password_url = $block->getUrl('customer/account/forgotpassword');
+$create_account_url = $block->getUrl('customer/account/create');
+$checkout_url = $block->getUrl('checkout');
+
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$context = $objectManager->get('Magento\Framework\App\Http\Context');
+$isLoggedIn = $context->getValue(\Magento\Customer\Model\Context::CONTEXT_AUTH);
+$helper= $this->helper('Flamingo\Checkout\Helper\Data');
+$redirect = $objectManager->get('\Magento\Framework\App\Response\Http');
+if($isLoggedIn) {
+	$redirect->setRedirect($checkout_url);
+}
+?>
+
+<div class="biolayout pb-5">
+	<div class="bio_login_main container pb-3">
+		<div class="row">
+			<div class="col-md-6 border-end-a80">
+				<div class="block-customer-login">
+					<div class="row">
+						<div class="div">
+							<h3 class="text-center text-uppercase py-4">Login to Bahrain Duty Free</h3>
+							<ul class="sociallogin_list">
+								<?php echo $this->getLayout()->createBlock("Mageplaza\SocialLogin\Block\Popup\Social")->setTemplate("Mageplaza_SocialLogin::form/social.phtml")->toHtml();?>
+							</ul>
+						</div>
+						<div class="col-md-5 mx-auto">
+							<p class="division_div text-center">If you have Bahrain Duty Free login please use it below
+							</p>
+						</div>
+						<div id="btn_full">
+							<form class="col-md-12" action="<?=$block->getUrl('customer/account/loginPost')?>"
+								method="post" data-mage-init='{"validation":{}}'>
+								<div class="col-md-8 col-sm-8 col-lg-8 mx-auto fieldset_login floating">
+									<div class="form-group mb-2">
+										<input type="email" name="login[username]" class="floating__input"
+											placeholder="Email Address" title="Enter your Email Address"
+											data-mage-init='{"mage/trim-input":{}}'
+											data-validate="{required:true, 'validate-email':true}">
+											<label class="floating__label" for="email" data-content="Email Address"></label>
+									</div>
+									<div class="form-group mb-2">
+										
+										<input type="password" name="login[password]" placeholder="Password" class="floating__input" id="password"
+											title="Enter your Password" data-validate="{required:true}">
+											<label class="floating__label" for="pass" data-content="Password"></label>
+                                           <span id="togglePassword" class="password-icon">
+                                            <i class="fa fa-eye" aria-hidden="true"></i>
+                                        </span>
+									</div>
+									<div class="form-group bio_secondary text-end">
+										<a class="bio_fogot_pw" href="<?php echo $forgot_password_url; ?>" title="Forgot password?">Forgot
+											password?</a>
+									</div>
+									<div class="form-group pt-4">
+										<input type="hidden" name="login[checkout]" value="1">
+                                        <?php if (!empty($helper->getPageBefore())): ?>
+                                            <input type="hidden" name="login[type]" value="1">
+                                        <?php endif; ?>
+										<div class="internal_page_full_style">
+											<button type="submit" id="submitcontact" title="SIGN IN">
+												<span class="btn_style1 btn_style_in">
+													<span>SIGN IN</span>
+												</span>
+												<div class="content-details fadeIn-left">
+													<span class="btn_style btn_style_in">
+														<span>SIGN IN</span>
+													</span>
+												</div>
+											</button>
+										</div>
+										<!-- <button type="submit" id="submitcontact" title="Continue" data-hover="SIGN IN"
+											class="create-an-Account btn_style"> <span>SIGN IN</span></button> -->
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-1 col-sm-0 col-0">
+				<div class="border_new"></div>
+			</div>
+			<div class="col-md-5">
+				<div class="guest_checkout_box">
+					<div class="row">
+						<h3 class="text-uppercase py-4">Create an Account</h3>
+						<p class="fw-bold">Creating an account with Bahrain Duty Free:</p>
+						<ul class="list_style_new">
+							<li>Easy to track and update your order</li>
+							<li>Receive our latest news and offers</li>
+							<li>Save your details to make your next purchase quicker</li>
+							<li>Create a Wishlist</li>
+						</ul>
+						<div class="col-md-7 ">
+							<div class="internal_page_full_style ">
+								<a href="<?php echo $create_account_url; ?>" title="Create an Account">
+									<span class="btn_style1 btn_style_in">
+										<span>Create an Account</span>
+									</span>
+									<div class="content-details fadeIn-left">
+										<span class="btn_style btn_style_in">
+											<span>Create an Account</span>
+										</span>
+									</div>
+								</a>
+								</div>
+							</div>
+							<!-- <a data-hover="Create an Account" class="create-an-Account btn_style text-white text-center"
+							href="<?php echo $create_account_url; ?>"><span>Create an Account</span></a> -->
+						
+						<div class=" pt-5">
+							<p>If you don't travel often through Bahrain Airport you can opt for our Guest Checkout.</p>
+							<div class="col-md-7 ">
+							<div class="internal_page_full_style">
+								<a href="<?php echo $checkout_url; ?>">
+									<span class="btn_style1 btn_style_in">
+										<span>Checkout as Guest</span>
+									</span>
+									<div class="content-details fadeIn-left">
+										<span class="btn_style btn_style_in">
+											<span>Checkout as Guest</span>
+										</span>
+									</div>
+								</a>
+							</div>
+							<!-- <a data-hover="Checkout as Guest" class="checkout-as-guest btn_style text-white text-center"
+							href="<?php echo $checkout_url; ?>"> <span>Checkout as Guest</span></a> -->
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

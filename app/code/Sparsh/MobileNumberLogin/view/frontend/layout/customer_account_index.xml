@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="customer_account"/>
+    <body>
+        <referenceBlock name="customer_account_dashboard_info">
+            <action method="setTemplate" ifconfig="sparsh_mobile_number_login/general/enable">
+                <argument name="template" xsi:type="string">Sparsh_MobileNumberLogin::account/dashboard/info.phtml</argument>
+            </action>
+        </referenceBlock>
+    </body>
+</page>

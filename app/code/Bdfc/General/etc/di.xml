@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * 
+ * @package Bdfc_General
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+ <preference for="Magetop\Brand\Block\Brandpage" type="Bdfc\General\Rewrite\Magetop_Brand\Brandpage" />
+ <preference for="Magento\Sales\Helper\Guest" type="Bdfc\General\Rewrite\Helper\Guest" />
+</config>

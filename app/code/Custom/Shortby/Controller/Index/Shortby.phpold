@@ -1,0 +1,47 @@
+<?php
+
+namespace Custom\Shortby\Controller\Index;
+
+use Magento\Framework\App\Action\Action;
+use Magento\Framework\Controller\Result\JsonFactory;
+
+
+class Shortby extends Action
+{  
+    protected $sessionFactory;
+    protected $resultJsonFactory;
+    
+    public function __construct( 
+      \Magento\Framework\App\Action\Context $context, 
+      \Magento\Checkout\Model\SessionFactory $sessionFactory,
+      JsonFactory $resultJsonFactory
+       ) 
+    {    
+        $this->sessionFactory = $sessionFactory;
+        $this->resultJsonFactory = $resultJsonFactory;
+        parent::__construct($context);   
+    }
+
+    public function execute()
+    {
+        echo 1 ;die(" iiiiii");
+        // $user_email = $this->getRequest()->getParam('guest_email');
+        // $product_id = $this->getRequest()->getParam('productId');
+        // $storeId = $this->getRequest()->getParam('storeId');
+        // $gdpr_cosent = $this->getRequest()->getParam('gdpr_cosent');
+        // $collections = $this->stockNotifications->create()->getCollection();
+
+        // if(!empty($user_email) && !empty($product_id)){
+        //     $duplicate = $collections->addFieldToFilter('customer_email', ['eq' => $user_email])
+        //                             ->addFieldToFilter('product_id',['eq' => $product_id]);
+        //     if(count($duplicate) > 0){
+        //         $resultJson = $this->resultJsonFactory->create();
+        //         return $resultJson->setData(['value' => 1]);
+        //     }else{
+        //         $resultJson = $this->resultJsonFactory->create();
+        //         return $resultJson->setData(['value' => 0, 'guest_email' => $user_email, 'productId' => $product_id, 'storeId' => $storeId, 'gdpr_cosent' => $gdpr_cosent]);
+        //     }
+        // }
+    }
+
+}

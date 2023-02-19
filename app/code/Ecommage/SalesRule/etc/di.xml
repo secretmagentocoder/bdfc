@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\SalesRule\Model\Rule\Condition\Product">
+        <plugin name="ecommage_model_rule_condition_product" type="Ecommage\SalesRule\Plugin\Model\Rule\ConditionProduct"/>
+    </type>
+    <type name="Webkuls\SpecialPromotions\Model\Rule\Action\Discount\GroupNPercentDiscount">
+        <plugin name="ecommage_model_rule_action_discount_group_n_percent_discount" type="Ecommage\SalesRule\Plugin\Model\Rule\Action\Discount\GroupNPercentDiscount"/>
+    </type>
+    <type name="Webkuls\SpecialPromotions\Model\Rule\Action\Discount\GroupNth">
+        <plugin name="ecommage_model_rule_action_discount_group_nth" type="Ecommage\SalesRule\Plugin\Model\Rule\Action\Discount\GroupNth"/>
+    </type>
+</config>

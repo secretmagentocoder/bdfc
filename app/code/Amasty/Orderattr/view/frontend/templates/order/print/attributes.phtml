@@ -1,0 +1,29 @@
+<?php
+/**
+ * @var \Amasty\Orderattr\Block\Order\PrintOrder $block
+ */
+?>
+<?php if ($orderAttributeList = $block->getOrderAttributesData()): ?>
+    <div class="block block-order-details-view">
+        <div class="block-title">
+            <strong><?= $block->escapeHtml(__('Additional Info')); ?></strong>
+        </div>
+        <div class="block-content">
+            <?php foreach ($orderAttributeList as $attribute): ?>
+            <div class="box">
+                <strong class="box-title">
+                    <span><?= $block->escapeHtml(__($attribute['label'])); ?></span>
+                </strong>
+                <div class="box-content">
+                    <?php if (is_array($attribute['value'])): ?>
+                        <?= /** @noEscape */ $attribute['value']['name'] ?? ''; ?>
+                    <?php else: ?>
+                        <?= /** @noEscape */ $attribute['value']; ?>
+                    <?php endif; ?>
+                </div>
+            </div>
+            <?php endforeach;?>
+        </div>
+    </div>
+<?php endif; ?>
+

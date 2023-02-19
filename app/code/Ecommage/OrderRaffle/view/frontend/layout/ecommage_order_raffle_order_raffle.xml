@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="customer_account"/>
+     <head>
+        <title>RAFFLE TICKETS</title>
+    </head>
+    <body>
+     <referenceContainer name="columns.top">
+            <container name="page.messages" htmlTag="div" htmlClass="page messages">
+                <block class="Magento\Framework\View\Element\Template" name="ajax.message.placeholder" template="Magento_Theme::html/messages.phtml"/>
+                <block class="Magento\Framework\View\Element\Messages" name="messages" as="messages" template="Magento_Theme::messages.phtml"/>
+            </container>
+        </referenceContainer>
+        <referenceBlock name="page.main.title">
+            <action method="setPageTitle">
+                <argument translate="true" name="title" xsi:type="string">RAFFLE TICKETS</argument>
+            </action>
+        </referenceBlock>
+        <referenceContainer name="content">
+            <block class="Ecommage\OrderRaffle\Block\Raffle" name="ecommage_order_raffle" template="Ecommage_OrderRaffle::order-raffle.phtml" cacheable="false">
+            </block>
+            <referenceContainer name="div.sidebar.additional" remove="true"/>
+        </referenceContainer>
+    </body>
+</page>

@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="quote_address" resource="checkout" comment="Sales Flat Quote Address">
+        <column xsi:type="varchar" name="customer_firstname"
+                nullable="true" comment="Customer firstname"/>
+        <column xsi:type="varchar" name="customer_lastname"
+                nullable="true" comment="Customer lastname"/>
+        <column xsi:type="varchar" name="country_code"
+                nullable="true" comment="Country Code"/>
+        <column xsi:type="varchar" name="customer_phone"
+                nullable="true" comment="Customer phone"/>
+        <column xsi:type="varchar" name="customer_email"
+                nullable="true" comment="Customer email"/>
+        <column xsi:type="varchar" name="customer_street"
+                nullable="true" comment="Customer street"/>
+        <column xsi:type="varchar" name="customer_postcode"
+                nullable="true" comment="Customer postcode"/>
+
+        <column xsi:type="date" name="customer_dob"
+                nullable="true" comment="Customer dob"/>
+        <column xsi:type="varchar" name="customer_nationality"
+                nullable="true" comment="Customer nationality"/>
+        <column xsi:type="varchar" name="customer_passport"
+                nullable="true" comment="Customer passport"/>
+        <column xsi:type="varchar" name="customer_country"
+                nullable="true" comment="Customer Country"/>
+        <column xsi:type="varchar" name="shipping_country"
+                nullable="true" comment="Address Country"/>
+        <column xsi:type="varchar" name="shipping_deliver"
+                nullable="true" comment="Address Delivery"/>
+        <column xsi:type="int" name="is_save_address"
+                nullable="true" comment="Is Save Address"/>
+    </table>
+
+    <table name="sales_order" resource="sales" comment="Sales Order">
+        <column xsi:type="varchar" name="customer_country"
+                nullable="true" comment="Customer country"/>
+         <column xsi:type="varchar" name="customer_nationality"
+                nullable="true" comment="Customer nationality"/>
+        <column xsi:type="varchar" name="customer_passport"
+                nullable="true" comment="Customer passport"/>
+        <column xsi:type="varchar" name="mobile_number"
+                nullable="true" comment="Mobile Number"/>
+        <column xsi:type="varchar" name="country_code"
+                nullable="true" comment="Country Code"/>
+    </table>
+</schema>

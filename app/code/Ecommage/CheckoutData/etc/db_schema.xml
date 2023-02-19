@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="ecommage_nationalities" resource="default" comment="Nationality">
+         <column xsi:type="int" name="id" padding="10" unsigned="true" nullable="false" identity="true"
+                comment="Id"/>
+        <column xsi:type="varchar" name="name" nullable="true" comment="Nationality name"/>
+        <column xsi:type="varchar" name="country_id" nullable="true" comment="Country Id"/>
+        <column xsi:type="varchar" name="country_name" nullable="true" comment="Country name"/>
+       <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="id"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="DIRECTORY_COUNTRY_FORMAT_COUNTRY_ID_TYPE">
+                <column name="country_id"/>
+        </constraint>
+    </table>
+    <table name="quote_item" resource="default" comment="Nationality">
+        <column xsi:type="datetime" name="cart_time_raffle" nullable="true" comment="Cart Time Raffle"/>
+    </table>
+</schema>

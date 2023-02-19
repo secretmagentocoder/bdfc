@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <!-- <referenceBlock name="head.additional">
+            <block class="Magento\Framework\View\Element\Template" name="opengraph.general" template="Magento_Theme::html/header/meta.phtml"/>
+        </referenceBlock> -->
+
+        <!-- remove block -->
+        <!-- <referenceContainer name="skip_to_content" remove="true"/> -->
+        <referenceContainer name="header" remove="true"/>
+
+        <referenceBlock name="top.links">
+            <referenceBlock name="register-link" remove="true" />
+            <referenceBlock name="authorization-link" remove="true" />
+            <referenceBlock name="authorization-link-login" remove="true"/>
+        </referenceBlock>
+
+        <referenceBlock name="catalog.compare.link" remove="true" />
+        <referenceBlock name="catalog.compare.sidebar" remove="true"/>
+        <referenceBlock name="catalogsearch.product.addto.compare" remove="true"/>
+        <referenceBlock name="category.product.addto.compare" remove="true"/>
+        <referenceBlock name="crosssell.product.addto.compare" remove="true" />
+        <referenceBlock name="related.product.addto.compare" remove="true" />
+        <referenceBlock name="upsell.product.addto.compare" remove="true" />
+        <referenceBlock name="view.addto.compare" remove="true" />
+
+        <!--move blocks -->
+        <move element="header.panel" destination="header-wrapper" after="logo"/>
+        <move element="top.search" destination="header-wrapper" before="logo"/>
+        <move element="minicart" destination="header.panel" after="currency" />
+        
+        <referenceContainer name="header.panel">
+            <!-- <block class="Magento\Store\Block\Switcher" name="store_switcher" as="store_switcher" before="header.links" template="switch/stores.phtml"/> -->
+            <block class="Custom\Websiteswitcher\Block\WebsiteSwitcher" name="website_switcher" as="website_switcher"  template="Magento_Store::switch/websites.phtml"/>
+        </referenceContainer>
+        <!-- <move element="store_switcher" destination="store.menu" after="navigation"/> -->
+        <move element="website_switcher" destination="store.menu" after="navigation"/>
+        <!-- <move element="store_switcher" destination="header.panel" before="header.links" /> -->
+        <!-- <move element="store_language" destination="store.menu" after="navigation"/> -->
+        <referenceBlock name="website_switcher" remove="true" />
+
+        <referenceBlock name="header.links">
+            <block class="Magento\Framework\View\Element\Html\Link" name="custom-header-link" after="minicart" template="Magento_Theme::html/custom-header-link.phtml" />
+        </referenceBlock>
+
+        <referenceContainer name="footer-container">
+            <container name="footer" as="footer" label="Page Footer" htmlTag="div" htmlClass="footer content">
+                <block class="Magento\Cms\Block\Block" name="block_footer_bottom">
+                    <arguments>
+                        <argument name="block_id" xsi:type="string">block_footer_bottom</argument>
+                    </arguments>
+                </block>
+                <block class="Magento\Theme\Block\Html\Footer" name="copyright" template="html/copyright.phtml"/>
+                <block class="Magento\Framework\View\Element\Template" name="report.bugs" template="Magento_Theme::html/bugreport.phtml" />
+            </container>
+        </referenceContainer>
+
+        <block class="Magento\Framework\View\Element\Template" name="age_varification_popup" template="Magento_Theme::popup/age-varification-popup.phtml" cacheable="false"/>
+        <move element="age_varification_popup" destination="page.wrapper" after="copyright"/>
+
+        <block class="Magento\Framework\View\Element\Template" name="age_varification_bellow_age_popup" template="Magento_Theme::popup/age-varification-bellow-age-popup.phtml" cacheable="false"/>
+        <move element="age_varification_bellow_age_popup" destination="page.wrapper" after="copyright"/>
+
+        <block class="Magento\Framework\View\Element\Template" name="terms_and_conditions_popup" template="Magento_Theme::popup/terms-and-conditions-popup.phtml"/>
+        <move element="terms_and_conditions_popup" destination="page.wrapper" after="copyright"/>
+
+        <block class="Magento\Framework\View\Element\Template" name="customer_terms_and_conditions_popup" template="Magento_Theme::popup/customer-terms-and-conditions-popup.phtml"/>
+        <move element="customer_terms_and_conditions_popup" destination="page.wrapper" after="copyright"/>
+
+        <block class="Magento\Framework\View\Element\Template" name="shopping_experience_rate_popup" template="Magento_Theme::popup/shopping-experience-rate-popup.phtml"/>
+        <move element="shopping_experience_rate_popup" destination="page.wrapper" after="copyright"/>
+
+        <block class="Magento\Framework\View\Element\Template" name="collection_procedure_video_popup" template="Magento_Theme::popup/collection-procedure-video-popup.phtml"/>
+        <move element="collection_procedure_video_popup" destination="page.wrapper" after="copyright"/>
+
+        <block class="Magento\Framework\View\Element\Template" name="over_allowance_popup" template="Magento_Theme::popup/over-allowance-popup.phtml"/>
+        <move element="over_allowance_popup" destination="page.wrapper" after="copyright"/>
+
+        <block class="Magento\Framework\View\Element\Template" name="change_collection_details_popup" template="Magento_Theme::popup/change-collection-details-popup.phtml"/>
+        <move element="change_collection_details_popup" destination="page.wrapper" after="copyright"/>
+
+    </body>
+</page>

@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!-- 
+/**
+ * Webkul Software
+ *
+ * @category Webkul
+ * @package Webkul_SpecialPromotions
+ * @author Webkul
+ * @copyright Copyright (c) Webkul Software Private Limited (https://webkul.com)
+ * @license https://store.webkul.com/license.html
+ */ -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
+    <module name="Webkul_SpecialPromotions">
+        <sequence>
+            <module name="Magento_SalesRule" />
+            <module name="Magento_Checkout"/>
+    		<module name="Magento_Quote"/>
+        </sequence>
+    </module>
+</config>

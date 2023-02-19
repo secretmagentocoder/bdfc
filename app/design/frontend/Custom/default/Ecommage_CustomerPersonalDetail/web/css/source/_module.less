@@ -1,0 +1,102 @@
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+    .field-grp {
+        display: grid;
+        gap: 20px;
+        grid-template-columns: repeat(2,minmax(0,1fr));
+    }
+
+    .field-float {
+        .control {
+            > select {
+                &:extend(.abs-floating-input all);
+            }
+            > label {
+                &:extend(.abs-floating-label all);
+                &:extend(.abs-floating-label-initial-before all);
+                &:extend(.abs-floating-placeholder-shown all);
+                &:extend(.abs-floating-input-on-focus all);
+            }
+
+            .input-text {
+                &:extend(.abs-floating-input all);
+
+                &:focus {
+                    & + .label,
+                    & + label {
+                        &:extend(.abs-floating-input-on-focus all);
+                    }
+                }
+
+                &::placeholder {
+                    &:extend(.abs-floating-input-placeholder all);
+                }
+
+                &:placeholder-shown {
+                    & + .label,
+                    & + label {                            
+                        &:extend(.abs-floating-placeholder-shown all);
+                    }
+                }
+            }
+        }
+    }
+
+    .form {
+        .field {
+            &.mobile-number {
+                .control {
+                    .iti {
+                        .iti__selected-flag {
+                            &:extend(.abs-floating-input all);
+                            width: 135px;
+                        }
+
+                        .input-text {
+                            padding-top: 10px;
+                        }
+                    }
+                }
+            }
+        }
+
+        &.form-edit-account {
+            .field-grp {
+                display: grid;
+                gap: 20px;
+                grid-template-columns: repeat(2,minmax(0,1fr));
+            }
+
+            .field {
+                &.mobile-number {
+                    .control {
+                        position: relative;
+
+                        .text-secondary {
+                            position: absolute;
+                            top: 10px;
+                            left: 20px;
+                            text-transform: uppercase;
+                            font-size: 12px;
+                            text-align: center;
+                        }
+
+                        // .iti {
+                        //     .iti__selected-flag {
+                        //         &:extend(.abs-floating-input all);
+                        //         width: 135px;
+                        //     }
+                        // }
+                    }
+                }
+
+                &.choice {
+                    &:extend(.abs-checkbox-custom-tick all);
+                }
+            }
+        }
+    }
+}

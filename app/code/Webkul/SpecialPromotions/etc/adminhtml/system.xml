@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Webkul Software.
+ *
+ * @category  Webkul
+ * @package   Webkul_SpecialPromotions
+ * @author    Webkul
+ * @copyright Copyright (c) Webkul Software Private Limited (https://webkul.com)
+ * @license   https://store.webkul.com/license.html
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+      <tab id="webkul" translate="label" sortOrder="10" class="wk-config-tab-class">
+          <label>Webkul</label>
+      </tab>
+      <section id="customization" translate="label" type="text" sortOrder="300" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Special Promotions</label>
+            <!-- Assign section to tab -->
+            <tab>webkul</tab>
+            <resource>Webkul_SpecialPromotions::config_specialpromotion</resource>
+            <!-- create group for fields in section -->
+              <group id="settings" translate="label" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Settings</label>
+              
+                <field id="active" translate="label comment" sortOrder="3" type="select" showInDefault="1">
+                    <label>Enable</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+            </group>
+
+            <group id="skipsettings" translate="label" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Skip Settings</label>
+                <field id="skip_item_special_price" translate="label comment" sortOrder="3" type="select" showInDefault="1">
+                    <label>Skip Items With Special Price</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="skip_configurable_item_special_price" translate="label comment" sortOrder="3" type="select" showInDefault="1">
+                    <label>Skip Configurable Items if child Special Price</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="skip_item_tier_price" translate="label comment" sortOrder="3" type="select" showInDefault="1">
+                    <label>Skip Items with Tier Price</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+            </group>
+             <group id="marketplace_special_promotions_template" translate="label" type="text" sortOrder="700" showInDefault="1"
+                   showInWebsite="1" showInStore="1">
+                <label>Product Information</label>
+                <field id="author" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1"
+                       showInStore="1">
+                    <label><![CDATA[<p>Author: <a target="_blank" title="Webkul Software Private Limited" href="https://webkul.com/">Webkul</a></p>
+                        <p>Vesion: 5.0.1</p>
+                        <p>User Guide: <a target="_blank" href="https://webkul.com/blog/magento2-special-promotions-module/">Click Here</a></p>
+                        <p>Store Extension: <a target="_blank" href="https://store.webkul.com/magento2-special-promotions.html">Click Here</a></p>
+                        <p>Ticket/Customisations: <a target="_blank" href="https://webkul.uvdesk.com/en/customer/create-ticket/">Click Here</a></p>
+                        <p>Services: <a target="_blank" href="https://webkul.com/magento-development/">Click Here</a></p>
+					]]></label>
+                    <frontend_model>Magento\Config\Block\System\Config\Form\Field\Heading</frontend_model>
+                </field>
+            </group>
+
+        </section>
+    </system>
+</config>

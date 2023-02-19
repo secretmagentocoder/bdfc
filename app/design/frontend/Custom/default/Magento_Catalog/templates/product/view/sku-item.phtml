@@ -1,0 +1,41 @@
+<?php
+/**
+ * Product view template
+ *
+ * @var $block \Magento\Catalog\Block\Product\View\Description
+ */
+$helper = $this->helper('Ecommage\RaffleTickets\Helper\Data');
+?>
+<?php
+$_helper = $this->helper(Magento\Catalog\Helper\Output::class);
+$_product = $block->getProduct();
+
+if (!$_product instanceof \Magento\Catalog\Model\Product) {
+    return;
+}
+
+$product_size = $_product->getResource()->getAttribute('size')->getFrontend()->getValue($_product);
+?>
+<?php if (!$helper->getActionName() ) : ?>
+<div class="row border-bottom pb-3">
+    <div class="col-md-6 col-6">
+        <div class="product_sku">
+            <p class="brand_title text-uppercase fw-bold">ITEM NO: 
+                <span class="sku_value" data-dynamic="product_sku"><?php echo $_product->getSku(); ?></span>
+            </p>
+        </div>
+        <?php if(!empty($product_size)): ?>
+        <div class="product_size">
+            <p class="brand_title text-uppercase fw-bold">Size: <?php echo $product_size; ?> </p>
+        </div>
+        <?php endif; ?>
+    </div>
+    <div class="col-md-6 col-6 text-md-end">
+        <div class="add-to-box">
+            <?php
+            echo $block->getLayout()->createBlock('Magento\Wishlist\Block\Catalog\Product\ProductList\Item\AddTo\Wishlist')->setProduct($_product)->setTemplate("Magento_Wishlist::catalog/product/list/addto/wishlist.phtml")->toHtml();
+            ?>
+        </div>
+    </div>
+</div>
+<?php endif; ?>

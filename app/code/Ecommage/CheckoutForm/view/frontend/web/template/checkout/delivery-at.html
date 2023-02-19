@@ -1,0 +1,58 @@
+<div class="co-step-content">
+    <div class="row">
+        <each args="data: address().customAttributes, as: 'element'">
+            <if args="element['attribute_code'] === 'deliver_at'">
+                <div class="col-sm-6">
+                    <div class="field _required">
+                        <label class="label"><span>Deliver at</span></label>
+                        <div class="control">
+                            <input type="text" placeholder="HOME"
+                                   data-bind="attr: {'value': element.value ? element.label : ''}">
+                        </div>
+                    </div>
+                </div>
+            </if>
+        </each>
+    </div>
+    <each args="data: address().street, as: 'element'">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="field _required">
+                    <div class="control">
+                        <input class="input-text" type="text"
+                               data-bind="attr: {'value': element, 'name': $index}" placeholder="FLAT NO.">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </each>
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="field _required">
+                <div class="control">
+                    <input class="input-text" type="text" name="country"
+                           data-bind="attr: {'value': getCountryName(address().countryId)}"
+                           placeholder="COUNTRY">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="field _required">
+                <div class="control">
+                    <input class="input-text" type="text" name="postcode"
+                           data-bind="attr: {'value': address().postcode}" placeholder="ZIP CODE">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="field">
+            <div class="control">
+                <input id="save_address" type="checkbox" name="save_address">
+                <label for="save_address">Save your shipping address</label>
+            </div>
+        </div>
+    </div>
+</div>

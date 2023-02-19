@@ -1,0 +1,51 @@
+<?php
+/**
+
+@Author paygcc.com contact info@paygcc.com
+
+ */
+?>
+<?php $jsonHelper = $this->helper('\Magento\Framework\Json\Helper\Data');?>
+<?php $_info = $this->getInfo();?>
+<div><?php echo $block->escapeHtml($block->getMethod()->getTitle()) ?></div>
+
+
+<table class="data-table admin__table-secondary">
+    <?php
+    if ($_info->getAdditionalInformation('payment_additional_info')):
+        $paymentInfo = $jsonHelper->jsonDecode($_info->getAdditionalInformation('payment_additional_info'));
+        ?>
+
+        <?php if (isset($paymentInfo['number'])):?>
+        <tr>
+            <th>Card number: </th>
+            <td><?php echo $paymentInfo['number']?></td>
+        </tr>
+    <?php endif;?>
+        <?php if (isset($paymentInfo['tnx_id'])):?>
+        <tr>
+            <th>Transaction Id: </th>
+            <td> <?php echo $paymentInfo['tnx_id']?></td>
+        </tr>
+    <?php endif;?>
+        <?php if (isset($paymentInfo['receipt'])):?>
+        <tr>
+            <th>Receipt Id: </th>
+            <td> <?php echo $paymentInfo['receipt']?></td>
+        </tr>
+    <?php endif;?>
+        <?php if (isset($paymentInfo['authorizationCode'])):?>
+        <tr>
+            <th>Authorization Code: </th>
+            <td> <?php echo $paymentInfo['authorizationCode']?></td>
+        </tr>
+    <?php endif;?>
+        <?php if (isset($paymentInfo['order_status'])):?>
+        <tr>
+            <th>Payment Status: </th>
+            <td> <?php echo $paymentInfo['order_status']?></td>
+        </tr>
+    <?php endif;?>
+
+    <?php endif;?>
+</table>

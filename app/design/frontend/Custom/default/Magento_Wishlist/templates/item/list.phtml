@@ -1,0 +1,50 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+?>
+<?php
+/** @var \Magento\Wishlist\Block\Customer\Wishlist\Items $block */
+$columns = $block->getColumns();
+?>
+
+<div class="products-grid wishlist">
+    <?php if (count($block->getItems())) : ?>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col"></th>
+                <th scope="col"></th>
+                <th scope="col">QTY</th>
+                <th scope="col">PRICE</th>
+                <th scope="col">TOTAL PRICE</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($block->getItems() as $item) : ?>
+                <tr class="wishlist-product-item" id="item_<?= $block->escapeHtmlAttr($item->getId()) ?>">
+                    <div class="wishlist-product-item-info">
+                        <?php foreach ($columns as $column) : ?>
+                            <?php if (!empty($column->setItem($item)->toHtml())): ?>
+                            <td>
+                                <?= $column->setItem($item)->toHtml();?>
+                            </td>
+                            <?php endif ?>
+                        <?php endforeach; ?>
+                    </div>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+    <?php else : ?>
+        <div class="message info empty">
+            <span><?= $block->escapeHtml(__('This Wish List has no Items')) ?></span>
+        </div>
+    <?php endif; ?>
+</div>
+
+<?php foreach ($columns as $column) : ?>
+    <?= $column->getAdditionalHtml() ?>
+<?php endforeach; ?>

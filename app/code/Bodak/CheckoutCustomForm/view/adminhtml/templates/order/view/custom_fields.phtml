@@ -1,0 +1,97 @@
+<?php
+/** @var Magento\Backend\Block\Template $block */
+
+/** @var Bodak\CheckoutCustomForm\Model\Data\CustomFields $customFields */
+$customFields = $block->getOrderCustomFields();
+$currentOrder = $block->getCurrentOrder();
+$website_id = $currentOrder->getStore()->getWebsiteId();
+?>
+<?php if($customFields): ?>
+
+    <?php if($website_id == '2'): ?>
+        <section class="admin__page-section">
+            <div class="admin__page-section-title">
+                <span class="title"><?php /* @escapeNotVerified */ echo __('Other information') ?></span>
+            </div>
+            <div class="admin__page-section-content">
+                <div class="order-information" style="width: 100%;">
+                    <div class="box">
+                        <strong class="box-title"><span><?php /* @escapeNotVerified */ echo __('Collection Point:') ?></span></strong>
+                        <div class="box-content">
+                            <?php echo $this->escapeHtml($customFields->getArrivalCollectionPoint()); ?>
+                        </div>
+                    </div>
+                    <div class="box">
+                        <strong class="box-title"><span><?php /* @escapeNotVerified */ echo __('Pick Up By:') ?></span></strong>
+                        <div class="box-content">
+                            <?php echo $this->escapeHtml($customFields->getArrivalPickUpByAnotherPerson()); ?>
+                        </div>
+                    </div>
+                    <?php if ($customFields->getArrivalPickUpByAnotherPerson() == "Pick Up By Another Person") { ?>                    
+                    <div class="box">
+                        <strong class="box-title"><span><?php /* @escapeNotVerified */ echo __('Another Person Name:') ?></span></strong>
+                        <div class="box-content">
+                            <?php echo $this->escapeHtml($customFields->getArrivalAnotherPersonName()); ?>
+                        </div>
+                    </div>
+                    <div class="box">
+                        <strong class="box-title"><span><?php /* @escapeNotVerified */ echo __('Another Person Phone:') ?></span></strong>
+                        <div class="box-content">
+                            <?php echo $this->escapeHtml($customFields->getArrivalAnotherPersonPhone()); ?>
+                        </div>
+                    </div>
+                    <?php } ?>
+                    <div class="box">
+                        <strong class="box-title"><span><?php /* @escapeNotVerified */ echo __('Do You Have Quantity On Hand:') ?></span></strong>
+                        <div class="box-content">
+                            <?php echo $this->escapeHtml($customFields->getArrivalDoYouHaveQuantityOnHand()); ?>
+                        </div>
+                    </div>
+                    <div class="box">
+                        <strong class="box-title"><span><?php /* @escapeNotVerified */ echo __('Quantity On Hand:') ?></span></strong>
+                        <div class="box-content">
+                            <?php echo $this->escapeHtml($customFields->getArrivalQuantityOnHand()); ?>
+                        </div>
+                    </div>
+                    <div class="box">
+                        <strong class="box-title"><span><?php /* @escapeNotVerified */ echo __('Arrival Date:') ?></span></strong>
+                        <div class="box-content">
+                            <?php echo $this->escapeHtml($customFields->getArrivalFlightDate()); ?>
+                        </div>
+                    </div>
+                    <div class="box">
+                        <strong class="box-title"><span><?php /* @escapeNotVerified */ echo __('Flight No.:') ?></span></strong>
+                        <div class="box-content">
+                            <?php echo $this->escapeHtml($customFields->getArrivalFlightNumber()); ?>
+                        </div>
+                    </div>
+                    <div class="box">
+                        <strong class="box-title"><span><?php /* @escapeNotVerified */ echo __('Flight Name:') ?></span></strong>
+                        <div class="box-content">
+                            <?php echo $this->escapeHtml($customFields->getArrivalFlightName()); ?>
+                        </div>
+                    </div>
+                    <div class="box">
+                        <strong class="box-title"><span><?php /* @escapeNotVerified */ echo __('Flight Time:') ?></span></strong>
+                        <div class="box-content">
+                            <?php echo $this->escapeHtml($customFields->getArrivalFlightTime()); ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    <?php endif; ?>
+
+<?php endif; ?>
+
+<style type="text/css"> 
+.box {
+  display: flex;
+  vertical-align: top;
+  margin-bottom: 10px;
+}
+.box .box-content {
+  margin-left: 10px;
+  line-height: 22px;
+}
+</style>

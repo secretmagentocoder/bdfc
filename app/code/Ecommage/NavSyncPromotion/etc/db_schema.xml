@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="nav_sync_log" resource="default" engine="innodb" comment="NAV Sync Log Table">
+        <column xsi:type="varchar" name="identifier" nullable="false" length="255" comment="String Identifier"/>
+        <column xsi:type="mediumtext" name="data" nullable="true" comment="Data"/>
+        <column xsi:type="timestamp" name="creation_time" on_update="false" nullable="true" default="CURRENT_TIMESTAMP" comment="Creation Time"/>
+        <column xsi:type="timestamp" name="update_time" on_update="true" nullable="true" default="CURRENT_TIMESTAMP" comment="Modification Time"/>
+        <column xsi:type="timestamp" name="expire_time" on_update="true" nullable="true" default="CURRENT_TIMESTAMP" comment="Expire Time"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="identifier"/>
+        </constraint>
+    </table>
+    <table name="salesrule" resource="default">
+        <column xsi:type="varchar" name="offer_no" nullable="true" length="64" comment="NAV Offer No"/>
+    </table>
+</schema>

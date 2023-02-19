@@ -1,0 +1,92 @@
+<?php
+/** @var Magento\Backend\Block\Template $block */
+
+/** @var Bodak\CheckoutCustomForm\Model\Data\DepartureFields $departureFields */
+$departureFields = $block->getOrderDepartureFields();
+$currentOrder = $block->getCurrentOrder();
+$website_id = $currentOrder->getStore()->getWebsiteId();
+?>
+<?php if($departureFields): ?>
+
+    <?php if($website_id == '3'): ?>
+        <section class="admin__page-section">
+            <div class="admin__page-section-title">
+                <span class="title"><?php /* @escapeNotVerified */ echo __('Other information') ?></span>
+            </div>
+            <div class="admin__page-section-content">
+                <div class="order-information" style="width: 100%;">
+                    <div class="box">
+                        <strong class="box-title"><span><?php /* @escapeNotVerified */ echo __('Select Your Lounge:') ?></span></strong>
+                        <div class="box-content">
+                            <?php echo $this->escapeHtml($departureFields->getDepartureSelectYourLounge()); ?>
+                        </div>
+                    </div>
+                    <div class="box">
+                        <strong class="box-title"><span><?php /* @escapeNotVerified */ echo __('Pick Up By:') ?></span></strong>
+                        <div class="box-content">
+                            <?php echo $this->escapeHtml($departureFields->getDeparturePickUpByAnotherPerson()); ?>
+                        </div>
+                    </div>
+                    <?php if ($departureFields->getDeparturePickUpByAnotherPerson() == "Pick Up By Another Person") { ?>  
+                    <div class="box">
+                        <strong class="box-title"><span><?php /* @escapeNotVerified */ echo __('Another Person Name:') ?></span></strong>
+                        <div class="box-content">
+                            <?php echo $this->escapeHtml($departureFields->getDepartureAnotherPersonName()); ?>
+                        </div>
+                    </div>
+                    <div class="box">
+                        <strong class="box-title"><span><?php /* @escapeNotVerified */ echo __('Another Person Phone:') ?></span></strong>
+                        <div class="box-content">
+                            <?php echo $this->escapeHtml($departureFields->getDepartureAnotherPersonPhone()); ?>
+                        </div>
+                    </div>
+                    <?php } ?>
+                    <div class="box">
+                        <strong class="box-title"><span><?php /* @escapeNotVerified */ echo __('Departure Date:') ?></span></strong>
+                        <div class="box-content">
+                            <?php echo $this->escapeHtml($departureFields->getDepartureFlightDate()); ?>
+                        </div>
+                    </div>
+                    <div class="box">
+                        <strong class="box-title"><span><?php /* @escapeNotVerified */ echo __('Departure Time:') ?></span></strong>
+                        <div class="box-content">
+                            <?php echo $this->escapeHtml($departureFields->getDepartureFlightTime()); ?>
+                        </div>
+                    </div>
+                    <div class="box">
+                        <strong class="box-title"><span><?php /* @escapeNotVerified */ echo __('Flight No.:') ?></span></strong>
+                        <div class="box-content">
+                            <?php echo $this->escapeHtml($departureFields->getDepartureFlightNumber()); ?>
+                        </div>
+                    </div>
+                    <div class="box">
+                        <strong class="box-title"><span><?php /* @escapeNotVerified */ echo __('Flight Name:') ?></span></strong>
+                        <div class="box-content">
+                            <?php echo $this->escapeHtml($departureFields->getDepartureFlightName()); ?>
+                        </div>
+                    </div>
+                    <div class="box">
+                        <strong class="box-title"><span><?php /* @escapeNotVerified */ echo __('Collection Time:') ?></span></strong>
+                        <div class="box-content">
+                            <?php echo $this->escapeHtml($departureFields->getDepartureCollectionTime()); ?>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    <?php endif; ?>
+
+<?php endif; ?>
+
+<style type="text/css"> 
+.box {
+  display: flex;
+  vertical-align: top;
+  margin-bottom: 10px;
+}
+.box .box-content {
+  margin-left: 10px;
+  line-height: 22px;
+}
+</style>

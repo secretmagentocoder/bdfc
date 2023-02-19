@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!--
+**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_MinMaxQtyOrderPerCate
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2017-2018 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="controller_action_predispatch_checkout_cart_index">
+        <observer name="bss_minmaxqtypercate_event_cart_minmax" instance="Bss\MinMaxQtyOrderPerCate\Observer\MinMaxQty" />
+    </event>
+    <event name="controller_action_predispatch_checkout_index_index">
+        <observer name="bss_minmaxqtypercate_event_checkout_minmax" instance="Bss\MinMaxQtyOrderPerCate\Observer\MinMaxQty" />
+    </event>
+    <event name="checkout_type_multishipping_create_orders_single">
+        <observer name="bss_checkout_multishipping_minmax" instance="Bss\MinMaxQtyOrderPerCate\Observer\MinMaxQty" />
+    </event>
+</config>

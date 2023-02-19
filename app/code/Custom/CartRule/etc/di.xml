@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * 
+ * @package Custom_CartRule
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <!-- <type name="Magento\Catalog\Model\Product">
+        <plugin name="add_excise_in_product_price" type="Custom\CartRule\Plugin\Model\Product" sortOrder="1"/>
+    </type> -->
+    <!-- <preference for="Magento\Framework\Locale\Format" type="Custom\CartRule\Model\Format" /> -->
+    <type name="Magento\Checkout\Model\GuestTotalsInformationManagement">
+        <plugin name="guest_total_infomation_checkoutcart" type="Custom\CartRule\Plugin\Checkout\CustomerData\CollectTotalCartGuest" />
+    </type>
+    <type name="Magento\Checkout\Model\TotalsInformationManagement">
+        <plugin name="login_total_infomation_checkoutcart" type="Custom\CartRule\Plugin\Checkout\CustomerData\CollectTotalCartLogin" />
+    </type> 
+    <type name="Magento\Tax\Model\Sales\Total\Quote\Tax">
+        <plugin name="custom_tax" type="Custom\CartRule\Plugin\Model\Sales\Total\Quote\Tax" sortOrder="1" />
+    </type>
+    <type name="Magento\Quote\Model\Quote\Item\ToOrderItem">
+        <plugin name="handligcharge_quote_to_order_item" type="Custom\CartRule\Plugin\Quote\QuoteToOrderItem" sortOrder="1" />
+    </type>
+</config>

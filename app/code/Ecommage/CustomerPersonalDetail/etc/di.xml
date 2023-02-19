@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<config>
+    <type name="Magento\Customer\Controller\Account\Index">
+        <plugin name="redirect_url_personal_detail" type="Ecommage\CustomerPersonalDetail\Plugin\RedirectPersonalDetail"/>
+    </type>
+</config>

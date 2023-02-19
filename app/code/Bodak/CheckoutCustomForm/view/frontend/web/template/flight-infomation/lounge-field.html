@@ -1,0 +1,8 @@
+<div class="field lounge-select">
+    <label data-bind="text: window.checkoutConfig.select_your_lounge.label"></label>
+    <select name="departure_select_your_lounge" id="">
+        <!-- ko foreach: { data: window.checkoutConfig.select_your_lounge['options'], as: 'item' } -->
+            <option data-bind="attr: {'value': item.value},text:item.label"></option>
+        <!-- /ko -->
+    </select>
+</div>

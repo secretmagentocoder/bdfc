@@ -1,0 +1,29 @@
+& when (@media-common = true) {
+    .field.password{
+      input.input-text{
+        padding-right:40px;
+      }
+    }
+    label.fa{
+      &.fa-eye-slash{
+        position: absolute;
+        right:15px;
+        top:9px;
+        z-index: 2;
+        cursor: pointer;
+      }
+      &:before{
+        color: @color-gray_light;
+      }
+    }
+    .account .field .control{
+      position: relative;
+    }
+    input.show-password{
+      display: none;
+      &:checked + label.fa-eye-slash:before{
+        content:"\f06e";
+        color: #000;
+      }
+    }
+}

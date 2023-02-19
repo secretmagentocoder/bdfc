@@ -1,0 +1,63 @@
+
+<div id="over_allowance_popup" class="modal custom-modal">
+    <div class="custom-modal-wrapper">
+        <?php echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('block_over_allowance_popup')->toHtml(); ?>
+    </div>
+</div>
+
+<script type="text/javascript">
+/*require(['Magento_Customer/js/customer-data'], function (customerData) {
+    var cart = customerData.get('cart');
+    var count = cart().summary_count;
+    cart.subscribe(function () {
+        if (cart().summary_count !== count) {
+            count = cart().summary_count;
+            if (count > 0) {
+                var base_url = "<?php echo $block->getBaseUrl(); ?>";
+                var url = base_url+'customcartrule/overallowance/index';
+
+                jQuery.ajax({
+                    url: url,
+                    type: 'POST',
+                    // async: false,
+                    dataType: 'json',
+                    data:{
+                        'action': 'ajax_overallowance_popup',
+                    },
+                    success: function(data, textStatus, xhr) {
+                        console.log("success");
+                        console.log(data);
+                        var over_allowance_show_popup = data.over_allowance_show_popup;
+                        var over_allowance_popup = jQuery.cookie('over_allowance_popup');
+                        if (over_allowance_show_popup == 'yes' && over_allowance_popup != 'yes') {
+                            jQuery('#over_allowance_popup').addClass("open");
+                        }
+                    },
+                    error: function(xhr, textStatus, errorThrown) {
+                        //called when there is an error
+                        console.log("error");
+                    }
+                });
+
+            }
+        }
+    });
+});*/
+
+require(["jquery"], function ($) {
+    // age_verification_submit
+    $(document).on('click', '#over_allowance_popup_close', function(){
+        // cookie
+        var expDate = new Date();
+        expDate.setTime(expDate.getTime() + (24 * 60 * 60 * 1000)); // add 24 hours
+
+        if ($('#over_allowance_popup input[name="over_allowance_term_and_condition"]').is(':checked')) {
+            $.cookie('over_allowance_popup', 'yes', { path: '/', expires: expDate });
+        }else{
+            $.cookie('over_allowance_popup', 'no', { path: '/', expires: expDate });
+        }
+
+        $("#over_allowance_popup").removeClass("open");
+    });
+});
+</script>

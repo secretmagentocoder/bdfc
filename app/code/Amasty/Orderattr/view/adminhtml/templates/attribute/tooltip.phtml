@@ -1,0 +1,31 @@
+<?php
+/** @var $block \Amasty\Orderattr\Block\Adminhtml\Attribute\Edit\Tab\Options\Tooltip */
+?>
+<fieldset class="fieldset-wrapper admin__collapsible-block-wrapper">
+    <div class="fieldset-wrapper-title">
+        <strong class="admin__collapsible-title" data-toggle="collapse" data-target="#manage-tooltip-panel">
+            <span><?= /* @escapeNotVerified */ __('Manage Tooltip') ?></span>
+        </strong>
+    </div>
+    <div class="fieldset-wrapper-content collapse" id="manage-tooltip-panel" style="height: 0px; display: none;">
+        <table class="admin__control-table">
+            <thead>
+            <tr id="attribute-tooltip-options-table">
+                <?php foreach ($block->getStores() as $store) : ?>
+                    <th><?= __($store->getName()) ?></th>
+                <?php endforeach; ?>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="col-draggable">
+                <?php $tooltips = $block->getTooltipValues()?>
+                <?php foreach ($block->getStores() as $store) : ?>
+                    <td class="col-store-view multi-input">
+                        <input class="input-text" name="store_tooltips[<?= $store->getId() ?>]" id="tooltip-strore-<?= $store->getId() ?>" type="text" value="<?= $block->escapeHtml($tooltips[$store->getId()]) ?>">
+                    </td>
+                <?php endforeach; ?>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</fieldset>

@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Cron:etc/crontab.xsd">
+    <group id="staging">
+        <job instance="Ecommage\RaffleTickets\Cron\CreateProductApi" method="execute" name="ecommage_create_product_api">
+            <schedule>0 00 * * *</schedule>
+        </job>
+        <job instance="Ecommage\RaffleTickets\Cron\CronUpdateTax" method="execute" name="ecommage_product_api_tax">
+            <schedule>* 03 * * *</schedule>
+        </job>
+    </group>
+    <group id="staging" >
+        <job instance="Ecommage\RaffleTickets\Cron\CronUpdate" method="execute" name="ecommage_product_api">
+            <schedule>* * * * *</schedule>
+        </job>
+    </group>
+</config>

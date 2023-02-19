@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Webkul Software.
+ *
+ * @category  Webkul
+ * @package   Webkul_SpecialPromotions
+ * @author    Webkul
+ * @copyright Copyright (c) Webkul Software Private Limited (https://webkul.com)
+ * @license   https://store.webkul.com/license.html
+ */
+-->
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <fieldset name="actions" sortOrder="30">
+        <field name="wkrulesrule_nqty" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">sales_rule</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Number of Y Products</label>
+                <dataScope>wkrulesrule_nqty</dataScope>
+            </settings>
+        </field>
+        <field name="wkrulesrule" formElement="select">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">sales_rule</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>number</dataType>
+                <label translate="true">Calculate Discount Based On</label>
+                <dataScope>wkrulesrule</dataScope>
+            </settings>
+        </field>
+        <field name="max_discount" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">sales_rule</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Max Amount of Discount</label>
+                <dataScope>max_discount</dataScope>
+            </settings>
+        </field>
+        <field name="n_threshold" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">sales_rule</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">After N</label>
+                <dataScope>n_threshold</dataScope>
+            </settings>
+        </field>
+        <field name="wkrulesrule_skip_rule" formElement="select">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">sales_rule</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>number</dataType>
+                <label translate="true">Skip Items with Special Price</label>
+                <dataScope>wkrulesrule_skip_rule</dataScope>
+            </settings>
+        </field>
+        <field name="promo_cats" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">sales_rule</item>
+                    <item name="notice" xsi:type="string" translate="true">Enter the category ids seperated by comma for Y products. Ex : 12,75</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Promo Categories</label>
+                <dataScope>promo_cats</dataScope>
+            </settings>
+        </field>
+        <field name="promo_skus" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">sales_rule</item>
+                    <item name="notice" xsi:type="string" translate="true">Enter Y products separated by comma. Enter All SKU(s) if producut is Customisable.</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>number</dataType>
+                <label translate="true">Promo SKU</label>
+                <dataScope>promo_skus</dataScope>
+            </settings>
+        </field>
+    </fieldset>
+</form>

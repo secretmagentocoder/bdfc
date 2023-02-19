@@ -1,0 +1,124 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+use Magento\Framework\App\Action\Action;
+
+/** @var \Magento\CatalogWidget\Block\Product\ProductsList $block */
+
+// phpcs:disable Generic.Files.LineLength.TooLong
+// phpcs:disable Magento2.Templates.ThisInTemplate.FoundHelper
+
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$store = $objectManager->get('Magento\Store\Model\StoreManagerInterface')->getStore();
+?>
+<?php if ($exist = ($block->getProductCollection() && $block->getProductCollection()->getSize())): ?>
+    <?php
+    $type = 'widget-product-grid featured_brand_slider';
+
+    $mode = 'list';
+
+    $image = 'product_page_main_image_default';
+    $items = $block->getProductCollection()->getItems();
+    ?>
+    <div class="block widget block-products-list <?= /* @noEscape */ $mode ?>">
+        <div class="feature_brands">
+            <div class="container">
+                <?php if ($block->getTitle()): ?>
+                    <div class="block-title">
+                        <h3 class="fw-bold text-uppercase text-center pb-2">
+                            <span class="span_btn"></span><?= $block->escapeHtml(__($block->getTitle())) ?><span class="span_btn"></span>
+                        </h3>
+                    </div>
+                <?php endif ?>
+                <div class="product-item <?= /* @noEscape */ $type ?> row">
+                    <?php foreach ($items as $_item): ?>
+                        <?php
+                        $imageUrl = $store->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA) . 'catalog/product' . $_item->getImage();
+                        ?>
+                        <?php
+                        $_product = $objectManager->create('Magento\Catalog\Model\Product')->load($_item->getId());
+                        $product_brand = $_product->getResource()->getAttribute('product_brand')->getFrontend()->getValue($_product);
+                        $product_is_new = $_product->getData('product_is_new');
+                        $bestseller_product = $_product->getData('bestseller_product');
+                        $product_in_offer = $_product->getData('product_in_offer');
+                        $product_in_travel = $_product->getData('product_in_travel');
+                        ?>
+                        <div class="col-md-4">
+                            <div class="card card_space" >
+                                <div class="card-image">
+                                    <img src="<?php echo $imageUrl; ?>" alt="<?php echo $_item->getName(); ?>" class="img-fluid" />
+                                </div>
+                                <div class="card-content">
+                                    <div class="top_head d-flex justify-content-md-between">
+                                        <h5 class="text-uppercase fw-bold mb-1">
+                                            <?= $block->escapeHtml($_item->getName()) ?>
+                                        </h5>
+                                        <div class="label_img">
+                                            <?php
+                                            /*echo '<div class="product-badges">';
+                                                if ($product_is_new == true) {
+                                                    echo '<div class="product_is_new">';
+                                                        echo '<img src="/images/badges/New_Arrival_Badges.png" alt="New" />';
+                                                    echo '</div>';
+                                                }
+                                                if ($bestseller_product == true) {
+                                                    echo '<div class="bestseller_product">';
+                                                        echo '<img src="/images/badges/BestSeller_Badges.png" alt="Bestseller" />';
+                                                    echo '</div>';
+                                                }
+                                                if ($product_in_offer == true) {
+                                                    echo '<div class="product_in_offer">';
+                                                        echo '<img src="/images/badges/Offer_Badges.png" alt="Offer" />';
+                                                    echo '</div>';
+                                                }
+                                                if ($product_in_travel == true) {
+                                                    echo '<div class="product_in_travel">';
+                                                        echo '<img src="/images/badges/badges-travel.svg" alt="Travel Exclisive" />';
+                                                    echo '</div>';
+                                                }
+                                            echo '</div>';*/
+                                            ?>
+                                        </div>
+                                    </div>
+                                    <div class="product-item-des">
+                                        <?php
+                                        $getShortDescription = $_item->getShortDescription();
+                                        if (strlen($getShortDescription) > 60){
+                                            $getShortDescription_without_tags = strip_tags($getShortDescription);
+                                            $getShortDescription_ = substr($getShortDescription_without_tags, 0, 60) . '...';
+                                        }else{
+                                            $getShortDescription_ = $getShortDescription;
+                                        }
+                                        echo $block->escapeHtml($getShortDescription_);
+                                        ?>
+                                    </div>
+                                    <div id="internal_page_style">
+                                        <a href="<?= $block->escapeUrl($block->getProductUrl($_item)) ?>" target="_blank">
+                                            <span class="btn_style1 btn_style_in">
+                                                <span>Shop Now</span>
+                                            </span>
+                                            <div class="content-details fadeIn-left">
+                                                <span class="btn_style btn_style_in">
+                                                    <span>Shop Now</span>
+                                                </span>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <!-- <a href="<?= $block->escapeUrl($block->getProductUrl($_item)) ?>">
+                                        <span data-hover="Shop Now" class="btn_style btn_style_in">
+                                            <span>Shop Now</span>
+                                        </span>
+                                    </a> -->
+                                </div>
+                            </div>
+                        </div>
+                    <?php endforeach ?>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<?php endif;?>

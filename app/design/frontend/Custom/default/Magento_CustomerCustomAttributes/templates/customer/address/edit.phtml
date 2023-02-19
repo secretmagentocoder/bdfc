@@ -1,0 +1,242 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// phpcs:disable Magento2.Templates.ThisInTemplate
+?>
+<?php
+/**
+ * Edit customer address template
+ *
+ * @var $block \Magento\Customer\Block\Address\Edit
+ * @var \Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer
+ */
+/** @var \Magento\Customer\Helper\Address $addressHelper */
+$addressHelper = $block->getData('addressHelper');
+$requiredAttributesPrechecked = $block->getData('required_attributes_prechecked');
+$displayAllRegions = $block->getConfig('general/region/display_all');
+/** @var \Magento\Directory\Helper\Data $directoryHelper */
+$directoryHelper = $block->getData('directoryHelper');
+$customHelper = $this->helper('Ecommage\CustomerPersonalDetail\Helper\Address');
+$deliverAtOptions = $customHelper->getDeliveryAt();
+
+?>
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Sparsh_MobileNumberLogin/js/mobile-number": {}
+        }
+    }
+
+</script>
+<form class="form-address-edit"
+      action="<?= $block->escapeUrl($customHelper->getSaveUrl()) ?>"
+      method="post"
+      id="form-validate"
+      enctype="multipart/form-data"
+      data-hasrequired="<?= $block->escapeHtmlAttr(__('* Required Fields')) ?>">
+    <fieldset class="fieldset">
+        <legend class="legend"><span><?= $block->escapeHtml(__('PERSONAL INFORMATION')) ?></span></legend>
+        <br>
+        <?= $block->getBlockHtml('formkey') ?>
+        <input type="hidden" name="success_url" value="<?= $block->escapeUrl($block->getSuccessUrl()) ?>"/>
+        <input type="hidden" name="error_url" value="<?= $block->escapeUrl($block->getErrorUrl()) ?>"/>
+        <input type="hidden" name="firstname" value="<?= $block->escapeUrl($customHelper->getFirstname()) ?>"/>
+        <input type="hidden" name="lastname" value="<?= $block->escapeUrl($customHelper->getLastname()) ?>"/>
+        <input type="hidden" name="address_id" value="<?= $customHelper->getParamIdUrl() ?>"/>
+
+        <div class="field firstname required">
+            <div class="control">
+                <input type="text"
+                       name="firstname"
+                       id="firstname"
+                       value="<?= $block->escapeHtml($block->getAddress()->getFirstname()) ?>"
+                       title="<?= $block->escapeHtml(__('FIRST NAME')) ?>"
+                       placeholder="FIRST NAME"
+                       class="input-text required"/>
+            </div>
+        </div>
+        <div class="field lastname required">
+            <div class="control">
+                <input type="text"
+                       name="lastname"
+                       id="lastname"
+                       value="<?= $block->escapeHtml($block->getAddress()->getLastname()) ?>"
+                       title="<?= $block->escapeHtml(__('LAST NAME')) ?>"
+                       placeholder="LAST NAME"
+                       class="input-text required"/>
+            </div>
+        </div>
+        <?php if ($addressHelper->isAttributeVisible('telephone')): ?>
+            <?php $requiredPhone = in_array('telephone', $requiredAttributesPrechecked) ? 'required' : ''; ?>
+            <div class="field telephone <?= $block->escapeHtmlAttr($requiredPhone); ?>"
+                 data-container="change-mobile-number">
+                <div class="control">
+                    <?php $phoneValidationClass = $addressHelper->getAttributeValidationClass('telephone'); ?>
+                    <small class="text-secondary">COUNTRY</small>
+                    <br>
+                    <input type="text" name="mobile_number" id="mobile_number" data-input="change-mobile-number"
+                           title="<?= $block->escapeHtml(__('MOBILE NUMBER')) ?>"
+                           value="<?= $block->escapeHtml($block->getAddress()->getTelephone()) ?>"
+                           class="input-text <?= /* @noEscape */
+                           $phoneValidationClass ?>"
+                           placeholder="MOBILE NUMBER"/>
+                    <input type="hidden" name="country_code">
+                </div>
+            </div>
+        <?php endif; ?>
+    </fieldset>
+    <fieldset class="fieldset">
+        <input type="hidden" name="success_url" value="<?= $escaper->escapeUrl($block->getSuccessUrl()) ?>">
+        <input type="hidden" name="error_url" value="<?= $escaper->escapeUrl($block->getErrorUrl()) ?>">
+        <legend class="legend"><span><?= $escaper->escapeHtml(__('ADDRESS')) ?></span></legend>
+        <br>
+        <?php $_streetValidationClass = $addressHelper->getAttributeValidationClass('street'); ?>
+        <?php for ($_i = 1, $_n = $addressHelper->getStreetLines(); $_i <= $_n; $_i++): ?>
+            <div class="field additional">
+                <div class="control">
+                    <input type="text"
+                           name="street[]"
+                           value="<?= $block->escapeHtml($block->getStreetLine($_i)) ?>"
+                           placeholder="<?php
+                                if($_i == 1)  echo 'FLAT NO.';
+                                if($_i == 2)  echo 'BUILDING NO.';
+                                if($_i == 3)  echo 'ROAD NO.';
+                                if($_i == 4)  echo 'BLOCK';
+                           ?>
+                        "
+                           title="<?= $block->escapeHtmlAttr(__('Street Address %1', $_i)) ?>"
+                           id="street_<?= /* @noEscape */ $_i ?>"
+                           class="input-text <?= /* @noEscape */ $_streetValidationClass ?>"/>
+                </div>
+            </div>
+        <?php endfor; ?>
+        <div class="field city required">
+            <div class="control">
+                <?php $cityValidationClass = $addressHelper->getAttributeValidationClass('city');?>
+                <input type="text"
+                       name="city"
+                       title="<?= $escaper->escapeHtmlAttr(__('CITY')) ?>"
+                       id="city"
+                       placeholder="CITY"
+                       value="<?= $block->escapeHtml($block->getAddress()->getCity()) ?>"
+                       class="input-text required-entry <?= $cityValidationClass ?>"/>
+            </div>
+        </div>
+                <div class="field postcode required">
+                    <div class="control">
+                        <?php $postcodeValidationClass = $addressHelper->getAttributeValidationClass('postcode');?>
+                        <input type="text"
+                               name="postcode"
+                               title="<?= $escaper->escapeHtmlAttr(__('POSTCODE')) ?>"
+                               id="postcode"
+                               value="<?= $block->escapeHtml($block->getAddress()->getPostcode()) ?>"
+                               placeholder="POSTCODE"
+                               class="input-text"/>
+                    </div>
+                </div>
+        <div class="field country required">
+            <div class="control">
+                <?= $block->getCountryHtmlSelect() ?>
+            </div>
+        </div>
+        <?php if ($addressHelper->isAttributeVisible('deliver_at')): ?>
+            <div class="field deliver_at required">
+                <div class="control">
+                    <?php $customHelper->getDeliveryId(); $deliveryValidationClass = $addressHelper->getAttributeValidationClass('deliver_at'); ?>
+                    <select name="deliver_at" id="" class="<?= $deliveryValidationClass ?>">
+                        <option value="" disabled selected>DELIVERY AT</option>
+                        <?php foreach ($deliverAtOptions as $option): ?>
+                            <?php if ($option['value']): ?>
+                                <option <?= $option['value'] == $customHelper->getDeliveryId() ? 'selected' : '' ?> value="<?= $option['value'] ?>"><?= $option['label'] ?></option>
+                            <?php endif; ?>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+            </div>
+        <?php endif; ?>
+
+        <?php if ($block->isDefaultBilling()): ?>
+            <div class="message info">
+                <span><?= $block->escapeHtml(__("This is your default billing address.")) ?></span>
+            </div>
+        <?php elseif ($block->canSetAsDefaultBilling()): ?>
+            <div class="field choice set billing">
+                <input type="checkbox" id="primary_billing" name="default_billing" value="1" class="checkbox"/>
+                <label class="label" for="primary_billing">
+                    <span><?= $block->escapeHtml(__('Use as my default billing address')) ?></span>
+                </label>
+            </div>
+        <?php else: ?>
+            <input type="hidden" name="default_billing" value="1"/>
+        <?php endif; ?>
+
+        <?php if ($block->isDefaultShipping()): ?>
+            <div class="message info">
+                <span><?= $block->escapeHtml(__("This is your default shipping address.")) ?></span>
+            </div>
+        <?php elseif ($block->canSetAsDefaultShipping()): ?>
+            <div class="field choice set shipping">
+                <input type="checkbox" id="primary_shipping" name="default_shipping" value="1" class="checkbox"/>
+                <label class="label" for="primary_shipping">
+                    <span><?= $block->escapeHtml(__('Use as my default shipping address')) ?></span>
+                </label>
+            </div>
+        <?php else: ?>
+            <input type="hidden" name="default_shipping" value="1"/>
+        <?php endif; ?>
+        
+        <div class="actions-toolbar">
+            <div class="primary">
+                <button type="submit"
+                        class="action submit primary"
+                        data-action="save-address"
+                        disabled="disabled"
+                        title="<?= $block->escapeHtmlAttr(__('Save Address')) ?>">
+                    <span><?= $block->escapeHtml(__('Save Address')) ?></span>
+                </button>
+            </div>
+        </div>
+    </fieldset>
+</form>
+<script type="text/x-magento-init">
+    {
+        "#form-validate": {
+            "addressValidation": {
+                "postCodes": <?= /* @noEscape */$block->getPostCodeConfig()->getSerializedPostCodes(); ?>
+            },
+            "formAddNewAddress": <?= $this->helper('Magento\Framework\Json\Helper\Data')->jsonEncode(['value'=>'#form-validate']) ?>
+        },
+        "#country": {
+            "regionUpdater": {
+                "optionalRegionAllowed": <?= /* @noEscape */
+    ($displayAllRegions ? 'true' : 'false') ?>,
+                "regionListId": "#region_id",
+                "regionInputId": "#region",
+                "postcodeId": "#zip",
+                "form": "#form-validate",
+                "regionJson": <?= /* @noEscape */
+    $directoryHelper->getRegionJson() ?>,
+                "defaultRegion": "<?= /* @noEscape */
+    $block->getRegionId() ?>",
+                "countriesWithOptionalZip": <?= /* @noEscape */
+    $directoryHelper->getCountriesWithOptionalZip(true) ?>
+            }
+        }
+    }
+</script>
+<script type="text/x-magento-init">
+    {
+        "[data-role=change-email], [data-role=change-mobile-number], [data-role=change-password]": {
+            "changeEmailMobilePassword": {
+                "titleChangeMobileNumber": "<?= $block->escapeJs($block->escapeHtml(__('Change Mobile Number'))) ?>",
+                "titleChangeEmailAndMobileNumber": "<?= $block->escapeJs($block->escapeHtml(__('Change Email and Mobile Number'))) ?>",
+                "titleChangeMobileNumberAndPassword": "<?= $block->escapeJs($block->escapeHtml(__('Change Mobile Number and Password'))) ?>",
+                "titleChangeEmailAndMobileNumberAndPassword": "<?= $block->escapeJs($block->escapeHtml(__('Change Email, Mobile Number and Password'))) ?>"
+            }
+        }
+    }
+</script>
+

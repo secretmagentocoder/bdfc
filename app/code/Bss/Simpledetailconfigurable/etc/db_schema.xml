@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_Simpledetailconfigurable
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2017-2022 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+-->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+  <table name="sdcp_preselect" resource="default" engine="innodb" comment="Preselect key for configurable product">
+    <column xsi:type="int" name="preselect_id" padding="11" unsigned="false" nullable="false" identity="true" comment="Key ID"/>
+    <column xsi:type="int" name="product_id" padding="11" unsigned="false" nullable="false" identity="false" comment="Product ID"/>
+    <column xsi:type="varchar" name="attribute_key" nullable="false" length="255" comment="Attribute name"/>
+    <column xsi:type="varchar" name="value_key" nullable="false" length="255" comment="Value Name"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="preselect_id"/>
+    </constraint>
+    <index referenceId="SDCP_PRESELECT_PRODUCT_ID" indexType="btree">
+      <column name="product_id"/>
+    </index>
+  </table>
+  <table name="sdcp_product_enabled" resource="default" engine="innodb" comment="Preselect key for configurable product">
+    <column xsi:type="int" name="product_id" padding="11" unsigned="false" nullable="false" identity="false" comment="Product Id"/>
+    <column xsi:type="int" name="enabled" padding="11" unsigned="false" nullable="false" identity="false" comment="Enabled"/>
+    <column xsi:type="smallint" name="is_ajax_load" padding="6" unsigned="false" nullable="false" identity="false" comment="Enabled ajax load"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="product_id"/>
+    </constraint>
+    <index referenceId="SDCP_PRODUCT_ENABLED_PRODUCT_ID" indexType="btree">
+      <column name="product_id"/>
+    </index>
+  </table>
+  <table name="sdcp_custom_url" resource="default" engine="innodb" comment="Preselect key for configurable product">
+    <column xsi:type="int" name="url_id" padding="11" unsigned="false" nullable="false" identity="true" comment="Key ID"/>
+    <column xsi:type="int" name="product_id" padding="11" unsigned="false" nullable="false" identity="false" comment="Product Id"/>
+    <column xsi:type="varchar" name="custom_url" nullable="false" length="255" comment="Custom Url"/>
+    <column xsi:type="varchar" name="parent_url" nullable="false" length="255" comment="Parent Url"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="url_id"/>
+    </constraint>
+    <index referenceId="SDCP_CUSTOM_URL_PRODUCT_ID" indexType="btree">
+      <column name="product_id"/>
+    </index>
+  </table>
+</schema>

@@ -1,0 +1,45 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/** @var \Magento\Customer\Block\Form\Login\Info $block */
+?>
+<?php if ($block->getRegistration()->isAllowed()) : ?>
+
+            <!-- <div class="col-md-1 col-sm-0 col-0"><div class="border_new"></div></div> -->
+            <div class="col-md-6">
+                <div class="guest_checkout_box">
+                    <div class="row">
+                        <h3 class="text-uppercase py-4 fw-bold">Create an Account</h3>
+                        <p class="fw-bold mt-3">Creating an account with Bahrain Duty Free:</p>
+                        <ul class="list_style_new">
+                            <li>Easy to track and update your order</li>
+                            <li>Receive our latest news and offers</li>
+                            <li>Save your details to make your next purchase quicker</li>
+                            <li>Create a Wishlist</li>
+                        </ul>
+                        <div class="col-md-12">
+                            <div class="internal_page_full_style ">
+                                <a href="<?= $block->escapeUrl($block->getCreateAccountUrl()) ?>" title="Create an Account">
+                                    <span class="btn_style1 btn_style_in">
+                                        <span>Create an Account</span>
+                                    </span>
+                                    <div class="content-details fadeIn-left">
+                                        <span class="btn_style btn_style_in">
+                                            <span>Create an Account</span>
+                                        </span>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <!-- <a href="<//?= $block->escapeUrl($block->getCreateAccountUrl()) ?>" class="create-an-Account btn_style text-white text-center" data-hover="Create an Account"><span><?= $block->escapeHtml(__('Create an Account')) ?></span></a> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<?php endif; ?>

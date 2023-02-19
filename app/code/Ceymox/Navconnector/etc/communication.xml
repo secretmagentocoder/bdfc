@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * @package Ceymox_Navconnector
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Communication/etc/communication.xsd">
+    <topic name="nav.order.create" request="string"/>
+    <topic name="nav.creditmemo.create" request="string"/>
+</config>

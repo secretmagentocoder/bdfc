@@ -1,0 +1,32 @@
+<?php
+/**
+ * @var $block \Ecommage\RaffleTickets\Block\Raffle\ChangeNumber
+ */
+$helper = $this->helper('Ecommage\RaffleTickets\Helper\Data');
+$options = $helper->setOptionNumber($helper->getCurrentProduct()->getOptions());
+$price = $helper->getCurrentProduct()->getFinalPrice();
+$type = $block->getData('type_number');
+$arr = $helper->getEvenNumber($options);
+$data = $helper->getAllOption();
+$arrOption = $options;
+?>
+<?php foreach ($arrOption as $item): ?>
+    <?php foreach ($data as $option): ?>
+        <?php $value = $option->getValues()[$item]; ?>
+        <div class="field choice admin__field admin__field-option <?= $helper->setDisplay($arr,$type,$value->getSku()) ?> <?= $helper->setClass($arr,$type,$value->getSku()) ?>" data-label="<?= $value->getTitle()?>" data-label="<?= $helper->setCharacters($value->getSku()) ?>"   style="padding:8px;"   data-id="<?= $option->getId() ?>" data-option-id="<?= $value->getOptionTypeId() ?>">
+            <?php if (empty($helper->getQtyOption($value))) :?>
+            <input  data-id="<?= $option->getId() ?>" data-label="<?= $helper->setCharacters($value->getSku()) ?>"  type="checkbox"
+                   class="checkbox admin__control-checkbox required product-custom-option"
+                   name="options[<?= $block->escapeHtmlAttr($option->getId()) ?>][]"
+                   id="options_<?= $block->escapeHtmlAttr($option->getId() . '_' . $value->getSku()) ?>"
+                   value="<?= $block->escapeHtmlAttr($value->getOptionTypeId()) ?>"
+                   data-selector="options[<?= $value->getId()?>][<?= $value->getOptionTypeId() ?>]"
+                   price="<?= $block->escapeHtmlAttr($price+$value->getPrice()) ?>"/>
+                <label class="label admin__field-label"
+                       for="options_<?= $block->escapeHtmlAttr($option->getId() . '_' . $value->getSku()) ?>">
+                    <?= $helper->setCharacters($value->getSku())  ?>
+                </label>
+        </div>
+        <?php endif; ?>
+    <?php endforeach;?>
+<?php endforeach; ?>

@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * 
+ * @package Bdfc_General
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+     <event name="adminhtml_customer_save_after">
+        <observer name="ecommage_custom_save_after" disabled="true" />
+    </event>
+</config>

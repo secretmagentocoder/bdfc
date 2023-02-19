@@ -1,0 +1,19 @@
+
+<div class="opc-block-summary" data-bind="blockLoader: isLoading">
+    <div class="shopping-cart-wrapper">
+        <span data-bind="i18n: 'Your Shopping Cart'" class="title"></span>
+        <span class="shopping-cart-link">
+            <a href="cart" class="cart-link"><span>Edit</span></a>
+        </span>
+    </div>
+    <!-- ko foreach: elems() -->
+    <!-- ko template: getTemplate() --><!-- /ko -->
+    <!-- /ko -->
+</div>
+<!-- ko if: (isVisible()) -->
+<div class="actions-toolbar-trigger" id="place-order-trigger-wrapper">
+    <button type="button" class="button action primary" id="place-order-trigger" value="Place Order" >
+        <span>PROCEED TO PAYMENT</span>
+    </button>
+</div>
+<!-- /ko -->

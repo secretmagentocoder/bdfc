@@ -1,0 +1,464 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+?>
+<style>
+@media print {
+    footer.page-footer{
+        display: none !important;
+    }
+} 
+</style>
+
+<?php
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$connection = $objectManager->get('Magento\Framework\App\ResourceConnection')->getConnection('\Magento\Framework\App\ResourceConnection::DEFAULT_CONNECTION');
+$pageUrl = $objectManager->get('Magento\Framework\UrlInterface');
+$helper = $this->helper('Ecommage\CustomerCheckoutSuccess\Helper\Data');
+$helperRaffle = $this->helper('Ecommage\RaffleTickets\Helper\Data');
+$lid = $this->getOrderId();
+$imageHelper = $this->helper(\Magento\Catalog\Helper\Image::class);
+$order = $objectManager->create('Magento\Sales\Model\Order')->loadByIncrementId($lid);
+$billing = $order->getBillingAddress();
+$items = $order->getItemsCollection();
+$customerSession = $objectManager->get('Magento\Customer\Model\Session');
+$customer = $customerSession->getCustomer();
+?>
+
+<section class="py-5">
+    <div class="row">
+        <div class="col-md-8">
+            <h3 style="color:#b58484; font-weight:600;">THANK YOU FOR SHOPPING</h3>
+            <p>We'll email you an order confirmation with your shopping details and tracking information.</p>
+        </div>
+        <div class="col-md-4 share_link">
+            <a href="javascript:void(0);"><img src="/media/wysiwyg/icon/share.svg" alt="" width="40px" class="px-2"><div> Share</div></a> 
+            <a href="javascript:void(0);" onclick="window.print()"><img src="/media/wysiwyg/icon/printer.svg" alt="" width="40px" class="px-2"><div> Print</div></a>  
+            <a href="<?=$pageUrl->getCurrentUrl()?>" download><img src="/media/wysiwyg/icon/download.svg" alt="" width="40px" class="px-2"><div>Download</div></a> 
+        </div>
+    </div>
+
+    <?php
+    $lid = $this->getOrderId();
+    //echo "Order ID:".$lid."<br/>";
+
+    $order = $objectManager->create('Magento\Sales\Model\Order')->loadByIncrementId($lid);
+    //echo '<pre>';print_r($lid);die;
+    $status = $order['status'];
+    $currencycode = $order['store_currency_code'];
+    $created_at = $order['created_at'];
+    $date = date("d M Y", strtotime($created_at));
+
+    $grand_total = $order->getGrandTotal();
+    $sub_total = $order->getSubtotal();
+    $discount_amount = $order->getDiscountAmount();
+    $total_vat = $order->getTaxAmount();
+    $total_custom_fee = $order->getCustomfee();
+
+    // arrival_quantity_on_hand
+    $arrival_quantity_on_hand = $order->getArrivalQuantityOnHand();
+    $arrival_quantity_on_hand_arr = json_decode($arrival_quantity_on_hand);
+    $on_hand_qty_spirit_wine = 0;
+    $on_hand_qty_beer = 0;
+    $on_hand_qty_tobacco = 0;
+    $on_hand_qty_flv_tobacco = 0;
+    if (!empty($arrival_quantity_on_hand_arr)) {
+        $on_hand_qty_spirit_wine = $arrival_quantity_on_hand_arr[0]->on_hand_qty_spirit_wine;
+        $on_hand_qty_beer = $arrival_quantity_on_hand_arr[0]->on_hand_qty_beer;
+        $on_hand_qty_tobacco = $arrival_quantity_on_hand_arr[0]->on_hand_qty_tobacco;
+        $on_hand_qty_flv_tobacco = $arrival_quantity_on_hand_arr[0]->on_hand_qty_flv_tobacco;
+        if (empty($on_hand_qty_spirit_wine)) {
+            $on_hand_qty_spirit_wine = 0;
+        }
+        if (empty($on_hand_qty_beer)) {
+            $on_hand_qty_beer = 0;
+        }
+        if (empty($on_hand_qty_tobacco)) {
+            $on_hand_qty_tobacco = 0;
+        }
+        if (empty($on_hand_qty_flv_tobacco)) {
+            $on_hand_qty_flv_tobacco = 0;
+        }
+    }
+
+    $total_after_discount = $sub_total+$discount_amount;
+    $total_after_discount_ = number_format((float)$total_after_discount, 4, '.', '');
+
+    //echo "Order Total:".$totall."<br/>";
+    $shippingAddress = $order->getShippingAddress();
+    //echo "Telephone No:".$telephone = $order->getShippingAddress() ? $order->getShippingAddress()->getTelephone() : false."<br/>";
+     
+    $storeManager = $objectManager->get('\Magento\Store\Model\StoreManagerInterface');
+    $home_url = $storeManager->getStore()->getBaseUrl(); 
+      
+    $store_id = \Magento\Framework\App\ObjectManager::getInstance()
+        ->get(\Magento\Store\Model\StoreManagerInterface::class)
+        ->getStore()
+        ->getId();
+    ?>
+    <div class="row">
+         <?php if (!$helper->isCheckTicket($items)): ?>
+        <div class="col-md-8">
+            <table id="user_data_new" >
+                <tr>
+                    <td><strong>Name:</strong> </td>
+                    <td><?php echo $shippingAddress->getName(); ?></td>
+                </tr>
+                <tr>
+                    <td><strong>Mobile no:</strong> </td>
+                    <td><?php echo $shippingAddress->getTelephone(); ?></td>
+                </tr>
+                <tr>
+                    <td><strong>Email:</strong> </td>
+                    <td><?php echo $shippingAddress->getEmail(); ?></td>
+                </tr>
+            </table>
+            <p class="pt-3"><b>VAT Reg NO.</b> : 0000000000000000</p>
+            <div class="collection-procedure">
+                <a href="javascript:void(0);" id="collection_procedure_video">Click to view the collection procedure video</a>
+            </div>
+        </div>
+         <?php else: ?>
+         <div class="col-md-8">
+            <table id="user_data_new" >
+                <tr>
+                    <td><strong>Name:</strong> </td>
+                    <td><?= $block->escapeHtml($customer->getFirstname() .' ' . $customer->getLastname()) ?></td>
+                </tr>
+                <tr>
+                    <td><strong>Mobile no:</strong> </td>
+                    <td><?= $block->escapeHtml($customer->getMobileNumber()) ?></td>
+                </tr>
+                <tr>
+                    <td><strong>Email:</strong> </td>
+                    <td><?= $customer->getEmail() ?></td>
+                </tr>
+            </table>
+            <p class="pt-3"><b>VAT Reg NO.</b> : 0000000000000000</p>
+            <?php if ($helper->isCheckTicket($items)): ?>
+            <div class="collection-procedure">
+                <a href="javascript:void(0);" id="collection_procedure_video">Click to view the collection procedure video</a>
+                <?php endif; ?>
+            </div>
+        </div>
+    <?php endif; ?>
+        <div class="col-md-4">
+            <table>
+                <tr>
+                    <td><strong>Order No:</strong> </td>
+                    <td><?php echo $lid; ?></td>
+                </tr>
+                <tr>
+                    <td><strong>Order Date:</strong> </td>
+                    <td><?php echo $date; ?></td>
+                </tr>
+                <tr>
+                    <td><strong>Order Status:</strong> </td>
+                    <td><?php echo $status; ?></td>
+                </tr>
+    			<?php
+    			if($store_id == '4') {
+                    ?>
+                    <tr>
+                        <td><strong>Collection Point:</strong> </td>
+                        <td>Home Delivery</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Delivery Date:</strong> </td>
+                        <td>3-4 Working Days</td>
+                    </tr>     
+                    <?php
+    			} elseif($store_id == '2') {
+                    ?>
+                    <tr>
+                        <td><strong>Collection Point:</strong> </td>
+                        <td>Arrival</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Collection Date:</strong> </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Arrival Time:</strong> </td>
+                        <td></td>
+                    </tr>       
+                    <?php
+                } elseif($store_id == '3') {
+                    ?>
+                    <tr>
+                        <td><strong>Collection Point:</strong> </td>
+                        <td>Departure</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Collection Date:</strong> </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Collection Time:</strong> </td>
+                        <td></td>
+                    </tr>       
+                    <?php
+                } else {
+
+                }
+    			?>   
+            </table>
+        </div>
+    </div>
+     <?php if (!$helper->isCheckTicket($items)): ?>
+    <div class="row">
+        <div class="col-md-8">
+            <table class="table table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th></th>
+                    <th>ITEM NO</th>
+                    <th>PRODUCT DETAILS</th>
+                    <th>QTY</th>
+                    <th>TOTAL</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    // $items = $order->getItemsCollection();
+                    $items = $order->getAllVisibleItems();
+
+                    foreach($items as $i):            
+                        $attribute = $objectManager->create('\Magento\Catalog\Model\ResourceModel\Eav\Attribute');
+                        $product = $objectManager->get('Magento\Catalog\Api\ProductRepositoryInterface')->getById($i->getProductId());
+                        $store = $objectManager->get('Magento\Store\Model\StoreManagerInterface')->getStore(); 
+                        $productImageUrl = '';
+                        if (empty($product->getImage())) {
+                            $productImageUrl = $store->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA) . 'catalog/product/placeholder/image.jpg';
+                        }else{
+                            $productImageUrl = $store->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA) . 'catalog/product' . $product->getImage();
+                        }
+                        // $productUrl  = $product->getProductUrl();
+                        $p = $objectManager->create('Magento\Catalog\Model\Product')->load($i->getProductId());
+                        $product_size = $p->getResource()->getAttribute('size')->getFrontend()->getValue($p);
+                        // $product_brand = $p->getResource()->getAttribute('product_brand')->getFrontend()->getValue($p);
+
+                        // $product_brand = $p->getResource()->getAttribute('product_brand')->getFrontend()->getValue($p);
+                        $product_brand = $p->getData('product_brand');
+                        $product_brand_arr = explode(",", $product_brand);
+                        $product_brand_html = '';
+                        $count = '0';
+                        if (!empty($product_brand_arr)) {
+                            foreach ($product_brand_arr as $value) {
+                                if (!empty($value)) {
+                                    if ($count != '0') {
+                                        $product_brand_html .= ', ';
+                                    }
+                                    $brand_id = $value;
+                                    $query = $connection->select()->from('magetop_brand', ['*'])->where('brand_id = ?', $brand_id);
+                                    $result = $connection->fetchRow($query);
+                                    $brand_name = $result['name'];
+                                    $brand_url_key = $result['url_key'];
+                                    $brand_url = $home_url.'brand/'.$brand_url_key.'.html';
+                                    $product_brand_html .= '<a href="'.$brand_url.'" title="'.$brand_name.'">'.$brand_name.'</a>';
+                                }
+                                $count++;
+                            }
+                        }
+
+                        $giftWrapId =  $i->getGwId();
+                        ?>
+                        <tr class="test">
+                            <td><?php echo "<img src=".$productImageUrl." style='width:100px;'>";?></td>
+                            <td><?php echo $i->getSku(); ?></td>
+                            <td>
+                                <span class="brand">
+                                    <div class="product-brand">
+                                        <?php echo $product_brand_html;?>
+                                    </div>
+                                </span></br>
+                                <span class="product-name"><?php echo $i->getName(); ?></span></br>
+                                <?php if(!empty($product_size)): ?>
+                                    <span class="product-size">SIZE: <?php echo $product_size;?></span></br>
+                                <?php endif; ?>
+                                <span class="options">
+                                    <?php
+                                    $options = $i->getProductOptions();
+                                    if (!empty($options)) {
+                                        if (isset($options['info_buyRequest']['super_attribute'])) {
+                                            $super_attribute = $options['info_buyRequest']['super_attribute'];
+                                            echo '<dl class="item-options">';
+                                            foreach ($super_attribute as $key => $value) {
+                                                $attribute_id = $key;
+                                                $attribute_option_id = $value;
+
+                                                $attribute_model = $attribute->load($attribute_id);
+                                                $attribute_code = $attribute_model->getAttributeCode();
+                                                $attribute_label = $attribute_model->getFrontendLabel();
+
+                                                $_attributeId = $product->getResource()->getAttribute($attribute_code);
+                                                if ($_attributeId->usesSource()) {
+                                                    $attribute_option_text = $_attributeId->getSource()->getOptionText($attribute_option_id);
+                                                }
+                                                echo '<span class="option">';
+                                                    echo $attribute_label.': '.$attribute_option_text;
+                                                    echo '</br>';
+                                                echo '</span>';
+
+                                            }
+                                            echo '</dl>';
+                                        }
+                                    }
+                                    ?>
+                                </span></br>
+                                <?php //echo $order->getCouponCode(); ?> 
+                                <span class="gifts">
+                                    <input type="checkbox" id='gift' <?php if($giftWrapId != null){ ?> checked<?php } ?>>
+                                    <label for="">Gift Wrap</label>
+                                </span></br>
+                            </td>
+                            <td><?php echo round($i->getQtyOrdered()); ?></td>
+                            <td class="totalvalue">
+                                <?php if($i->getOriginalPrice() != $i->getPrice()): ?>
+                                    <?= 'Save '. $currencycode .' '. ($i->getOriginalPrice() - $i->getPrice());?><br/>
+                                    <strong style="text-decoration: line-through;"><?php echo $currencycode; ?> <?= $i->getOriginalPrice();?></strong><br/>
+                                    <?php echo $currencycode; ?> <?php echo $i->getRowTotalInclTax(); ?> 
+                                <?php else : ?>
+                                    <?php echo $currencycode; ?> <?php echo $i->getRowTotalInclTax(); ?> 
+                                <?php endif; ?>
+                            </td>
+                        </tr>
+                        <?php
+                        unset($i);
+                    endforeach;
+                    ?>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-4">
+            <table class="table table-hover">
+                <tr>
+                    <td>Total :</td>
+                    <td><?php echo $currencycode; ?></td>
+                    <td id="total"><?php echo $sub_total; ?></td>
+                </tr>
+                <tr>
+                    <td>Total Discount:</td>
+                    <td><?php echo $currencycode; ?></td>
+                    <td id="discount"><?php echo $discount_amount; ?></td>
+                </tr>
+                <tr>
+                    <td>Total after Discount:</td>
+                    <td><?php echo $currencycode; ?></td>
+                    <td id="afterdiscount"><?php echo $total_after_discount_; ?></td>
+                </tr>
+                <tr>
+                    <td>Total VAT:</td>
+                    <td><?php echo $currencycode; ?></td>
+                    <td id="discount"><?php echo $total_vat; ?></td>
+                </tr>
+                <!-- <tr>
+                    <td>Handling Charges:</td>
+                    <td><?php echo $currencycode; ?></td>
+                    <td id="discount"><?php echo $total_custom_fee; ?></td>
+                </tr> -->
+                <tr>
+                    <td>Total Cart Value:</td>
+                    <td><?php echo $currencycode; ?></td>
+                    <td id="cartvalue"><?php echo $grand_total; ?></td>
+                </tr>
+            </table>
+            <?php if($store_id == '2'): ?>
+                <table class="table table-striped">
+                    <thead>                    
+                        <tr>
+                          <th colspan="2">On-Hand Quantity Declared</th>
+                        </tr>
+                    </thead>
+                    <tr>
+                        <td>Spirit + Wine</td>
+                        <td><?php echo $on_hand_qty_spirit_wine;?> Ltr</td>
+                    </tr>
+                    <tr>
+                        <td>Beer</td>
+                        <td><?php echo $on_hand_qty_beer;?> Box</td>
+                    </tr>
+                    <tr>
+                        <td>Tobacco</td>
+                        <td><?php echo $on_hand_qty_tobacco;?> Pcs</td>
+                    </tr>
+                    <tr>
+                        <td>FLV Tobacco</td>
+                        <td><?php echo $on_hand_qty_flv_tobacco;?> GM</td>
+                    </tr>
+                </table>
+            <?php endif;?>
+        </div>
+    </div>
+     <?php else: ?>
+         <div class="order-ticket">
+        <?php foreach ($items as $order) :?>
+        <?php $products = $helper->getProduct($order->getProductId()); ?>
+        <?php $information = $helper->getInformation($order); ?>
+            <div class="header-ticket">
+                <?php $address = $helper->getInformation($order);  ?>
+                <?php $imageUrl = $block->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA) . 'catalog/product' . $products->getImage(); ?>
+                <span class="image-product"> <img src="<?= $products->getImage()?:  $imageHelper->getDefaultPlaceholderUrl('small_image') ?>"> </span>
+                <span class="image-logo"> <img src="<?= $block->getLayout()->getBlock('logo')->getLogoSrc() ?>"> </span>
+                <span class="series-ticket"> <?= $block->escapeHtml(__('Series: %1',$products->getSeries())) ?> </span>
+                <span class="ticket-no-product"> <?= $block->escapeHtml(__('Ticket No: %1',$helper->getTitleTicket($order->getProductOptions()))) ?> </span>
+            </div>
+            <fieldset class="bottom-checkout">
+                <div class="content-ticket"><?= $block->escapeHtml(__('Ticket: %1',$order->getName())) ?></div>
+                <div class="name"><?= $block->escapeHtml(__('Name: %1',$billing->getFirstName() .' ' .$billing->getLastName())) ?></div>
+                <div class="passport"><?= $block->escapeHtml(__('Passport/Nationality id: %1',$billing->getPassportNo())) ?></div>
+                <div class="nationality"><?= $block->escapeHtml(__('Nationality: %1',$billing->getRegion())) ?></div>
+                <div class="address"><?= $block->escapeHtml(__('Address: %1',$billing->getStreet())) ?></div>
+                <div class="country"><?= $block->escapeHtml(__('Country: %1',$helper->getCountryName($billing->getCountryId()))) ?></div>
+                <div class="zip-code"><?= $block->escapeHtml(__('Zip Code: %1',$billing->getPostCode())) ?></div>
+                <div class="mobile-no"><?= $block->escapeHtml(__('Mobile No: %1',$billing->getTelephone())) ?></div>
+                <div class="e-mail"><?= $block->escapeHtml(__('E-mail: %1',$billing->getEmail())) ?></div>
+                <div class="date"><?= $block->escapeHtml(__('Date: %1',$date)) ?></div>
+            </fieldset>
+        <?php endforeach;  ?>
+        </div>
+    <?php endif; ?>
+    <div class="row">
+        <div class="col-md-8 link_order ">
+            <a href="<?php echo $home_url; ?>" type="button" class=" btn btn-dark text-white rounded-pill py-2 px-4">BACK TO HOME</a>
+            <?php if (! $helper->isCheckTicket($items)): ?>
+            <a href="<?php echo $block->getUrl('sales/order/reorder', ['order_id' => $order->getId()]); ?>" type="button" class=" btn btn-dark text-white rounded-pill py-2 px-4">REORDER</a>
+            <?php endif; ?>
+        </div>
+        <?php if (!$helper->isCheckTicket($items)): ?>
+        <div class="col-md-12">
+            <a href="javascript:void(0);" id="shopping_experience_rate" class="py-4 d-block">We would appreciate if your shopping experience with Bahrain Duty Free</a>
+            
+        </div>
+        <?php else: ?>
+            <div class="col-md-12">
+                <a href="" id="shopping_experience_rate" class="py-4 d-block"><?= $block->escapeHtml(__('We will email the draw date once it has been announced')) ?></a>
+            </div>
+        <?php endif; ?>
+    </div>
+</section>
+
+<style type="text/css">
+    .page-title-wrapper {
+        display: none;
+    }
+    div#registration {
+        display: none;
+    }
+</style>
+
+<script>
+    require(['jquery', 'jquery/ui', 'slick'], function($) {
+        $(document).ready(function() {
+            $(".order-ticket").slick({
+                dots: true,
+                infinite: true,
+                slidesToShow: 2,
+                slidesToScroll: 0,
+                centerMode: true,
+            });
+        });
+    });
+</script>

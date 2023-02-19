@@ -1,0 +1,50 @@
+<?php
+/**
+ * @package Bdfc_General
+ */
+
+/** @var \Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer */
+?>
+<form class="form form-orders-search"
+      id="oar-widget-orders-and-returns-form"
+      data-mage-init='{"ordersReturns":{}, "validation":{}}'
+      action="<?= $block->escapeUrl($block->getActionUrl()) ?>"
+      method="post" name="guest_post">
+    <fieldset class="fieldset">
+        <legend class="legend"><span><?= $block->escapeHtml(__('Order Information')) ?></span></legend>
+        <br>
+
+        <div class="field id required">
+            <label class="label" for="oar-order-id"><span><?= $block->escapeHtml(__('Order ID')) ?></span></label>
+
+            <div class="control">
+                <input type="text" class="input-text" id="oar-order-id" name="oar_order_id"
+                       data-validate="{required:true}"/>
+            </div>
+        </div>
+        <div id="oar-email" class="field email required">
+            <label class="label" for="oar_email"><span><?= $block->escapeHtml(__('Email')) ?></span></label>
+
+            <div class="control">
+                <input type="email" class="input-text" id="oar_email" name="oar_email"
+                       data-validate="{required:true, 'validate-email':true}"/>
+            </div>
+        </div>
+    </fieldset>
+    <div class="actions-toolbar">
+        <div class="primary">
+            <button type="submit" title="<?= $block->escapeHtml(__('Continue')) ?>" class="action submit primary">
+                <span><?= $block->escapeHtml(__('Continue')) ?></span>
+            </button>
+        </div>
+    </div>
+    <div class="message">
+        <span><?= $block->escapeHtml(__('You can also track your order from your personalized Dashboard.')) ?></span><br>
+         <span><?= $block->escapeHtml(__('Just login to your account below')) ?></span>
+    </div>
+    <div class="login-link">
+        <a href="<?= $block->escapeUrl($block->getUrl('customer/account/login')) ?>">
+            <?= $block->escapeHtml(__('LOGIN')) ?>
+        </a>
+    </div>
+</form>

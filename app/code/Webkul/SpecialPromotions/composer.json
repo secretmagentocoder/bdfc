@@ -1,0 +1,21 @@
+{
+    "name": "webkul/module-specialpromotions",
+    "description": "Webkul SpecialPromotions Module for Magento2",
+    "require": {
+        "magento/module-sales-rule": "101.2.*",
+        "magento/framework": "103.0.*"
+      },
+    "type": "magento2-module",
+    "version": "5.0.1-p1",
+    "license": [
+        "proprietary"
+    ],
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Webkul\\SpecialPromotions\\": ""
+        }
+    }
+}

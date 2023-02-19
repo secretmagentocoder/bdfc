@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank you emailer</title>
+    <style>
+        table,
+        th,
+        td,
+        p,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        body {
+            font-family: Arial, sans-serif !important;
+        }
+    </style>
+</head>
+
+<body>
+    <table role="presentation" style="width:100%;border-collapse:collapse;border:0;border-spacing:0;background:#ffffff;">
+        <tbody>
+            <tr>
+                <td align="center" style="padding:0;">
+                    <table role="presentation" style="max-width:780px;border-collapse:collapse;border-spacing:0;text-align:left;">
+                        <tbody>
+                            <tr>
+                                <td align="center" style="padding:20px 0 20px 0;background:#ffffff;">
+                                    <img src="https://thecurator.digital/bdfc-emailer/emailer-images/Bahrain_DutyFree_Logo.png" alt="" width="300" style="height:auto;display:block;">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding:0px 30px 0px 30px; background-color: #f7f7f7;">
+                                    <table role="presentation" style="width:100%;border-collapse:collapse;border:0;border-spacing:0;padding:30px; background-color: #fff8f8;">
+                                        <tbody>
+                                            <tr>
+                                                <td style="padding:50px;color:#111111;">
+                                                    <h1 style="font-size:40px;margin:0 0 20px 0;font-family:Arial,sans-serif;text-align: center;">
+                                                        WE’VE RECEIVED <br> YOUR ORDER!</h1>
+                                                    <p style="margin:0;font-size:16px;line-height:24px;font-family:Arial,sans-serif; font-weight: bold;">
+                                                        {{var CustomerName|raw}},</p>
+                                                    <p style="margin:0 0 12px 0;font-size:16px;line-height:24px;font-family:Arial,sans-serif;">
+                                                        Thanks for shopping with Bahrain Duty Free! You’ll find a summary of recent purchase order below.</p>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td style="padding: 0px 50px;" valign="top">
+                                                    <table align="left" border="0" cellpadding="0" cellspacing="0" style="max-width: 50%; padding-right: 20px;" width="100%">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td valign="top" style="padding-right:20px; padding-bottom:20px;">
+                                                                    <table align="left" border="0" cellspacing="0" width="100%">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td style="padding: 8px 0px;  width: 50%; text-align: left;">
+                                                                                    Order No:</td>
+                                                                                <td style="padding: 8px 0px;  width: 50%; text-align: right;">
+                                                                                     {{var OrderNo|raw}}</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td style="padding: 8px 0px;  width: 50%; text-align: left;">
+                                                                                    Order Date:</td>
+                                                                                <td style="padding: 8px 0px;  width: 50%; text-align: right;">
+                                                                                    {{var OrderDate|raw}}</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td style="padding: 8px 0px;  width: 50%; text-align: left;">
+                                                                                    Order Status:</td>
+                                                                                <td style="padding: 8px 0px;  width: 50%; text-align: right;">
+                                                                                    {{var OrderStatus|raw}}</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td style="padding: 8px 0px;  width: 50%; text-align: left;">
+                                                                                    Collection Point:</td>
+                                                                                <td style="padding: 8px 0px;  width: 50%; text-align: right;">
+                                                                                    Arrival
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td style="padding: 8px 0px;  width: 50%; text-align: left;">
+                                                                                    Flight No:</td>
+                                                                                <td style="padding: 8px 0px;  width: 50%; text-align: right;">
+                                                                                    EK121</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td style="padding: 8px 0px;  width: 50%; text-align: left;">
+                                                                                    Collection Date:</td>
+                                                                                <td style="padding: 8px 0px;  width: 50%; text-align: right;">
+                                                                                    15 Mar 2022</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td style="padding: 8px 0px;  width: 50%; text-align: left;">
+                                                                                    Arrival Time:</td>
+                                                                                <td style="padding: 8px 0px;  width: 50%; text-align: right;">
+                                                                                    20:20</td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    <table align="left" border="0" cellpadding="0" cellspacing="0" style="max-width: 50%; padding-left: 20px;" width="100%">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td valign="top" style="padding-left:20px; padding-bottom:20px;">
+                                                                    <table align="left" border="0" cellspacing="0" width="100%">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td style="padding: 8px 0px;  width: 50%; text-align: left;">
+                                                                                    Name:</td>
+                                                                                <td style="padding: 8px 0px;  width: 50%; text-align: right;">
+                                                                                    {{var CustomerName|raw}}</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td style="padding: 8px 0px;  width: 50%; text-align: left;">
+                                                                                    Mobile No:</td>
+                                                                                <td style="padding: 8px 0px;  width: 50%; text-align: right;">
+                                                                                    {{var CustomerMobile|raw}}</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td style="padding: 8px 0px;  width: 50%; text-align: left;">
+                                                                                    Email:</td>
+                                                                                <td style="padding: 8px 0px;  width: 50%; text-align: right;">
+                                                                                    {{var CustomerEmail|raw}}</td>
+                                                                            </tr>
+
+
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding:0px 30px 0px 30px; background-color: #f7f7f7;">
+                                    <table role="presentation" style="width:100%;border-collapse:collapse;border:0;border-spacing:0;padding:30px; background-color: #ffffff;">
+                                        <tbody>
+                                            <tr>
+                                                <td style="padding:20px 50px;color:#111111; background-color: #ececec;">
+                                                    <h1 style="font-size:30px;margin:0 0 0px 0;font-family:Arial,sans-serif;text-align: center;">
+                                                        ORDER BRIEF</h1>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td style="padding: 30px 50px;" valign="top">
+                                                    <table align="left" border="0" cellpadding="0" cellspacing="0" style="max-width: 100%;" width="100%">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td valign="top">
+                                                                    <table align="left" border="0" cellspacing="10" width="100%" style="padding-top: 20px;">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <th colspan="2">
+
+                                                                                </th>
+                                                                                <th style="text-align: center;">UNIT PRICE
+                                                                                </th>
+                                                                                <th style="text-align: center;">QTY</th>
+                                                                                <th style="text-align: right;">TOTAL
+                                                                                </th>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td style="padding: 8px 10px;  width:10%; text-align: center;">
+                                                                                    <img src="https://thecurator.digital/bdfc-emailer/emailer-images/chivas.png" alt="chivas" width="100%"></td>
+                                                                                <td style="padding: 8px 20px;  width: 50%; text-align: left;">
+                                                                                    <h5 style="color: rgb(129, 129, 129); padding: 0px; margin: 0px;">
+                                                                                        CHIVAS</h5>
+                                                                                    <h4 style="padding: 10px 0px;margin: 0;">
+                                                                                       {{var ProductName|raw}}</h4>
+                                                                                    <p style="padding: 0px 0px;margin: 0; font-size:15px;">
+                                                                                        Item No:  {{var ItemNumber|raw}}</p>
+                                                                                    <p style="padding: 0;margin: 0 ; font-size:15px;">
+                                                                                        Size: 1L</p>
+                                                                                </td>
+                                                                                <td style="padding: 8px 0px;  width: 20%; text-align: center;">
+                                                                                    <h5 style="color: #ee4c50; padding: 0;margin: 0; ">
+                                                                                        Save BHD {{var ProductDiscount|raw}}</h5>
+                                                                                    <p style="padding: 0;margin: 0;  font-size:15px;">
+                                                                                        <del> BHD 50.000</del></p>
+                                                                                    <h4 style="padding: 0;margin: 0;  font-size:15px;">
+                                                                                        BHD {{var ProductPrice|raw}}</h4>
+                                                                                </td>
+                                                                                <td style="padding: 8px 0px;  width: 5%; text-align: center;">
+                                                                                    1</td>
+                                                                                <td style="padding: 8px 0px;  width: 15%; text-align: center;">
+                                                                                    BHD {{var ProductPrice|raw}}</td>
+                                                                            </tr>
+
+                                                                            <tr>
+                                                                                <td style="padding: 8px 10px;  width:10%; text-align: center;">
+                                                                                    <img src="https://thecurator.digital/bdfc-emailer/emailer-images/chivas.png" alt="chivas" width="100%"></td>
+                                                                                <td style="padding: 8px 20px;  width: 50%; text-align: left;">
+                                                                                    <h5 style="color: rgb(129, 129, 129); padding: 0px; margin: 0px;">
+                                                                                        CHIVAS</h5>
+                                                                                    <h4 style="padding: 10px 0px;margin: 0;">
+                                                                                        Chivas Regal 12 Year Old Blended Scotch Whisky</h4>
+                                                                                    <p style="padding: 0px 0px;margin: 0;  font-size:15px;">
+                                                                                        Item No: 1234567</p>
+                                                                                    <p style="padding: 0;margin: 0;  font-size:15px;">
+                                                                                        Size: 1L</p>
+                                                                                </td>
+                                                                                <td style="padding: 8px 0px;  width: 20%; text-align: center;">
+                                                                                    <h5 style="color: #ee4c50; padding: 0;margin: 0;">
+                                                                                        Save BHD 5.000</h5>
+                                                                                    <p style="padding: 0;margin: 0;  font-size:15px;">
+                                                                                        <del> BHD 50.000</del></p>
+                                                                                    <h4 style="padding: 0;margin: 0; ">
+                                                                                        BHD 45.000</h4>
+                                                                                </td>
+                                                                                <td style="padding: 8px 0px;  width: 5%; text-align: center;">
+                                                                                    1</td>
+                                                                                <td style="padding: 8px 0px;  width: 15%; text-align: center;">
+                                                                                    BHD 45.000</td>
+                                                                            </tr>
+
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+
+                                                        </tbody>
+
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding:20px 50px;color:#111111; background-color: #ececec;">
+                                                    <table align="left" border="0" cellpadding="0" cellspacing="0" style="max-width: 50%; padding-right: 20px;" width="100%">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td valign="top">
+                                                                    <table align="left" border="0" cellspacing="0" width="100%">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td style="padding: 0px 80px 0px 0px;  width: 100%; text-align: left;">
+                                                                                    <h4 style="font-size: 18px; font-weight:600;">Scan Barcode</h4>
+                                                                                    <img src="https://thecurator.digital/bdfc-emailer/emailer-images/barcode.png" alt="barcode" width="100%">
+                                                                                </td>
+
+                                                                            </tr>
+
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    <table align="left" border="0" cellpadding="0" cellspacing="0" style="max-width: 50%; padding-right: 0px;" width="100%">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td valign="top">
+                                                                    <table align="left" border="0" cellspacing="0" width="100%">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td style="padding: 8px 0px;  width: 50%; text-align: left;">
+                                                                                    Total Excl. VAT</td>
+                                                                                <td style="padding: 8px 0px;  width: 50%; text-align: right;">
+                                                                                    BHD 150.000</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td style="padding: 8px 0px;  width: 50%; text-align: left;">
+                                                                                    Total Discount</td>
+                                                                                <td style="padding: 8px 0px;  width: 50%; text-align: right;">
+                                                                                    BHD -15.000</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td style="padding: 8px 0px;  width: 50%; text-align: left;">
+                                                                                    Total After Discount</td>
+                                                                                <td style="padding: 8px 0px;  width: 50%; text-align: right;">
+                                                                                    BHD 135.000</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td style="padding: 8px 0px;  width: 50%; text-align: left;">
+                                                                                    Total VAT</td>
+                                                                                <td style="padding: 8px 0px;  width: 50%; text-align: right;">
+                                                                                    BHD 13.500
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td style="padding: 8px 0px;  width: 50%; text-align: left;">
+                                                                                    Handling Charge</td>
+                                                                                <td style="padding: 8px 0px;  width: 50%; text-align: right;">
+                                                                                    BHD 0.000</td>
+                                                                            </tr>
+
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding:10px 50px;color:#ffffff; background-color: #0e0e0e;">
+                                                    <table align="left" border="0" cellspacing="0" width="100%">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td style="padding: 8px 0px; color:#fff; width: 70%; text-align: right; font-size: 24px;">
+                                                                    TOTAL</td>
+                                                                <td style="padding: 8px 0px; color:#fff;  width: 30%; text-align: right; font-size: 24px;">
+                                                                    BHD 150.000</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding:0;">
+                                                    <table role="presentation" style="width:100%;border-collapse:collapse;border:0;border-spacing:0;padding-top: 20px;">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td style="width:260px;padding:0;vertical-align:top;color:#153643;">
+
+                                                                    <p style="margin:30px 0px 25px 0px;font-size:16px;line-height:24px;font-family:Arial,sans-serif;">
+                                                                        <img src="https://thecurator.digital/bdfc-emailer/emailer-images/Emailler_01.png" alt="emailer" width="100%" style="height:auto;display:block;"></p>
+
+                                                                </td>
+                                                                <td style="width:20px;padding:0;font-size:0;line-height:0;">
+                                                                     </td>
+                                                                <td style="width:260px;padding:0;vertical-align:top;color:#153643;">
+                                                                    <p style="margin:30px 0px 25px 0px;font-size:16px;line-height:24px;font-family:Arial,sans-serif;">
+                                                                        <img src="https://thecurator.digital/bdfc-emailer/emailer-images/Emailler_02.png" alt="emailer" width="100%" style="height:auto;display:block;"></p>
+
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- FOOTER DESIGN -->
+
+    <table role="presentation" style="width:100%;border-collapse:collapse;border:0;border-spacing:0;background:#ffffff;">
+        <tbody>
+            <tr>
+                <td align="center" style="padding:0;">
+                    <table role="presentation" style="max-width:780px;border-collapse:collapse;border-spacing:0;text-align:left;">
+                        <tbody>
+                            <tr>
+                                <td style="padding:0px 30px 0px 30px; background-color: #f7f7f7;">
+                                    <table role="presentation" style="width:100%;border-collapse:collapse;border:0;border-spacing:0;font-size:9px;font-family:Arial,sans-serif; background-color:#ffffff">
+                                        <tbody>
+                                            <tr>
+                                                <td style="padding:0;width:50%;" align="left">
+                                                    <ul style="list-style: none; padding-left:50px;">
+                                                        <li>
+                                                            <a href="#" style="font-size: 20px; color: #aaaaaa;display: block; padding: 5px 0px; text-decoration: none;">SHOP
+                                                                NOW</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#" style="font-size: 20px; color: #aaaaaa;display: block; padding: 5px 0px; text-decoration: none;">ABOUT
+                                                                US</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#" style="font-size: 20px; color: #aaaaaa; display: block; padding: 5px 0px; text-decoration: none;">CONTACT
+                                                                US</a>
+                                                        </li>
+                                                    </ul>
+                                                    <br>
+
+                                                    <ul style="list-style: none; display: flex; padding-left:50px;">
+                                                        <li>
+                                                            <a href="#" style="font-size: 20px; color: #aaaaaa;display: block; padding: 5px 10px 5px 0px; text-decoration: none;"><img src="https://thecurator.digital/bdfc-emailer/emailer-images/meta.png" alt="meta" width="23px"></a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#" style="font-size: 20px; color: #aaaaaa;display: block; padding: 5px 10px; text-decoration: none;"><img src="https://thecurator.digital/bdfc-emailer/emailer-images/instagram.png" alt="instagram" width="20px"></a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#" style="font-size: 20px; color: #aaaaaa; display: block; padding: 5px 10px; text-decoration: none;"><img src="https://thecurator.digital/bdfc-emailer/emailer-images/linkedin.png" alt="linkedin" width="20px"></a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#" style="font-size: 20px; color: #aaaaaa; display: block; padding: 5px 10px; text-decoration: none;"><img src="https://thecurator.digital/bdfc-emailer/emailer-images/youtube.png" alt="youtube" width="20px"></a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#" style="font-size: 20px; color: #aaaaaa; display: block; padding: 5px 10px; text-decoration: none;"><img src="https://thecurator.digital/bdfc-emailer/emailer-images/whatapp.png" alt="whatapp" width="20px"></a>
+                                                        </li>
+                                                    </ul>
+                                                </td>
+                                                <td style="padding:0;width:50%;" align="left">
+                                                    <table role="presentation" style="border-collapse:collapse;border:0;border-spacing:0;">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td style="padding:0 50 0 10px;">
+                                                                    <h2 style="font-size: 13px; font-weight:600; padding-top:20px;">If you need help with anything please don’t hesitate to drop us an email at:</p>
+                                                                        <h5><a href="mailto:info@bdutyfree.com " style="font-size: 14px; color: #414141; text-decoration: none;">info@bdutyfree.com</a>
+                                                                        </h5>
+                                                                        <h2 style="font-size: 15px; font-weight:600;">GET IN TOUCH</h4>
+                                                                            <h4 style="font-size: 12px;">
+                                                                                <strong>Telephone :</strong> +973 1732912
+                                                                                </p>
+                                                                                <h4 style="font-size: 12px;">
+                                                                                    <strong>Email :</strong> info@bdutyfree.com
+                                                                                    </p>
+                                                                                    <h4 style="font-size: 12px;">
+                                                                                        <strong>Website
+                                                                                            :</strong>www.bdutyfreeshop.com
+                                                                                        </p>
+                                                                                        <h4 style="font-size: 12px;">
+                                                                                            <strong>VAT Reg No.
+                                                                                                :</strong> 200000090700002
+                                                                                            </p>
+                                                                </td>
+
+                                                            </tr>
+
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+
+
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td style="width:100%; text-align:center; padding:20px 30px 20px 30px; background-color: #f7f7f7;">
+                                    © 2022 BAHRAIN DUTY FREE. ALL RIGHTS RESERVED.</td>
+                            </tr>
+
+
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+
+    <!-- footer DESIGN -->
+
+
+
+</body>
+
+</html>

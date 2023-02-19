@@ -1,0 +1,12 @@
+<?php
+/** @var \Ecommage\RaffleTickets\Block\Slider $block */
+$helper = $this->helper('Ecommage\RaffleTickets\Helper\Data');
+$product = $block->getProduct();
+
+if($product):?>
+<?php if ($helper->getActionName()):?>
+    <div class="banner">
+    <img src="<?= $helper->getTopBannerImageUrl($product->getTopBannerImage()); ?>" class="img-fluid" />
+    </div>
+<?php endif; ?>
+<?php endif; ?>

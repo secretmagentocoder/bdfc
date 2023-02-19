@@ -1,0 +1,19 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Cron:etc/crontab.xsd">
+    <group id="default">
+        <job instance="Ecommage\CreateProductApi\Cron\WebValueMappingProduct" method="execute" name="ecommage_value_mapping_product">
+            <schedule>0 00 * * *</schedule>
+        </job>
+    </group>
+    <group id="staging">
+        <job instance="Ecommage\CreateProductApi\Cron\UploadVariant" method="execute" name="ecommage_upload_variant">
+            <schedule>* * * * *</schedule>
+        </job>
+        <job instance="Ecommage\CreateProductApi\Cron\UploadManual" method="execute" name="ecommage_upload_manual">
+            <schedule>* * * * *</schedule>
+        </job>
+        <job instance="Ecommage\CreateProductApi\Cron\UploadHexCode" method="execute" name="ecommage_upload_hex_code">
+            <schedule>0 00 * * *</schedule>
+        </job>
+    </group>
+</config>

@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * 
+ * @package Bdfc_General
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Checkout\Model\CompositeConfigProvider">
+        <arguments>
+            <argument name="configProviders" xsi:type="array">
+                <item name="additional_checkout_datas" xsi:type="object">Bdfc\General\Model\AdditionalDataConfigProvider</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Cms\Controller\Noroute\Index">
+        <plugin name="404_redirect" type="Bdfc\General\Plugin\RedirectToHomepage"/>
+    </type>
+</config>

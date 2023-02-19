@@ -1,0 +1,121 @@
+<style>
+.center {
+  text-align: center;
+  /* border: 3px solid green; */
+}
+</style>
+
+<div id="change_collection_details_popup" class="modal custom-modal">
+    <div class="custom-modal-wrapper">
+        <?php //echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('block_change_collection_details_popup')->toHtml(); ?>
+      
+        <div class="col-md-6 col-lg-5 col-sm-6 col-xxl-4 col-10 mx-auto age_verify  border p-1" id="pop_up_collection">
+<div class="text-end p-2">
+        <span class="custom_popup_close text-end"><img src="/media/wysiwyg/icon/delete_btn.svg"></span>
+      </div>
+    <h3 class="text-uppercase py-5 text-center"> Change Collection Details </h3>
+    <form class="row">
+        <label for="date" class="col-md-10 mx-auto col-12 col-form-label text-uppercase text-left">Update Date</label>
+        <div class="col-md-10 mx-auto col-12">
+            <div class="input-group date" id="datepicker">
+                <input type="date" name="updateArrivalDate" class="form-control date_detail" id="updateArrivalDate" required/>
+                <input type="hidden" class="form-control date_detail" id="change_collection_details" />
+                <span class="input-group-append">
+                    <span class="input-group-text bg-light d-block">
+                        <i class="fa fa-calendar"></i>
+                    </span>
+                </span>
+            </div>
+        </div>
+
+        <label for="date" class="col-md-10 mx-auto col-12 mt-3 col-form-label text-uppercase text-left">Pickup Date</label>
+        <div class="col-md-10 mx-auto col-12">
+            <div class="input-group date" id="datepicker">
+                <input type="text" class="form-control date_detail" name="arrival_date"  id="arrival_date" disabled/>
+                <input type="hidden" name="type" id="datetype">
+                <span class="input-group-append">
+                    <span class="input-group-text bg-light d-block">
+                        <i class="fa fa-calendar"></i>
+                    </span>
+                </span>
+            </div>
+        </div>
+      
+ <div class="col-md-6 mx-auto col-12 mt-5 pb-5">
+        <div id="internal_page_style">
+            <a href="#" class="updateArrivalDate" 
+            tabindex="0">
+                <span class="btn_style1 btn_style_in">
+                    <span>Submit Now</span>
+                </span>
+                <div class="content-details fadeIn-left">
+                    <span class="btn_style btn_style_in">
+                        <span>Submit Now</span>
+                    </span>
+                </div>
+            </a>
+        </div>
+        <div class="center response_msg"></div>
+</div>
+
+    </form>
+</div>
+    </div>
+</div>
+
+<script type= "text/javascript">
+
+    function getArrivalDate(date,orderId,type)
+    {
+        document.getElementById("arrival_date").value= date;
+        document.getElementById("change_collection_details").value = orderId;
+        document.getElementById("datetype").value = type;
+    }
+
+    require(["jquery"], function ($) {
+              
+        $(".updateArrivalDate").click(function(){
+            var updateArrivalDate= jQuery('#updateArrivalDate').val(); 
+            updateArrivalDatenew = updateArrivalDate.split("-").reverse().join("/");
+            jQuery('#arrival_date').val(updateArrivalDatenew);
+            
+            // var url = window.location.href;
+        
+            var type = document.getElementById('datetype').value;
+            if(type == 'departure'){
+                updateDateUrl = '<?php echo $this->getUrl('customcartrule/sales/updateDepartureDate') ?>';
+            }else{
+                updateDateUrl = '<?php echo $this->getUrl('customcartrule/sales/updateArrivalDate') ?>';
+            }
+            var orderId = document.getElementById('change_collection_details').value;
+            var updateArrivalDate = document.getElementById('updateArrivalDate').value;
+
+           // alert(updateArrivalDate);
+            $.ajax({
+                url: updateDateUrl,
+                type: 'POST',
+                dataType: 'json',
+                showLoader: true,
+                cache: false,
+                data: {updateArrivalDate: updateArrivalDate, orderId: orderId},
+                success:function(result){
+                    console.log(result.message);
+                    $('.response_msg').append(result.message);
+                    $('#updateArrivalDate').val('');
+                    setTimeout(function() {
+                    $("#change_collection_details_popup").removeClass("open");}, 4000);
+                }
+            });
+        });   
+    });
+    
+</script>
+
+<script type="text/javascript">
+require(["jquery"], function ($) {
+    // change_collection_details
+    $(document).on('click', '.change_collection_details', function(){
+        $("#change_collection_details_popup").addClass("open");
+    });
+});
+</script>

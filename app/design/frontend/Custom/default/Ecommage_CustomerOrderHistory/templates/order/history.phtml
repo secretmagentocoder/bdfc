@@ -1,0 +1,134 @@
+<?php
+
+/** @var \Ecommage\CustomerOrderHistory\Block\Order\History $block */
+$helper = $this->helper('Magento\Catalog\Helper\Product');
+$helperOrder = $this->helper('Ecommage\CustomerOrderHistory\Helper\Data');
+$helperPrice  = $this->helper('Magento\Framework\Pricing\Helper\Data'); // @codingStandardsIgnoreLine
+$type = $block->getData('display');
+?>
+<?php $_orders = $block->getOrders(); ?>
+<?= $block->getChildHtml('info') ?>
+<?php if ($_orders && count($_orders)) : ?>
+<?php if ($type != 1): ?>
+      <input type="text" id="mySearch" placeholder="<?= $block->escapeHtml(__('SEARCH YOUR ORDER HISTORY')) ?>" title="Type in a category">
+<div class="order-history" id="order-history-content">
+    <?php endif; ?>
+    <?php foreach ($_orders as $_order) : ?>
+        <div class="order-process-right">
+            <div class="order-status-top">
+                <div>
+                <?= $block->escapeHtml(__('%1 ORDERS',strtoupper($_order->getStatus()))) ?>
+                </div>
+                <?= $block->escapeHtml(__('Order No.: #%1',$_order->getRealOrderId())) ?>
+            </div>
+            <div class="table-wrapper orders-history">
+                <table class="data table table-order-items history" id="my-orders-table">
+                    <caption class="table-caption"><?= $block->escapeHtml(__('Orders')) ?></caption>
+                    <thead>
+                    <tr>
+                        <th scope="col" class="col image"><?= $block->escapeHtml(__('IMAGE')) ?></th>
+                        <th scope="col" class="col sku"><?= $block->escapeHtml(__('SKU')) ?></th>
+                        <th scope="col" class="col name"><?= $block->escapeHtml(__('PRODUCT DETAILS')) ?></th>
+                        <?= $block->getChildHtml('extra.column.header') ?>
+                        <th scope="col" class="col qty"><?= $block->escapeHtml(__('QTY')) ?></th>
+                        <th scope="col" class="col total"><?= $block->escapeHtml(__('TOTAL')) ?></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php $options = $_order->getAllVisibleItems();?>
+                    <?php foreach ($options as $key => $option):?>
+                        <?php $product = $helperOrder->getProduct($option->getProductId()); ?>
+                        <tr>
+                            <td data-th="<?= $block->escapeHtml(__('IMAGE')) ?>" class="col image">
+                                <a href="<?= $block->escapeUrl($product->getProductUrl()) ?>"><img style="width: 100px;" src="<?= $block->escapeUrl($helper->getImageUrl($product)) ?>"></a></td>
+                            <td data-th="<?= $block->escapeHtml(__('SKU')) ?>" class="col sku"><?= $block->escapeHtml($product->getSku()) ?></td>
+                            <td data-th="<?= $block->escapeHtml(__('PRODUCT DETAILS')) ?>" class="col name">
+                                <a href="<?= $block->escapeUrl($product->getProductUrl()) ?>"><?= /* @noEscape */ $block->escapeHtml($product->getName()) ?></a>
+                                <?php if ($product->getSize()) :?>
+                                    <div class="attribute-size">
+                                    <span><?= $block->escapeHtml(__('SIZE : %1',$helperOrder->getValueSize($product))) ?></span>
+                                    </div>
+                                <?php endif; ?>
+                                <?php  $itemSize = $option->getProductOptions(); ?>
+                                <?php if(!empty($itemSize['options'])):?>
+                                <?php foreach($itemSize['options'] as $item): ?>
+                                    <div>
+                                    <?= $block->escapeHtml(__($item['label'].': %1',$item['value'])) ?>
+                                    </div>
+                                 <?php endforeach ; ?>
+                                <?php endif; ?>
+                             <?php if($_order->getMessageId()): ?>
+                            <span><input type="checkbox" disabled checked name="gift card"> <?= $block->escapeHtml(__('Gift Card')) ?></span> 
+                            <?php endif; ?>
+                            </td>
+                            <td data-th="<?= $block->escapeHtml(__('QTY')) ?>" class="col qty"><?= /* @noEscape */ $block->escapeHtml(round($option->getProductOptions()['info_buyRequest']['qty'])) ?></td>
+                            <?php $extra = $block->getChildBlock('extra.container'); ?>
+                            <?php if ($extra) : ?>
+                                <?php $extra->setOrder($_order); ?>
+                                <?= $extra->getChildHtml() ?>
+                            <?php endif; ?>
+                            <td data-th="<?= $block->escapeHtml(__('TOTAL')) ?>" class="col total"><?= /* @noEscape */ $_order->formatPrice($option->getRowTotal()) ?></td>
+                        </tr>
+                         <?php endforeach;?>
+                    </tbody>
+               
+                </table>
+            </div>
+            <?php if(in_array($_order->getStatus(),['pending','processing'])):?>
+                    <a href="#" id="checkout-button"><?= $block->escapeHtml(__('Click to view the collection procedure video'))?></a>
+                     <?php endif; ?>
+            <div class="order-process-left">
+                <div class="tab-left">
+                    <span><?= $block->escapeHtml(__('COLLECTION INFORMATION')) ?></span>
+                    <div class="order-status"> <?= $block->escapeHtml('Status :') ?> <span><?= $block->escapeHtml(__($_order->getStatus())) ?></span></div>
+                    <div class="order-store"> <?= $block->escapeHtml('Store :') ?> <span><?= $helperOrder->getStoreName($_order->getStoreId()) ?></span></div>
+                    <?php if($_order->getStoreId() == 2):?>
+                        <div class="order-point"> <?= $block->escapeHtml(__('Collection Point : %1', $block->escapeHtml($_order->getCollectionPoint()))) ?> </div>
+                        <div class="order-date"> <?= $block->escapeHtml('Collection Date :') ?> <span><?= /* @noEscape */ $helperOrder->formatDay($_order->getCollectionDate()) ?></div>
+                    <?php endif; ?>
+                    <?php if($_order->getStoreId() == 3):?>
+                        <div class="order-point"> <?= $block->escapeHtml(__('Collection Point : %1', $block->escapeHtml($_order->getCollectionPoint()))) ?> </div>
+                        <div class="order-date"> <?= $block->escapeHtml('Collection Date :') ?> <span><?= /* @noEscape */ $helperOrder->formatDay($_order->getCollectionDate()) ?></div>
+                        <div class="order-time"> <?= $block->escapeHtml('Collection Time :') ?> <span><?= /* @noEscape */ $helperOrder->formatDay($_order->getCollectionTime()) ?></div>
+                    <?php endif; ?>
+                    <?php if($_order->getStoreId() == 4):?>
+                        <div class="order-date"> <?= $block->escapeHtml('Delivery Date :') ?> <span><?= /* @noEscape */ $helperOrder->formatDay($_order->getCollectionDate()) ?></div>
+                                <?php endif; ?>
+                    <div class="order-total-cart"> <?= $block->escapeHtml('Total Cart Value :') ?> <span><?= /* @noEscape */ $_order->formatPrice($_order->getGrandTotal()) ?></span></div>
+                    <div class="action">
+                          <?php if(in_array($_order->getStatus(),['pending','processing'])):?>
+                                   <a href="<?= $block->escapeUrl($block->getUrl('bdfc_general/order/history',['id'=>$_order->getRealOrderId(), 'mobile'=>$_order->getShippingAddress()->getTelephone()])) ?>"><?= $block->escapeHtml(__('Change Collection Details')) ?></a>
+                                <?php endif; ?>
+                        <?php if ($this->helper(\Magento\Sales\Helper\Reorder::class)->canReorder($_order->getEntityId())) : ?>
+                            <a href="#" data-post='<?= /* @noEscape */
+                            $this->helper(\Magento\Framework\Data\Helper\PostHelper::class)
+                                 ->getPostData($block->getReorderUrl($_order))
+                            ?>' class="action order">
+                                <span><?= $block->escapeHtml(__('Reorder')) ?></span>
+                            </a>
+                        <?php endif ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php endforeach; ?>
+    <form method="get" action="<?= $block->escapeUrl(($block->getUrl())) ?>">
+        <div><button type="submit"><?=$block->escapeHtml(__('BACK TO HOME'))?></button></div>
+    </form>
+<?= $block->getBlockDisplayHtml() ?>
+</div>
+<?php else : ?>
+    <?php if ($type != 1): ?>
+        <div class="message info empty" ><span><?= $block->escapeHtml($block->getEmptyOrdersMessage()) ?></span></div>
+    <?php else: ?>
+        <span><?= $block->escapeHtml($block->getEmptyOrdersMessage()) ?></span>
+    <?php endif; ?>
+<?php endif ;?>
+
+<script type="text/x-magento-init"><?php // @codingStandardsIgnoreLine?>
+    {
+        ".page-main": {
+            "search_order": {}
+        }
+    }
+</script>

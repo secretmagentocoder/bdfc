@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="sales_order_place_before">
+        <observer name="ecommage_custom_sales_order_save_before" instance="Ecommage\CheckoutForm\Observer\Order\SetOrderAttribute"/>
+    </event>
+    <event name="customer_register_success">
+        <observer name="ecommage_custom_add_address_new_account" instance="Ecommage\CheckoutForm\Observer\AddAddress" />
+    </event>
+    <event name="adminhtml_customer_save_after">
+        <observer name="ecommage_custom_save_after" instance="Ecommage\CheckoutForm\Observer\Index\Save" />
+    </event>
+</config>

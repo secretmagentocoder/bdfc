@@ -1,0 +1,282 @@
+<li id="shipping" class="checkout-shipping-address" data-bind="fadeVisible: visible()">
+    <div class="step-title" translate="'1. Personal Information'" data-role="title" />
+    <div id="checkout-step-shipping"
+         class="step-content"
+         data-role="content">
+
+        <each if="!quoteIsVirtual" args="getRegion('customer-email')" render="" />
+        <each args="getRegion('address-list')" render="" />
+        <!-- <each args="getRegion('address-list-additional-addresses')" render="" /> -->
+
+        <!-- Address form pop up -->
+        <if args="!isFormInline">
+            <!-- <button type="button" class="action action-show-popup" click="showFormPopUp" visible="!isNewAddressAdded()">
+                <span translate="'New Address'" />
+            </button> -->
+            <div id="opc-new-shipping-address" visible="isFormPopUpVisible()" render="shippingFormTemplate" />
+        </if>
+
+        <each args="getRegion('before-form')" render="" />
+
+        <!-- Inline address form -->
+        <render if="isFormInline" args="shippingFormTemplate" />
+    </div>
+</li>
+
+<!-- Custom form -->
+<li id="opc-custom-checkout-form"
+    data-bind="click: prevStepFlightArrival(),fadeVisible: visible(), blockLoader: isLoading" if="window.checkoutConfig.storeCode == 'arrival' && !checkVisibleStepFlight()">
+    <div class="custom-checkout-step shipping-address-delivery custom-checkout-form ">
+        <div class="co-step-title"
+             translate="'2. Flight Infomation'"
+             data-role="title" />
+        <div class="co-step-content">
+            <!-- ko foreach: getRegion('custom-checkout-form') -->
+                <!-- ko template: getTemplate() --><!-- /ko -->
+            <!--/ko-->
+
+            <!-- next to step 3 delivery -->
+            <div class="actions-toolbar button-flight-next-to-delivery">
+                <div class="primary">
+                    <button data-role="opc-continue-delivery" type="button" class="button action continue primary">
+                        <span data-bind="i18n: 'Continue'"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</li>
+
+<!-- Departure Custom form -->
+<li id="opc-departure-checkout-form"
+    data-bind="fadeVisible: visible(), blockLoader: isLoading" if="window.checkoutConfig.storeCode == 'departure' && !checkVisibleStepFlight()">
+    <div class="custom-checkout-step shipping-address-delivery departure-checkout-form ">
+        <div class="co-step-title"
+             translate="'2. Flight Infomation'"
+             data-role="title" />
+        <div class="co-step-content">
+            <!-- ko foreach: getRegion('departure-checkout-form') -->
+                <!-- ko template: getTemplate() --><!-- /ko -->
+            <!--/ko-->
+
+            <!-- next to step 3 delivery -->
+            <div class="actions-toolbar button-flight-next-to-delivery">
+                <div class="primary">
+                    <button data-role="opc-continue-departure-delivery" type="button" class="button action continue primary">
+                        <span data-bind="i18n: 'Continue'"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</li>
+
+
+<!--Shipping method template-->
+<!-- Custoom delivery at 2 store flight -->
+<li id="opc-delivery-checkout-form"
+    data-bind="fadeVisible: visible(), blockLoader: isLoading" if="window.checkoutConfig.storeCode != 'home_delivery' && checkVisibleStepDelivery() != 'product'">
+    <div class="custom-checkout-step delivery-checkout-step-custom">
+        <div class="co-step-title"  if="checkVisibleStepFlight() == true"
+             translate="'2. Delivery details'"
+             data-role="title" />
+
+        <div class="co-step-title"  if="checkVisibleStepFlight() == false"
+             translate="'3. Delivery details'"
+             data-role="title" />
+
+        <div class="co-step-content">
+             <div class="delivery-form">
+                <span class="pull-right">
+                    <span>Home Delivery</span>
+                </span>
+                <p>Deliver at</p>
+                <a class="row">
+                    <div class="col-sm-12">
+                        <select name="deliver_at" id="">
+                            <!-- ko foreach: { data: window.checkoutConfig.getOptionDeliverAt, as: 'item' } -->
+                            <option if="item.value != ''" data-bind="attr: {'value': item.value},text:item.label,selected: getCustomerDeliveryAt() == item.value ? true : false"></option>
+                            <!-- /ko -->
+                        </select>
+                    </div>
+
+                        <each args="data: getCustomerStreet(), as: 'streetItem'">
+
+                        <!--             ko if:($index() == 0)           -->
+                            <div class="col-sm-12">
+                                <div class="field _required">
+                                    <div class="control">
+                                        <label class="label"><span></span></label>
+                                        <input class="input-text" type="text"
+                                            data-bind="attr: {'name': 'street[]','value':streetItem}"
+                                            placeholder="FLAT NO.">
+                                    </div>
+                                </div>
+                            </div>
+                        <!-- /ko -->
+
+                        <!--             ko if:($index() == 1)           -->
+                            <div class="col-sm-12">
+                                <div class="field _required">
+                                    <div class="control">
+                                        <label class="label"><span></span></label>
+                                        <input class="input-text" type="text"
+                                            data-bind="attr: {'name': 'street[]','value':streetItem}"
+                                            placeholder="BUILDING NO.">
+                                    </div>
+                                </div>
+                            </div>
+                        <!-- /ko -->
+
+                        <!--             ko if:($index() == 2)           -->
+                            <div class="col-sm-12">
+                                <div class="field _required">
+                                    <div class="control">
+                                        <label class="label"><span></span></label>
+                                        <input class="input-text" type="text"
+                                            data-bind="attr: {'name': 'street[]','value':streetItem}"
+                                            placeholder="ROAD NO.">
+                                    </div>
+                                </div>
+                            </div>
+                        <!-- /ko -->
+
+                        <!--             ko if:($index() == 3)           -->
+                            <div class="col-sm-12">
+                                <div class="field _required">
+                                    <div class="control">
+                                        <label class="label"><span></span></label>
+                                        <input class="input-text" type="text"
+                                            data-bind="attr: {'name': 'street[]','value':streetItem}"
+                                            placeholder="BLOCK">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /ko -->
+
+                            <!--             ko if:($index() > 3)           -->
+                            <div class="col-sm-12">
+                                <div class="field _required">
+                                    <div class="control">
+                                        <label class="label"><span></span></label>
+                                        <input class="input-text" type="text"
+                                            data-bind="attr: {'name': 'street[]','value':streetItem}"
+                                            placeholder="STREET">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /ko -->
+                        </each>
+
+                    <div class="row" if="isLoggedIn()">
+                        <div class="field">
+                            <div class="control">
+                                <input id="save_address" type="checkbox" checked name="save_address">
+                                <label for="save_address">Save your shipping address</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- button custom next step -->
+                    <div class="no-quotes-block" ifnot="rates().length > 0" >
+                        <!-- ko if:(home_delivery_form_visible() == false)           -->
+                        <div class="actions-toolbar" id="shipping-method-buttons-container">
+                            <div class="primary">
+                                <button data-role="opc-continue-step3"  data-bind="click: nextShipping" type="submit" class="button action continue primary">
+                                    <span translate="'Continue'" />
+                                </button>
+                        </div>
+                    </div>
+                    <!-- /ko -->
+                    <!--             ko if:(home_delivery_form_visible() == true)           -->
+                    <div class="actions-toolbar" id="shipping-method-buttons-container" data-bind="attr: {'style': home_delivery_form_visible_hide()}">
+                        <div class="primary">
+                            <button data-role="opc-continue-step3"  data-bind="click: nextShipping" type="submit" class="button action continue primary">
+                                <span translate="'Continue'" />
+                            </button>
+                        </div>
+                    </div>
+                    <!-- /ko -->
+                </div>
+            </div>
+            <div class="actions-toolbar step4-next-payment">
+                <!-- form shipping to payment custom -->
+
+                <li id="opc-shipping_method"
+                class="checkout-shipping-method"
+                data-bind="fadeVisible: visible(), blockLoader: isLoading"
+                role="presentation" style="display: none;">
+                <div class="checkout-shipping-method-wrapper">
+                    <each args="getRegion('before-shipping-method-form')" render="" />
+                    <div id="checkout-step-shipping_method"
+                         class="step-content"
+                         data-role="content"
+                         role="tabpanel"
+                         aria-hidden="false">
+                        <form id="co-shipping-method-form"
+                              class="form methods-shipping"
+                              if="rates().length"
+                              submit="setShippingInformation"
+                              novalidate="novalidate">
+
+                            <div class="co-shipping-method-form-content" style="display: none">
+                                <render args="shippingMethodListTemplate"/>
+
+                                <div id="onepage-checkout-shipping-method-additional-load">
+                                    <each args="getRegion('shippingAdditional')" render="" />
+                                </div>
+                            </div>
+                            <div role="alert"
+                                 if="errorValidationMessage().length"
+                                 class="message notice">
+                                <span text="errorValidationMessage()" />
+                            </div>
+                            <div class="actions-toolbar" id="shipping-method-buttons-container"
+                                 data-bind="attr:{'style': home_arrival_form_visible_show()}">
+                                <div class="primary">
+                                    <button data-trigger="continue-payment" data-role="opc-continue" type="submit" class="button action continue primary">
+                                        <span translate="'Continue'" />
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+
+                        <!-- button custom next step in delivery form-->
+                    <div class="no-quotes-block" ifnot="rates().length > 0" >
+                        <!-- ko if:(home_delivery_form_visible() == true)           -->
+                        <div class="actions-toolbar" id="shipping-method-buttons-container">
+                            <div class="primary">
+                                <button data-role="opc-continue-step3"  data-bind="click: nextShipping" type="submit" class="button action continue primary">
+                                    <span translate="'Continue'" />
+                                </button>
+                        </div>
+                    </div>
+                    <!-- /ko -->
+
+                    </div>
+                </div>
+            </li>
+            </div>
+        </div>
+    </div>
+</li>
+
+<!-- payment form -->
+<li id="opc-payment-checkout-form"
+    data-bind="fadeVisible: visible()">
+    <div class="custom-checkout-step payment-checkout-form">
+        <div class="co-step-title" if="productSimpleVirtualExist() == false"
+             translate="'3. Payment'"
+             data-role="title"
+             data-bind="click: showPrevStep, attr: {'data-prev-step': 'payment-checkout-form'}" />
+        <div class="co-step-title" if="productSimpleVirtualExist() == true"
+             translate="'4. Payment'"
+             data-role="title"
+             data-bind="click: showPrevStep, attr: {'data-prev-step': 'payment-checkout-form'}" />
+        <div class="co-step-title" if="window.checkoutConfig.storeCode == 'home_delivery'"
+             translate="'3. Payment'"
+             data-role="title"
+             data-bind="click: showPrevStep, attr: {'data-prev-step': 'payment-checkout-form'}" />
+    </div>
+</li>
+

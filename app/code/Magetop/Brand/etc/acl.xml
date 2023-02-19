@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magetop
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the Magetop.com license that is
+ * available through the world-wide-web at this URL:
+ * https://www.magetop.com/LICENSE.txt
+ * 
+ * DISCLAIMER
+ * 
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ * 
+ * @category   Magetop
+ * @package    Magetop_Brand
+ * @copyright  Copyright (c) 2014 Magetop (https://www.magetop.com/)
+ * @license    https://www.magetop.com/LICENSE.txt
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+    <acl>
+        <resources>
+            <resource id="Magento_Backend::admin">
+                <resource id="Magetop_Brand::main_menu" title="Magetop Brand">
+                    <resource id="Magetop_Brand::brand" title="Brands" sortOrder="10">
+                        <resource id="Magetop_Brand::brand_edit" title="Edit Brand" sortOrder="10" />
+                        <resource id="Magetop_Brand::brand_save" title="Save Brand" sortOrder="20" />
+                        <resource id="Magetop_Brand::brand_delete" title="Delete Brand" sortOrder="30" />
+                    </resource>
+                    <resource id="Magetop_Brand::group" title="Groups" sortOrder="30">
+                        <resource id="Magetop_Brand::group_edit" title="Edit Group" sortOrder="10" />
+                        <resource id="Magetop_Brand::group_save" title="Save Group" sortOrder="20" />
+                        <resource id="Magetop_Brand::group_delete" title="Delete Group" sortOrder="30" />
+                    </resource>
+                    <resource id="Magetop_Brand::import" title="Import Brands Products" sortOrder="40">
+                        <resource id="Magetop_Brand::import_products" title="Import" sortOrder="10" />
+                        <resource id="Magetop_Brand::import_save" title="Save" sortOrder="20" />
+                    </resource>
+                </resource>
+                <resource id="Magento_Backend::stores">
+                    <resource id="Magento_Backend::stores_settings">
+                        <resource id="Magento_Config::config">
+                            <resource id="Magetop_Brand::config_brand" title="Brand" />
+                        </resource>
+                    </resource>
+                </resource>
+            </resource>
+        </resources>
+    </acl>
+</config>

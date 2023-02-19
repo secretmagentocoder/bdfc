@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author Rootways Team
+ * @copyright Copyright (c) 2021 Rootways Inc. (https://www.rootways.com)
+ * @package Rootways_Megamenu
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="Rootways_Megamenu::css/rootmenu.css" />
+        <script src="Rootways_Megamenu::js/rootmenu.js"/>
+    </head>
+    <body>
+       <referenceContainer name="head.additional">
+            <block class="Rootways\Megamenu\Block\Topmenu"
+                name="rootwaysmenuhead" 
+                template="Rootways_Megamenu::html/head.phtml"
+                ifconfig="rootmegamenu_option/general/enable"
+                before="-"/>
+        </referenceContainer>
+        
+        <!-- <referenceBlock name="catalog.topnav" remove="true"/> -->
+        <referenceContainer name="store.menu">
+            <block class="Rootways\Megamenu\Block\Topmenu"
+                name="roomegamenu"
+                template="Rootways_Megamenu::html/topmenu.phtml"
+                before="-">
+                <!--
+                <block class="Magento\Store\Block\Switcher" name="store_language_nav" as="store_language_nav" template="Rootways_Megamenu::html/languages.phtml"/>
+                -->
+             </block>
+            
+        </referenceContainer>
+    </body>
+</page>

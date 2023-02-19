@@ -1,0 +1,168 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/** @var \Magento\Customer\Block\Address\Edit $block */
+/** @var \Magento\Customer\ViewModel\Address $viewModel */
+/** @var \Magento\Framework\Escaper $escaper */
+/** @var \Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer */
+$viewModel = $block->getViewModel();
+?>
+<?php $_displayAll = $block->getConfig('general/region/display_all'); ?>
+<?php $_cityValidationClass = $viewModel->addressGetAttributeValidationClass('city'); ?>
+<?php $_postcodeValidationClass_value = $viewModel->addressGetAttributeValidationClass('postcode'); ?>
+<?php $_postcodeValidationClass = $_postcodeValidationClass_value; ?>
+<?php $_streetValidationClass = $viewModel->addressGetAttributeValidationClass('street'); ?>
+<?php $_streetValidationClassNotRequired = $_streetValidationClass !== null ?
+    trim(str_replace('required-entry', '', $_streetValidationClass)) : ''; ?>
+<?php $_regionValidationClass = $viewModel->addressGetAttributeValidationClass('region'); ?>
+<?php $helper = $this->helper('Ecommage\CustomerPersonalDetail\Helper\Data');?>
+<?php $addressHelper = $this->helper('Magento\Customer\Helper\Address'); ?>
+<?php $countryData = $helper->getCountryCollectionJson();
+
+?>
+<form class="form-address-edit new_form_style"
+      action="<?= $escaper->escapeUrl($block->getSaveUrl()) ?>"
+      method="post"
+      id="form-validate"
+      enctype="multipart/form-data"
+      style="margin-inline-end: 70px"
+      data-hasrequired="<?= $escaper->escapeHtmlAttr(__('* Required Fields')) ?>">
+    <?= $block->getBlockHtml('formkey') ?>
+    <input type="hidden" name="address_id" value="<?= $helper->getAddress()->getId() ?>">
+    <input type="hidden" name="id" value="<?= $helper->getAddress()->getId() ?>">
+    <input type="hidden" name="firstname" value="<?= $helper->getCustomer()->getFirstName() ?>">
+    <input type="hidden" name="lastname" value="<?= $helper->getCustomer()->getLastname() ?>">
+
+    <div class="fieldset ">
+        <input type="hidden" name="success_url" value="<?= $escaper->escapeUrl($block->getSuccessUrl()) ?>">
+        <input type="hidden" name="error_url" value="<?= $escaper->escapeUrl($block->getErrorUrl()) ?>">
+        <legend class="legend pt-5 fs-4"><span><?= $escaper->escapeHtml(__('ADDRESS')) ?></span></legend><br>
+        <div class="field choice set shipping">
+            <input type="checkbox"
+                   id="primary_shipping" <?= $helper->isDefaultShippingAddress() == $helper->getAddress()->getId() ? 'checked' : '' ?>
+                   name="default_shipping" value="1" class="checkbox">
+            <label class="label" for="primary_shipping">
+                <span><?= $escaper->escapeHtml(__('Deliver at below address')) ?></span>
+            </label>
+        </div>
+        <?php $_streetValidationClass = $addressHelper->getAttributeValidationClass('street'); ?>
+        <?php for ($_i = 1, $_n = $addressHelper->getStreetLines(); $_i <= $_n; $_i++): ?>
+            <div class="field additional">
+                <div class="control">
+                    <input type="text"
+                           name="street[]"
+                           value="<?= $block->escapeHtml($block->getStreetLine($_i)) ?>"
+                           placeholder="<?php
+                           if($_i == 1)  echo 'FLAT NO.';
+                           if($_i == 2)  echo 'BUILDING NO.';
+                           if($_i == 3)  echo 'ROAD NO.';
+                           if($_i == 4)  echo 'BLOCK';
+                           ?>"
+                           title="<?= $block->escapeHtmlAttr(__('Street Address %1', $_i)) ?>"
+                           id="street_<?= /* @noEscape */ $_i ?>"
+                           class="input-text <?= /* @noEscape */ $_streetValidationClass ?>"/>
+                </div>
+            </div>
+        <?php endfor; ?>
+        <div class="field city required">
+            <div class="control">
+                <?php $cityValidationClass = $addressHelper->getAttributeValidationClass('city');?>
+                <input type="text"
+                       name="city"
+                       value="<?= $escaper->escapeHtmlAttr($helper->getAddress() ? $helper->getAddress()->getCity() : '') ?>"
+                       title="<?= $escaper->escapeHtmlAttr(__('CITY')) ?>"
+                       id="city"
+                       placeholder="CITY."
+                       class="input-text <?= $cityValidationClass ?>"/>
+            </div>
+        </div>
+        <div class="field country required">
+            <div class="control">
+                <?= $block->getCountryHtmlSelect() ?>
+            </div>
+        </div>
+        <div class="field telephone required">
+            <div class="control">
+                <?php $telephoneValidationClass = $addressHelper->getAttributeValidationClass('telephone');?>
+                <input type="text"
+                       name="telephone"
+                       value="<?= $escaper->escapeHtmlAttr($helper->getAddress() ? $helper->getAddress()->getTelephone() : '') ?>"
+                       title="<?= $escaper->escapeHtmlAttr(__('PHONE')) ?>"
+                       id="telephone"
+                       placeholder="<?= $block->escapeHtml(__('Enter Mobile No'))  ?>"
+                       class="input-text <?= $telephoneValidationClass ?>"/>
+            </div>
+        </div>
+        <div class="field postcode required">
+            <div class="control">
+                <?php $postcodeValidationClass = $addressHelper->getAttributeValidationClass('postcode');?>
+                <input type="text"
+                       name="postcode"
+                       value="<?= $escaper->escapeHtmlAttr($helper->getAddress() ? $helper->getAddress()->getPostcode() : '') ?>"
+                       title="<?= $escaper->escapeHtmlAttr(__('POSTCODE')) ?>"
+                       id="postcode"
+                       placeholder="POSTCODE"
+                       class="input-text "/>
+            </div>
+        </div>
+        <?php if ($helper->getActionPage()) : ?>
+                <div class="text-sm-start text-md-end ">
+                    <a href="javascript:void(0)" role="add-address"
+                       title="<?= $block->escapeHtmlAttr(__('ADD ANOTHER ADDRESS')) ?>"
+                       class="action add"><span><?= $block->escapeHtml(__('+.ADD ANOTHER ADDRESS')) ?></span></a>
+                </div>
+            <?php endif; ?>
+        <div class="actions-toolbar pt-5">
+      
+        <div class="col-md-8 col-12">
+            <div class="internal_page_full_style">
+                    <button type="submit" title="<?= $escaper->escapeHtmlAttr(__('Save Address')) ?>" class="action save"  data-action="save-address">
+                        <span class="btn_style1 btn_style_in">
+                            <span><?= $escaper->escapeHtml(__('UPDATE ADDRESS')) ?></span>
+                        </span>
+                        <div class="content-details fadeIn-left">
+                            <span class="btn_style btn_style_in">
+                                <span><?= $escaper->escapeHtml(__('UPDATE ADDRESS')) ?></span>
+                            </span>
+                        </div>
+                        
+                    </button>
+                </div>
+               
+            </div>
+            <!-- <div class="primary">
+                <button type="submit"
+                        class="action save primary"
+                        data-action="save-address"
+                        title="<?= $escaper->escapeHtmlAttr(__('Save Address')) ?>">
+                    <span><?= $escaper->escapeHtml(__('UPDATE ADDRESS')) ?></span>
+                </button>
+            </div> -->
+           
+        </div>
+    </div>
+</form>
+<script type="text/x-magento-init">
+    {
+        "#form-validate": {
+            "addressValidation": {
+                "postCodes": <?= /* @noEscape */$block->getPostCodeConfig()->getSerializedPostCodes() ?>
+            }
+        }
+    }
+
+</script>
+<script type="text/x-magento-init">
+    {
+        ".form-address-edit": {
+            "address": {
+                "addAddress": "a[role='add-address']",
+                "addAddressLocation": "<?= $block->escapeJs($block->escapeUrl($block->getUrl('customer/address/new', ['_secure' => true]))) ?>"
+            }
+        }
+    }
+</script>
+

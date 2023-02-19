@@ -1,0 +1,107 @@
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<!--<style>-->
+<!--    .payment-method-content .actions-toolbar{-->
+<!--        display: none;-->
+<!--    }-->
+<!--</style>-->
+
+<li id="opc-shipping-checkout-form-personal">
+    <div class="custom-checkout-step shipping-checkout-form">
+        <div class="co-step-title"
+             translate="'1. Personal Information'"
+             data-role="title"
+             data-bind="click: showPrevStep, fadeVisible: isVisible, attr: {'data-prev-step': 'shipping-address-personal'}"/>
+    </div>
+</li>
+<li id="opc-shipping-checkout-form-delivery" if="home_delivery_form_visible() == true">
+    <div class="custom-checkout-step shipping-checkout-form">
+        <div class="co-step-title"
+             translate="'2. Delivery Details'"
+             data-role="title"
+             data-bind="click: showPrevStep, fadeVisible: isVisible, attr: {'data-prev-step': 'shipping-address-delivery'}"/>
+    </div>
+</li>
+
+<!--  -->
+<li id="opc-shipping-checkout-form-flight" if="window.checkoutConfig.storeCode != 'home_delivery' && !checkVisibleStepFlight()">
+    <div class="custom-checkout-step shipping-checkout-form">
+        <div class="co-step-title"
+             translate="'2. Flight Infomation'"
+             data-role="title"
+             data-bind="click: showPrevStep, fadeVisible: isVisible, attr: {'data-prev-step': 'shipping-address-delivery'}"/>
+    </div>
+</li>
+<!-- custom step delivery -->
+<li id="opc-shipping-checkout-form-delivery-departure-arrival" if="home_delivery_form_visible() == false && checkVisibleStepDelivery() != 'product'">
+    <div class="custom-checkout-step shipping-checkout-form">
+        <div class="co-step-title" if="checkVisibleStepFlight() == false"
+             translate="'3. Delivery Details'"
+             data-role="title"
+             data-bind="click: showPrevStep, fadeVisible: isVisible, attr: {'data-prev-step': 'shipping-address-delivery'}"></div>
+        <div class="co-step-title" if="checkVisibleStepFlight() == true"
+             translate="'2. Delivery Details'"
+             data-role="title"
+             data-bind="click: showPrevStep, fadeVisible: isVisible, attr: {'data-prev-step': 'shipping-address-delivery'}"></div>
+    </div>
+</li>
+<li id="payment" role="presentation" class="checkout-payment-method" data-bind="fadeVisible: isVisible">
+    <div class="co-step-title active" if="productSimpleVirtualExist() == false" translate="'3. Payment'" data-role="title"/>
+    <div class="co-step-title active" if="productSimpleVirtualExist() == true" translate="'4. Payment'" data-role="title"/>
+    <div class="co-step-title active" if="window.checkoutConfig.storeCode == 'home_delivery'" translate="'3. Payment'" data-role="title"/>
+    <div id="checkout-step-payment"
+         class="co-step-content active"
+         data-role="content"
+         role="tabpanel"
+         aria-hidden="false">
+        <!-- ko if: (quoteIsVirtual) -->
+        <!-- ko foreach: getRegion('customer-email') -->
+        <!-- ko template: getTemplate() --><!-- /ko -->
+        <!--/ko-->
+        <!--/ko-->
+        <form id="co-payment-form" class="form payments" novalidate="novalidate">
+            <input data-bind='attr: {value: getFormKey()}' type="hidden" name="form_key"/>
+            <fieldset class="fieldset">
+                <!-- ko foreach: getRegion('afterMethods') -->
+                <!-- ko template: getTemplate() --><!-- /ko -->
+                <!-- /ko -->
+
+                <legend class="legend">
+                    <span data-bind="i18n: 'Payment Information'"></span>
+                </legend>
+                <br/>
+                <!-- ko foreach: getRegion('place-order-captcha') -->
+                <!-- ko template: getTemplate() --><!-- /ko -->
+                <!-- /ko -->
+                <br/>
+                <!-- ko foreach: getRegion('beforeMethods') -->
+                <!-- ko template: getTemplate() --><!-- /ko -->
+                <!-- /ko -->
+                <div class="opc-payment-title">
+                    <span data-bind="i18n: 'Select your payment mode'"></span>
+                </div>
+                <div id="checkout-payment-method-load" class="opc-payment"
+                     data-bind="visible: isPaymentMethodsAvailable">
+                    <!-- ko foreach: getRegion('payment-methods-list') -->
+                    <!-- ko template: getTemplate() --><!-- /ko -->
+                    <!-- /ko -->
+                </div>
+                <div class="no-quotes-block" data-bind="visible: isPaymentMethodsAvailable() == false">
+                    <!-- ko i18n: 'No Payment method available.'--><!-- /ko -->
+                </div>
+                <!-- ko if: (isPaymentMethodsAvailable()) -->
+                    <div class="row mt-3">
+                        <div class="col-sm-12">
+                            <input type="checkbox" name="save_payment_detail" value="1" id="save_payment_detail">
+                            <label for="save_payment_detail">Save your payment details for future use.</label>
+                        </div>
+                    </div>
+                <!--/ko-->
+            </fieldset>
+        </form>
+    </div>
+</li>

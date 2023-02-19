@@ -1,0 +1,163 @@
+<?php
+
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/** @var $block \Magento\Catalog\Block\Product\View */
+?>
+<?php
+$age_limit = 0;
+$age_limit_category='';
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$helper = $this->helper('Ecommage\RaffleTickets\Helper\Data');
+$_product = $block->getProduct();
+$product_categories = $_product->getCategoryIds();
+
+$age_limit = 0;
+$age_limit_category = '';
+$productConfigHelper = $this->helper('Bdfc\General\Helper\ProductConfig');
+
+$ageData = $productConfigHelper->getAgeLimit($_product->getCategoryIds());
+if (! empty($ageData)) {
+    $age_limit = (isset($ageData['age_limit'])) ? $ageData['age_limit'] : 0;
+    $age_limit_category = (isset($ageData['age_limit_category'])) ? $ageData['age_limit_category'] : '';
+}
+?>
+
+<?php
+// $product_in_age = $_product->getResource()->getAttribute('in_age')->getFrontend()->getValue($_product);
+$is_preorder = $_product->getData('web_pre_order_allowed');
+$buttonTitle = __('Add to Cart');
+if ($is_preorder == 1) {
+    $buttonTitle = __('Add to Cart');
+}
+
+?>
+
+<input type="hidden" name="product_in_age" value="<?php echo $age_limit > 0 ? "Yes" : "No"; ?>">
+<input type="hidden" name="age_limit_category" value="<?php echo $age_limit_category !='' ? $age_limit_category: "LIQUOR & TOBACCO"; ?>">
+<input type="hidden" name="age_limit" value="<?php echo $age_limit ?>">
+
+<?php if ($_product->isSaleable()) : ?>
+    <div class="box-tocart">
+        <?php if (!$helper->getActionName()): ?>
+        <div class="new_box py-3">
+            <?php echo $this->getLayout()
+                ->createBlock(
+                    'Magento\Catalog\Pricing\Render',
+                    "product.price.final",
+                    [
+                        'data' => [
+                            'price_render' => 'product.price.render.default',
+                            'price_type_code' => 'final_price',
+                            'zone' => 'item_view'
+                        ]
+                    ]
+                )
+                ->toHtml(); ?>
+
+            <?php if ($block->shouldRenderQuantity()) : ?>
+                <div class="field qty">
+                    <label class="label text-uppercase pb-2 fw-bold" for="qty"><span><?= $block->escapeHtml(__('Quantity')) ?></span></label>
+                    <div class="control" data-bind="scope: 'qty_change'">
+                        <button data-bind="click: decreaseQty" class="qty-dec">−</button>
+                        <input data-bind="value: qty()" type="number" name="qty" id="qty" min="1" maxlength="3" title="<?php /* @escapeNotVerified */ echo __('Qty') ?>" class="input-text qty" data-validate="<?php echo $block->escapeHtml(json_encode($block->getQuantityValidators())) ?>" />
+                        <button data-bind="click: increaseQty" class="qty-inc">+</button>
+                    </div>
+                </div>
+            <?php endif; ?>
+        </div> 
+            <?php endif; ?>
+        <div class="fieldset">
+
+            <?php
+            $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+            $StockState = $objectManager->get('\Magento\CatalogInventory\Api\StockStateInterface');
+            $_product_qty = $StockState->getStockQty($_product->getId(), $_product->getStore()->getWebsiteId());
+
+            if (!empty($_product_qty) && $_product_qty <= '5') :
+            ?>
+                <div class="stock-availability-left">
+                    <div class="availability only" title="<?= /* @escapeNotVerified */ __('Only %1 item(s) left in stock', ($_product_qty)) ?>">
+                        <?= /* @escapeNotVerified */ __('Only %1 item(s) left in stock', "<strong>{$_product_qty}</strong>") ?>
+                    </div>
+                </div>
+            <?php endif ?>
+
+            <div class="product-available-offer">
+                <?php
+                echo $this->getLayout()->createBlock("Magento\Catalog\Block\Product\View")->setTemplate("Magento_Catalog::product/view/offers.phtml")->toHtml();
+                ?>
+            </div>
+
+            <div class="actions my-5">
+                <!-- <div class="internal_page_full_style">
+                                        <button type="submit"
+                    title="<?= $block->escapeHtmlAttr($buttonTitle) ?>">
+                                            <span class="btn_style1 btn_style_in">
+                                                <span>Add to Cart</span>
+                                            </span>
+                                            <div class="content-details fadeIn-left">
+                                                <span class="btn_style btn_style_in">
+                                                    <span>Add to Cart</span>
+                                                </span>
+                                            </div>
+        </button>
+                                    </div> -->
+
+                <?php if (!$helper->getActionName()): ?>
+
+
+                <button type="submit" title="<?= $block->escapeHtmlAttr($buttonTitle) ?>" class="action primary tocart btn-float" id="product-addtocart-button" disabled>
+                    <span class="front"><?php echo $buttonTitle; ?></span>
+                    <span class="back"><?php echo $buttonTitle; ?></span>
+                
+                    <!-- <span data-hover="Add to Cart" class="btn_style btn_style_in add_cart_button_style">
+                        <span class="add_to_cart_style"><?php echo $buttonTitle; ?></span>
+                    </span> -->
+                </button>
+                <?= $block->getChildHtml('', true) ?>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+<?php endif; ?>
+
+<div class="stock-availability-status">
+    <?php if ($block->displayProductStockStatus()) : ?>
+        <?php if ($_product->isAvailable()) : ?>
+            <div class="stock available" title="<?= /* @escapeNotVerified */ __('Availability') ?>">
+                <span><?= /* @escapeNotVerified */ __('In stock') ?></span>
+            </div>
+        <?php else : ?>
+            <div class="stock unavailable" title="<?= /* @escapeNotVerified */ __('Availability') ?>">
+                <span><?= /* @escapeNotVerified */ __('Out of stock') ?></span>
+            </div>
+        <?php endif; ?>
+    <?php endif; ?>
+</div>
+
+<script type="text/x-magento-init">
+    {
+        "#product_addtocart_form": {
+            "Magento_Catalog/js/validate-product": {}
+        }
+    }
+</script>
+
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Magento_Ui/js/core/app": {
+                "components": {
+                    "qty_change": {
+                        "component": "Magento_Catalog/js/qty_change",
+                        "defaultQty": <?php echo $block->getProductDefaultQty() * 1 ?>
+                    }
+                 }
+            }
+        }
+    }
+</script>

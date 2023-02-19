@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author Rootways Inc. Team
+ * @copyright Copyright (c) 2021 Rootways (https://www.rootways.com/)
+ * @package Rootways_Megamenu
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <rootmegamenu_option>
+            <general>
+                <enable>1</enable>
+                <show_home_link>1</show_home_link>
+                <show_contactus>1</show_contactus>
+                <topmenualignmenttype>2</topmenualignmenttype>
+                <topmenuarrow>1</topmenuarrow>
+                <underline>1</underline>
+            </general>
+            <design>
+                <menulabel>uppercase</menulabel>
+                <bgcolor>179BD7</bgcolor>
+                <mainbordercolor>097FB4</mainbordercolor>
+                <fontcolor>FFFFFF</fontcolor>
+                <fontsize>13</fontsize>
+                <activebgcolor>097FB4</activebgcolor>
+                <activefontcolor>FFFFFF</activefontcolor>
+                <hoverbgcolor>097FB4</hoverbgcolor>
+                <hoverfontcolor>FFFFFF</hoverfontcolor>
+                <submenubgcolor>FFFFFF</submenubgcolor>
+                <submenufountcolor>424242</submenufountcolor>
+                <submenufountsize>13</submenufountsize>
+                <submenuhoverfontcolor>424242</submenuhoverfontcolor>
+                <submenuheadingcolor>424242</submenuheadingcolor>
+                <submenuheadingfontsize>15</submenuheadingfontsize>
+                <tebingheadingbgcolor>F5F5F5</tebingheadingbgcolor>
+                <tebingheadingbordercolor>E2E2E2</tebingheadingbordercolor>
+                <tebingheadingfontcolor>424242</tebingheadingfontcolor>
+                <tebingheadingfontsize>12</tebingheadingfontsize>
+                <simplesubbgcolor>F6F6F6</simplesubbgcolor>
+                <simplesubfontcolor>000000</simplesubfontcolor>
+                <simplesubfontsize>12</simplesubfontsize>
+                <simplesubhoerbgcolor>E2E2E2</simplesubhoerbgcolor>
+                <simplesubhoverfontcolor>000000</simplesubhoverfontcolor>
+            </design>
+        </rootmegamenu_option>
+    </default>
+</config>

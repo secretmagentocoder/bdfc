@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="catalog.compare.sidebar" remove="true"/>
+        <referenceBlock name="sidebar.additional" remove="true"/>
+
+        <referenceBlock name="page.main.title" remove="true"/>
+
+        <block class="Magento\Cms\Block\Block" name="block_catalog_search_page">
+            <arguments>
+                <argument name="block_id" xsi:type="string">block_catalog_search_page</argument>
+            </arguments>
+        </block>
+        <move element="block_catalog_search_page" destination="page.top" before="breadcrumbs" />
+        
+    </body>
+</page>

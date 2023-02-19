@@ -1,0 +1,257 @@
+<?php
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$context = $objectManager->get('Magento\Framework\App\Http\Context');
+$isLoggedIn = $context->getValue(\Magento\Customer\Model\Context::CONTEXT_AUTH);
+
+$customer_is_logged_in = '';
+$customer_is_above_age = '';
+$customer_saved_age = 0;
+if ($isLoggedIn) {
+    // echo "Customer loggedin";
+    $customer_is_logged_in = 'yes';
+
+    $customerSession = $objectManager->get('Magento\Customer\Model\Session');
+    $customerSavedDOB = $customerSession->getCustomer()->getData('cust_dob');
+    $customerData = $customerSession->getCustomer()->getData();
+    $customer_id = $customerSession->getCustomer()->getId();
+
+    $objDate = $objectManager->create('Magento\Framework\Stdlib\DateTime\DateTime');
+    $current_date = $objDate->gmtDate();
+
+    $diff = abs(strtotime($current_date) - strtotime($customerSavedDOB));
+
+    $years = floor($diff / (365 * 60 * 60 * 24));
+    $months = floor(($diff - $years * 365 * 60 * 60 * 24) / (30 * 60 * 60 * 24));
+    $days = floor(($diff - $years * 365 * 60 * 60 * 24 - $months * 30 * 60 * 60 * 24) / (60 * 60 * 24));
+    // printf("%d years, %d months, %d days\n", $years, $months, $days);
+    $customer_saved_age = $years;
+} else {
+    // echo "Customer loggedout";
+    $customer_is_logged_in = 'no';
+    $cookie_name = "customer_is_above_age";
+    if (!isset($_COOKIE[$cookie_name]) || $_COOKIE[$cookie_name] == 'no') {
+        $customer_is_above_age = 'no';
+    } else {
+        $customer_is_above_age = 'yes';
+    }
+}
+
+?>
+
+<input type="hidden" id="customer_is_logged_in" value="<?php echo $customer_is_logged_in; ?>">
+<input type="hidden" id="customer_is_above_age" value="<?php echo $customer_is_above_age; ?>">
+<input type="hidden" id="customer_saved_age" value="<?php echo $customer_saved_age; ?>">
+
+
+<div id="age_verification_popup" class="modal custom-modal">
+    <div class="custom-modal-wrapper">
+        <?php echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('block_age_verification_popup')->toHtml(); ?>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    require(['customJS', 'jquery', 'jquery/jquery.cookie'], function(customJS, $) {
+        jQuery(document).ready(function() {
+            var age_cookie = $.cookie('age_cookie'); // Get Cookie Value
+            var age_limit_category_cookie = $.cookie('age_limit_category_cookie'); // Get Cookie Value
+            var age_limit = $(this).find('input[name="age_limit"]').val();
+            var age_limit_category = $(this).find('input[name="age_limit_category"]').val();
+            var customer_is_logged_in = $("#customer_is_logged_in").val();
+            var customer_is_above_age = $("#customer_is_above_age").val();
+            var customer_saved_age = $("#customer_saved_age").val();
+
+
+            // product-addtocart-button
+            $(document).on('click', '#product-addtocart-button', function(e) {
+
+                // e.preventDefault();
+                window.addtocart_form = $(this).parents('form');
+                var product_in_age = $(this).parents('form').find('input[name="product_in_age"]').val();
+                age_limit = $(this).parents('form').find('input[name="age_limit"]').val();
+                age_limit_category = $(this).parents('form').find('input[name="age_limit_category"]').val();
+
+                if (product_in_age == 'Yes') {
+
+                    $('.age_var').each(function() {
+                    // get element text
+                    let text = $(this).text();
+                    // modify text
+                    text = text.replace('21', age_limit);
+                    // update element text
+                    $(this).text(text);
+                });
+                $('.age_category_var').each(function() {
+                    // get element text
+                    let text = $(this).text();
+                    // modify text
+                    text = text.replace('LIQUOR & TOBACCO', age_limit_category);
+                    // update element text
+                    $(this).text(text);
+                });
+                    //Need to check age to add product
+                    if (customer_is_logged_in == 'yes') {
+                        if (parseInt(customer_saved_age) < parseInt(age_limit)) {
+
+                            // Customer DOB is not ok, show the error message
+                            $("#age_varification_bellow_age_popup").addClass("open");
+                            return false;
+
+                        } else {
+                            // Customer DOB is ok, direct add the product without asking
+                            return true;
+                        }
+                    } else {
+
+                        //Customer is not logged in
+                        if (age_cookie == null) {
+                            $("#age_verification_popup").addClass("open");
+                            return false;
+                        } else {
+                            if (parseInt(age_cookie) < parseInt(age_limit)) {
+                                if (age_limit_category_cookie == age_limit_category) {
+                                    // Customer DOB is not ok, show the error message
+                                    $("#age_varification_bellow_age_popup").addClass("open");
+                                    return false;
+                                } else {
+                                    $("#age_verification_popup").addClass("open");
+                                    return false;
+                                }
+
+
+
+                            } else {
+                                if (age_limit_category_cookie == age_limit_category) {
+                                    return true;
+                                } else {
+                                    $("#age_verification_popup").addClass("open");
+                                    return false;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            $(document).on('click', '.product-addtocart-form button', function(e) {
+
+                // e.preventDefault();
+                window.addtocart_form = $(this).parents('form');
+                var product_in_age = $(this).parents('form').find('input[name="product_in_age"]').val();
+                age_limit = $(this).parents('form').find('input[name="age_limit"]').val();
+                age_limit_category = $(this).parents('form').find('input[name="age_limit_category"]').val();
+
+                
+                if (product_in_age == 'Yes') {
+                    $('.age_var').each(function() {
+                    // get element text
+                    let text = $(this).text();
+                    // modify text
+                    text = text.replace('21', age_limit);
+                    // update element text
+                    $(this).text(text);
+                });
+                $('.age_category_var').each(function() {
+                    // get element text
+                    let text = $(this).text();
+                    // modify text
+                    text = text.replace('LIQUOR & TOBACCO', age_limit_category);
+                    // update element text
+                    $(this).text(text);
+                });
+
+                    if (customer_is_logged_in == 'yes') {
+                        if (parseInt(customer_saved_age) < parseInt(age_limit)) {
+
+                            // Customer DOB is not ok, show the error message
+                            $("#age_varification_bellow_age_popup").addClass("open");
+                            return false;
+
+                        } else {
+                            // Customer DOB is ok, direct add the product without asking
+                            return true;
+                        }
+                    } else {
+
+                        //Customer is not logged in
+                        if (age_cookie == null) {
+                            $("#age_verification_popup").addClass("open");
+                            return false;
+                        } else {
+
+                            if (parseInt(age_cookie) < parseInt(age_limit)) {
+
+                                if (age_limit_category_cookie == age_limit_category) {
+                                    // Customer DOB is not ok, show the error message
+                                    $("#age_varification_bellow_age_popup").addClass("open");
+                                    return false;
+                                } else {
+                                    $("#age_verification_popup").addClass("open");
+                                    return false;
+                                }
+
+                            } else {
+                                if (age_limit_category_cookie == age_limit_category) {
+                                    return true;
+                                } else {
+                                    $("#age_verification_popup").addClass("open");
+                                    return false;
+                                }
+
+
+                            }
+                        }
+
+                    }
+                }
+            });
+
+
+
+            // age_verification_submit
+            $(document).on('click', '#age_verification_submit', function() {
+                // cookie
+                var expDate = new Date();
+                expDate.setTime(expDate.getTime() + (24 * 60 * 60 * 1000)); // add 24 hours
+
+                $.cookie('age_limit_category_cookie', age_limit_category, {
+                    path: '/',
+                    expires: expDate
+                });
+
+                var select_age = $('#age_verification_popup input[name="select_age"]:checked').val();
+                if (select_age == 'Above 21') {
+                    $.cookie('age_cookie', parseInt(age_limit) + 1, {
+                        path: '/',
+                        expires: expDate
+                    });
+                    $('#customer_is_above_age').val("yes");
+                    // $('#product_addtocart_form').trigger("submit");
+                    window.addtocart_form.trigger("submit");
+                } else {
+                    $.cookie('age_cookie', parseInt(age_limit) - 1, {
+                        path: '/',
+                        expires: expDate
+                    });
+                    $('#customer_is_above_age').val("no");
+                }
+
+                $("#age_verification_popup").removeClass("open");
+                location.reload();
+            });
+
+            // select_age
+            $(document).on('change', '#age_verification_popup input[name="select_age"]', function() {
+                var select_age = $('#age_verification_popup input[name="select_age"]:checked').val();
+                if (select_age == 'Above 21') {
+                    $('.select_age_msg').hide();
+                    $('.select_age_above_21').show();
+                } else {
+                    $('.select_age_msg').hide();
+                    $('.select_age_bellow_21').show();
+                }
+            });
+
+        });
+    });
+</script>

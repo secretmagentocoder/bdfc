@@ -1,0 +1,71 @@
+<?php
+/** @var  Bodak\CheckoutCustomForm\Block\Checkout\CustomCategory $block */
+
+$options = $block->getCustomCategory();
+?>
+<table>
+    <tbody>
+    <tr>
+        <th>
+        <?= $block->escapeHtml(__('Category')) ?></td>
+        <th>
+        <?= $block->escapeHtml(__('Quantity')) ?></td>
+        <th>
+        <?= $block->escapeHtml(__('Size')) ?></td>
+    </tr>
+    <?php foreach ($options as $item): ?>
+        <tr class="category-options">
+            <td><?= $block->escapeHtml(__($item['name'])) ?></td>
+            <td><input type="number" class="table-custom-category"
+                       name="<?= $block->escapeHtml(__(strtolower($item['code']))) . '_api' ?>" min="0" value="0"></td>
+            <td><?= $block->escapeHtml(__($item['size'])) ?></td>
+        </tr>
+    <?php endforeach; ?>
+    </tbody>
+</table>
+
+<!--<script type="text/x-magento-init">-->
+<!--    {-->
+<!--        ".page-main": {-->
+<!--            "customCategory": {-->
+<!--                "changeInput" : ".table-custom-category"-->
+<!--            }-->
+<!--        }-->
+<!--    }-->
+<!--</script>-->
+<script type="text/javascript">
+    require([
+        'jquery',
+        'mage/url',
+        'Magento_Checkout/js/model/quote',
+        'Magento_Checkout/js/model/cart/totals-processor/default',
+        'Magento_Checkout/js/action/get-totals',
+        'rjsResolver'
+    ], function ($, url, quote, totalsDefaultProvider, getTotalsAction, resolver) {
+        resolver(function () {
+            $("input.table-custom-category").trigger('change');
+        }.bind(this));
+
+
+        $('body').on('blur', 'input.table-custom-category', function () {
+            $('tr.category-options').each(function (index) {
+               var values = $(this).find('input.table-custom-category').val();
+                if (values.length < 1){
+                    $(this).find('input.table-custom-category').val(0);
+                }
+            })
+            $.ajax({
+                url: url.build('ecommage_bodak/checkout/index'),
+                method: 'POST',
+                data: {
+                    'data': $("#custom-checkout-form").serializeArray()
+                },
+                showLoader: true,
+                success: function (resp) {
+                    var deferred = $.Deferred();
+                    getTotalsAction([], deferred);
+                }
+            });
+        })
+    });
+</script>

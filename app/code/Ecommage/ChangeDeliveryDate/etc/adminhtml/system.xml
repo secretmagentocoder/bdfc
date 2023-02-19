@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="nav" translate="label" type="text" sortOrder="102" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Dynamics NAV</label>
+            <tab>service</tab>
+            <resource>Ecommage_ChangeDeliveryDate::config_nav</resource>
+            <group id="system" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>NAV Settings</label>
+                <field id="api_delivery_date" translate="label comment" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Delivery Date Api</label>
+                    <comment>Api Check And Update Delivery Date.</comment>
+                </field>
+            </group>
+            <group id="config_email" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Config Email</label>
+                <field id="change_delivery_date_successfully" translate="label comment" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Delivery Date Change Template</label>
+                    <comment>Email template chosen based on theme fallback when "Default" option is selected.</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+                    <config_path>nav/config_email/change_delivery_date_successfully</config_path>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>
+

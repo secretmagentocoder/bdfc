@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="ecommage_api_nationality_scretkey" translate="label" sortOrder="10">
+            <label>Api Nationality Scretkey</label>
+        </tab>
+        <section id="ecommage_api_nationality" translate="label" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>API</label>
+            <tab>general</tab>
+            <resource>Ecommage_CheckoutData::config</resource>
+            <group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>Config Api Scretkey Nationality</label>
+                <field id="key" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Key</label>
+                    <comment>Scretkey nationalities api.</comment>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>
+

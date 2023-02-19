@@ -1,0 +1,44 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+?>
+<?php
+/**
+ * Product list toolbar
+ *
+ * @var $block \Magento\Catalog\Block\Product\ProductList\Toolbar
+ */
+
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$request = $objectManager->get('\Magento\Framework\App\Request\Http');
+
+$catalog_page_title = '';
+if ($request->getFullActionName() == 'catalog_category_view') {
+    $category = $objectManager->get('Magento\Framework\Registry')->registry('current_category');//get current category
+    $category_id = $category->getId();
+    $catalog_page_title = $category->getName();
+}else if ($request->getFullActionName() == 'magetopbrand_brand_view') {
+    $category = $objectManager->get('Magento\Framework\Registry')->registry('current_brand');//get current category
+    $category_id = $category->getId();
+    $catalog_page_title = $category->getName();
+}else if ($request->getFullActionName() == 'catalogsearch_result_index') {
+    $search_keyword = '';
+    $search_keyword = $_GET['q'];
+    $catalog_page_title = 'Search results for: '.$search_keyword;
+}else{
+    $catalog_page_title = '';
+}
+?>
+<div class="page-title-count">
+    <h1 class="page-title" id="page-title-heading">
+        <span class="base"><?php echo $catalog_page_title; ?></span>
+        <span class="base">
+            (<?= $block->escapeHtml(
+                __('%1', '<span class="toolbar-number">' . $block->getTotalNum() . '</span>'),
+                ['span']
+            ) ?>)
+        </span>
+    </h1>
+</div>
